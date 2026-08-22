@@ -26,10 +26,10 @@ Match the exam to your role. There are no prerequisites and no required order.
 
 ```mermaid
 flowchart TD
-    A{Do you write code<br/>that calls Claude?} -->|"No, I work in claude.ai"| B["CCAO-F<br/>Associate - Foundations"]
-    A -->|Yes| C{What do you build?}
+    A{"Do you write code<br/>that calls Claude?"} -->|"No, I work in claude.ai"| B["CCAO-F<br/>Associate - Foundations"]
+    A -->|Yes| C{"What do you build?"}
     C -->|"Applications on the<br/>API and SDKs"| D["CCDV-F<br/>Developer - Foundations"]
-    C -->|"Production systems:<br/>agents, MCP, orchestration"| E{Do you also own discovery,<br/>governance, and stakeholders?}
+    C -->|"Production systems:<br/>agents, MCP, orchestration"| E{"Do you also own discovery,<br/>governance, and stakeholders?"}
     E -->|"Not yet"| F["CCA-F<br/>Architect - Foundations"]
     E -->|"Yes, the full lifecycle"| G["CCAR-P<br/>Architect - Professional"]
 ```
