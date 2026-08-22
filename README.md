@@ -22,14 +22,26 @@ The cleanest way to read the table is as two tracks:
 
 ## Which one should you take?
 
-**Match the exam to your role first, career stage second.**
+Match the exam to your role. There are no prerequisites and no required order.
 
-- Your work happens inside the claude.ai application (marketing, operations, project management, communications, analysis) and you never touch the API → **[CCAO-F](./ccao-f/)**. It is the one exam in the program that requires no code.
-- You write software that calls Claude through the API, SDKs, Agent SDK, or Claude Code → **[CCDV-F](./ccdv-f/)**.
-- You design production Claude systems (agent architectures, MCP servers, orchestration) → **[CCA-F](./cca-f/)**, then step up to CCAR-P when your role includes discovery, governance, and stakeholder ownership.
-- You are the architect accountable for the whole solution lifecycle, with 3+ years of architecture experience → **[CCAR-P](./ccar-p/)**. No prerequisites exist; experienced architects can skip CCA-F, though most benefit from the Foundations vocabulary first.
+```mermaid
+flowchart TD
+    A{Do you write code<br/>that calls Claude?} -->|"No, I work in claude.ai"| B["CCAO-F<br/>Associate - Foundations"]
+    A -->|Yes| C{What do you build?}
+    C -->|"Applications on the<br/>API and SDKs"| D["CCDV-F<br/>Developer - Foundations"]
+    C -->|"Production systems:<br/>agents, MCP, orchestration"| E{Do you also own discovery,<br/>governance, and stakeholders?}
+    E -->|"Not yet"| F["CCA-F<br/>Architect - Foundations"]
+    E -->|"Yes, the full lifecycle"| G["CCAR-P<br/>Architect - Professional"]
+```
 
-Taking more than one makes sense when they certify different parts of a real job. The most common stack is CCA-F + CCAR-P (the deliberate two-tier architect path). CCDV-F + CCA-F suits engineers who both build applications and design systems, and the blueprint overlap (MCP, prompting, Claude Code) makes the second exam meaningfully cheaper in study time.
+| If you are... | Take | Why |
+|---|---|---|
+| A business professional working inside claude.ai: marketing, ops, PM, comms, analysis | [CCAO-F](./ccao-f/) | The one exam with no code; covers the product you actually use |
+| An engineer building applications on the Claude API, SDKs, or Claude Code | [CCDV-F](./ccdv-f/) | Certifies platform depth: API mechanics, agents, tools |
+| A builder of production Claude systems: agent architectures, MCP servers | [CCA-F](./cca-f/) | Implementation-level architecture, scenario-anchored format |
+| The architect accountable for the whole solution lifecycle, 3+ years experience | [CCAR-P](./ccar-p/) | Adds discovery, governance, evaluation, and stakeholder ownership |
+
+**Stacking:** combinations make sense when they certify different parts of one job. CCA-F + CCAR-P is the deliberate two-tier architect path, and CCDV-F + CCA-F suits engineers who both build applications and design systems, with enough blueprint overlap (MCP, prompting, Claude Code) that the second exam costs meaningfully less study time. Experienced architects can go straight to CCAR-P; most still benefit from the Foundations vocabulary first.
 
 ## How the program works
 
