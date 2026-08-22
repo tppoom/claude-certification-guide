@@ -4,7 +4,9 @@ The original Anthropic certification (launched March 12, 2026) and the credentia
 
 Where [CCDV-F](../ccdv-f/) certifies platform mechanics, CCA-F certifies the assembly of those mechanics into working systems.
 
-> **[📖 The Complete CCA-F Study Guide](./guide.md)** — the full preparation guide: 8 technology chapters, per-domain exam notes, worked questions, anti-patterns, and exam-day strategy. This page is the summary; the guide is the study material.
+> **[📖 The Complete CCA-F Study Guide](./guide.md)**: the full preparation guide with 8 technology chapters, per-domain exam notes, worked questions, anti-patterns, and exam-day strategy. This page is the summary; the guide is the study material.
+>
+> **Jump straight in:** [20 free questions](https://preporato.com/free/claude-certified-architect/questions?utm_source=github&utm_medium=readme&utm_campaign=cca-f) · [Practice tests](https://preporato.com/certificates/claude-certified-architect?utm_source=github&utm_medium=readme&utm_campaign=cca-f#practice-tests) · [Flashcards](https://preporato.com/certificates/claude-certified-architect?utm_source=github&utm_medium=readme&utm_campaign=cca-f#flashcards) · [Hands-on projects](https://preporato.com/certificates/claude-certified-architect?utm_source=github&utm_medium=readme&utm_campaign=cca-f#projects)
 
 ## Quick facts
 

@@ -2,7 +2,9 @@
 
 The developer credential. CCDV-F validates that an engineer can build real applications on the Claude platform: calling the API correctly, selecting models deliberately, constructing agents, wiring in tools, and shipping systems that are secure and testable.
 
-> **[📖 The Complete CCDV-F Study Guide](./guide.md)** — the full preparation guide: 8 technology chapters, per-domain exam notes, worked questions, trap answers, and exam-day strategy. This page is the summary; the guide is the study material.
+> **[📖 The Complete CCDV-F Study Guide](./guide.md)**: the full preparation guide with 8 technology chapters, per-domain exam notes, worked questions, trap answers, and exam-day strategy. This page is the summary; the guide is the study material.
+>
+> **Jump straight in:** [20 free questions](https://preporato.com/free/claude-certified-developer-foundations/questions?utm_source=github&utm_medium=readme&utm_campaign=ccdv-f) · [Practice tests](https://preporato.com/certificates/claude-certified-developer-foundations?utm_source=github&utm_medium=readme&utm_campaign=ccdv-f#practice-tests) · [Flashcards](https://preporato.com/certificates/claude-certified-developer-foundations?utm_source=github&utm_medium=readme&utm_campaign=ccdv-f#flashcards) · [Hands-on projects](https://preporato.com/certificates/claude-certified-developer-foundations?utm_source=github&utm_medium=readme&utm_campaign=ccdv-f#projects)
 
 ## Quick facts
 
