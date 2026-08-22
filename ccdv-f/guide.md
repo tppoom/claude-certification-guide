@@ -82,9 +82,44 @@ The API is stateless: you send the full conversation history on every request. M
 
 `max_tokens` is a hard output cap, and `stop_reason` tells you why generation ended: `end_turn` (finished naturally), `max_tokens` (truncated), `tool_use` (wants a tool executed), `refusal` (declined). **Check it before parsing content.** Code that reads the first content block unconditionally breaks the moment a response is truncated or refused, and the exam tests exactly that failure.
 
+The branching in code, which Domain 1 tests directly:
+
+```python
+response = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "Summarize this incident report: ..."}],
+)
+
+match response.stop_reason:
+    case "end_turn":
+        summary = response.content[0].text
+    case "max_tokens":
+        # Truncated. Never treat as complete: raise the cap, stream, or split.
+        summary = handle_truncated(response)
+    case "refusal":
+        summary = None
+        log_refusal(response)
+    case "tool_use":
+        summary = run_tool_loop(response)
+```
+
 ### 1.3 Vision
 
 Images arrive as content blocks (base64 data or a URL reference) placed before the text question in the same message. They bill as input tokens, so downsample when full resolution adds cost without adding accuracy.
+
+```python
+message = {
+    "role": "user",
+    "content": [
+        {
+            "type": "image",
+            "source": {"type": "base64", "media_type": "image/png", "data": b64_screenshot},
+        },
+        {"type": "text", "text": "What error is shown in this screenshot?"},
+    ],
+}
+```
 
 ### 1.4 Configuration is code
 
@@ -98,6 +133,17 @@ Images arrive as content blocks (base64 data or a URL reference) placed before t
 
 Streaming delivers the response incrementally over server-sent events. It solves two distinct problems: **perceived latency** (the user sees the first token quickly) and **long outputs** (large `max_tokens` budgets risk HTTP timeouts without it). Decision rule: user-facing chat streams, and any request with a large output budget streams.
 
+```python
+with client.messages.stream(
+    model="claude-sonnet-4-6",
+    max_tokens=4096,
+    messages=messages,
+) as stream:
+    for text in stream.text_stream:
+        print(text, end="", flush=True)      # first tokens reach the user in ms
+final = stream.get_final_message()            # complete message, usage, stop_reason
+```
+
 ### 2.2 Prompt caching
 
 Caching stores the processed form of a stable prompt prefix so repeated calls skip reprocessing it. Cached reads bill at roughly a tenth of the base input rate; writes carry a small premium.
@@ -109,6 +155,26 @@ The mechanics the exam tests:
 - **Structure stable-first, volatile-last.** The classic breakers: a timestamp or user ID early in the system prompt, tool definitions that reorder between calls, non-deterministic JSON serialization.
 - **Verify with `cache_read_input_tokens`** in the usage field rather than assuming it works. Prompts below the minimum cacheable length silently never cache.
 
+A cache checkpoint in a request, placed at the end of the stable prefix:
+
+```python
+response = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    tools=tools,                                  # stable: renders first
+    system=[
+        {
+            "type": "text",
+            "text": LONG_STABLE_SYSTEM_PROMPT,     # stable: policies, format rules
+            "cache_control": {"type": "ephemeral"} # checkpoint: caches tools + system
+        }
+    ],
+    messages=[{"role": "user", "content": user_request}],  # volatile: after the checkpoint
+)
+
+assert response.usage.cache_read_input_tokens > 0  # verify, never assume
+```
+
 ### 2.3 Batch versus realtime
 
 | Dimension | Realtime Messages API | Batch API |
@@ -119,6 +185,33 @@ The mechanics the exam tests:
 | Results | One response per call | Keyed by custom ID, returned in any order |
 
 Decision rule: a human waiting means realtime with streaming; work that can wait until tomorrow makes the batch discount free money. Both trap directions appear: batch behind a waiting user, and realtime rates on overnight bulk.
+
+Submission and retrieval, with `custom_id` doing the correlation because results return in any order:
+
+```python
+batch = client.messages.batches.create(
+    requests=[
+        {
+            "custom_id": f"ticket-{t.id}",
+            "params": {
+                "model": "claude-haiku-4-5",
+                "max_tokens": 256,
+                "messages": [{"role": "user", "content": classify_prompt(t.text)}],
+            },
+        }
+        for t in tickets
+    ]
+)
+
+# Later (poll or webhook): match results back by custom_id
+for result in client.messages.batches.results(batch.id):
+    if result.result.type == "succeeded":
+        store(result.custom_id, result.result.message.content[0].text)
+    else:
+        requeue(result.custom_id, reason=result.result.type)  # errored, canceled, expired
+```
+
+Note the per-result error handling: a batch can partially succeed, and requeueing failures by `custom_id` is the pattern the exam expects.
 
 ## Chapter 3: Model selection and cost
 
@@ -141,6 +234,20 @@ One rule answers a surprising number of questions: **high-volume bounded task me
 - **Extended thinking** gives the model room to reason internally before answering: accuracy on multi-step problems, at the price of output tokens and latency.
 - **Effort levels** dial reasoning and token spend without switching models: low for routine work, high for intelligence-sensitive work.
 - **Fast mode** serves the same model at higher output speed for premium pricing, for latency-critical paths.
+
+Extended thinking is a request parameter with an explicit token budget for the internal reasoning:
+
+```python
+response = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=8192,
+    thinking={"type": "enabled", "budget_tokens": 4096},   # reasoning spend, billed as output
+    messages=[{"role": "user", "content": hard_multistep_problem}],
+)
+# response.content contains thinking blocks followed by the answer text
+```
+
+The judgment being tested: thinking buys accuracy on genuinely multi-step problems and wastes tokens and latency on simple ones, so it is a per-workload decision backed by evals rather than a default.
 
 ### 3.4 Cost levers, in order
 
@@ -177,6 +284,25 @@ The **Claude Agent SDK** packages the full agent harness as a library: the loop,
 - **Testable criteria.** "Flag SQL injection and authentication bypass" is checkable; "be careful" is not. Few-shot uses 2-4 worked examples, ideally including a correct rejection so the model learns what to leave alone.
 - **Structured output plus defensive parsing.** Constrain the response to a schema, parse with a real JSON parser, validate against the schema, and handle `refusal` and `max_tokens` stop reasons. Regex over raw response text is the tested anti-pattern.
 
+```python
+def parse_extraction(response) -> dict | None:
+    if response.stop_reason == "refusal":
+        return None                                   # explicit, logged, never silent
+    if response.stop_reason == "max_tokens":
+        raise TruncatedOutput("raise max_tokens or split the document")
+
+    raw = response.content[0].text
+    try:
+        data = json.loads(raw)                        # real parser, not regex
+    except json.JSONDecodeError as e:
+        raise MalformedOutput(raw) from e             # feeds the validation-retry loop
+
+    jsonschema.validate(data, EXTRACTION_SCHEMA)      # schema check before anything downstream
+    return data
+```
+
+Every branch exists because a production failure lives there: refusals arrive on sensitive documents, truncation arrives on long ones, and malformed output arrives whenever schema enforcement was skipped.
+
 ## Chapter 6: Tools, Skills, and MCP
 
 ### 6.1 Descriptions decide selection
@@ -186,6 +312,37 @@ A strong tool description states what the tool does, when to use it, when to lea
 ### 6.2 Client-side versus server-side
 
 Client-side tools execute in your application: the model emits a call, you run it, you return the result. Server-side tools (web search, code execution) run on Anthropic infrastructure with no execution loop on your side.
+
+The client-side execution loop, end to end:
+
+```python
+tools = [{
+    "name": "get_order_status",
+    "description": "Looks up the current status of an order by id. Use for existing orders only; to create an order use create_order.",
+    "input_schema": {
+        "type": "object",
+        "properties": {"order_id": {"type": "string", "description": "UUID of the order"}},
+        "required": ["order_id"],
+    },
+}]
+
+response = client.messages.create(model="claude-sonnet-4-6", max_tokens=1024,
+                                  tools=tools, messages=messages)
+
+if response.stop_reason == "tool_use":
+    tool_call = next(b for b in response.content if b.type == "tool_use")
+    result = lookup_order(tool_call.input["order_id"])         # YOUR code runs it
+    messages.append({"role": "assistant", "content": response.content})
+    messages.append({"role": "user", "content": [{
+        "type": "tool_result",
+        "tool_use_id": tool_call.id,                            # ties result to the call
+        "content": json.dumps(result),
+    }]})
+    response = client.messages.create(model="claude-sonnet-4-6", max_tokens=1024,
+                                      tools=tools, messages=messages)
+```
+
+The two details questions probe: the `tool_use_id` linking each result to its call, and the full assistant turn being appended before the result (the stateless API needs both to reconstruct what happened).
 
 ### 6.3 Capability selection
 
@@ -203,6 +360,23 @@ The decision rule in one line: **Skills change what the model knows, tools chang
 - **Prompt injection versus jailbreak.** Injection is malicious instruction smuggled through content the model processes: user input, retrieved documents, tool outputs, web pages. A jailbreak is a direct attempt to talk the model out of its policy. Injection questions hinge on **untrusted data channels**.
 - **Layered defense, in order:** input validation and injection screening → system prompt constraints → least-privilege tool and permission scoping → output filtering → human review for high-stakes actions. Prompt instructions are probabilistic; permission scoping and output validation are deterministic, so compliance-critical controls must include the programmatic layers.
 - **Hooks as guardrails.** A hook running before a tool executes can block a dangerous command deterministically. On guardrail questions, a hook beats a plea in the system prompt.
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "if": "Bash(rm *)", "command": ".claude/hooks/block-destructive.sh" }
+        ]
+      }
+    ]
+  }
+}
+```
+
+The script blocks by exiting 2 (or returning a JSON `permissionDecision: "deny"`), and exits 0 to allow. Deterministic, unlike any instruction the model might weigh and skip.
 - **Leakage and PII:** redact sensitive fields before the model sees them, scrub logs and traces, and treat tool outputs as a leakage channel too.
 - **Auth:** agents act with the calling user's permissions. A shared over-privileged service account erases per-user boundaries and audit trails and is the tested anti-pattern. Keys live in environment variables or secret managers, never in prompts, code, or committed config.
 
@@ -233,6 +407,25 @@ Isolate where a failure lives before fixing it:
 | 429 or 529 responses | Infrastructure | Retry with exponential backoff |
 
 Trace analysis: log the full request and response, token counts, stop reason, and every tool call with inputs and outputs, so failures attribute to a layer instead of a guess. Retryable errors (rate limits, overload, 5xx) get backoff; 4xx client errors get fixed, never retried.
+
+```python
+import time, random
+
+RETRYABLE = {429, 500, 529}
+
+def call_with_backoff(make_request, max_attempts=5):
+    for attempt in range(max_attempts):
+        try:
+            return make_request()
+        except anthropic.APIStatusError as e:
+            if e.status_code not in RETRYABLE:
+                raise                                   # 4xx: fix the request, never retry
+            delay = min(2 ** attempt + random.random(), 60)   # exponential + jitter, capped
+            time.sleep(delay)
+    raise RetriesExhausted(max_attempts)
+```
+
+The three choices in this snippet are each a tested fact: only transient statuses retry, the delay grows exponentially with jitter (synchronized retries from many clients re-create the overload they are waiting out), and a retry cap converts an outage into a clean failure instead of an infinite loop.
 
 ---
 
@@ -434,6 +627,35 @@ Ten fresh questions in the exam's style. (Written for this guide; timed full-len
 - D) Add few-shot examples of staying on task
 
 **Answer: A.** Bloat gets pruning, drift gets compaction that re-anchors the instructions; the pair maps one-to-one onto the symptoms. B feeds the same rot a bigger room, C pays for the fix with the state, D prompts at a context problem.
+
+**Q11.** Review this request. The team expects caching to engage, and `cache_read_input_tokens` stays 0. Why?
+
+```python
+client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=512,
+    system=[{"type": "text",
+             "text": f"Request time: {datetime.now()}\n" + STABLE_POLICY_PROMPT,
+             "cache_control": {"type": "ephemeral"}}],
+    messages=[{"role": "user", "content": query}],
+)
+```
+
+- A) `max_tokens` is too low for caching to engage
+- B) The timestamp interpolated at the start of the system text changes every request, so the prefix never matches a prior request
+- C) `cache_control` belongs on the messages array
+- D) The system prompt must exceed the context window to cache
+
+**Answer: B.** Caching is a byte-exact prefix match, and the volatile timestamp sits before the stable content, invalidating everything after it on every call. Move volatile content after the checkpoint (or drop it). A, C, and D are invented mechanics.
+
+**Q12.** A batch of 50,000 classification requests completes with 49,400 succeeded. What does correct handling of the remainder look like?
+
+- A) Rerun the entire batch; results are cheaper the second time
+- B) Ignore the failures; 98.8% is within tolerance
+- C) Iterate the results, collect the `custom_id` of every non-succeeded result, and resubmit only those, with the error type logged per id
+- D) Switch the failed items to the realtime API with the same prompts and no further changes
+
+**Answer: C.** `custom_id` exists precisely so partial failure is recoverable at item granularity. A pays 50,000 requests to fix 600, B silently drops data (and the failure reasons may be systematic), and D changes the delivery mechanism without examining why the items failed, which matters if they errored on content rather than capacity.
 
 ## 4-week study plan
 
