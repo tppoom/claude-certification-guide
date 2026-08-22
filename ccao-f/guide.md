@@ -462,7 +462,7 @@ Expanded version: [3-week CCAO-F study plan](https://preporato.com/blog/ccao-f-s
   - [AI Capabilities and Limitations](https://anthropic.skilljar.com/ai-capabilities-and-limitations): the judgment layer behind hallucination spotting and appropriate use
   - Audience variants exist too ([small businesses](https://anthropic.skilljar.com/ai-fluency-for-small-businesses), [educators](https://anthropic.skilljar.com/ai-fluency-for-educators), [students](https://anthropic.skilljar.com/ai-fluency-for-students)) if one matches your role
 
-**Free deep-dives (preporato.com):**
+**Free articles (preporato.com):**
 - [CCAO-F complete guide](https://preporato.com/blog/claude-certified-associate-foundations-complete-guide-2026) · [Cheat sheet](https://preporato.com/blog/claude-certified-associate-foundations-cheat-sheet-2026) · [Domains breakdown](https://preporato.com/blog/ccao-f-exam-domains-complete-breakdown-2026) · [How to pass first attempt](https://preporato.com/blog/how-to-pass-ccao-f-first-attempt-2026) · [CCAO-F vs CCDV-F](https://preporato.com/blog/ccao-f-vs-ccdv-f-which-claude-certification-2026)
 
 **Practice ([preporato.com/certificates/claude-certified-associate-foundations](https://preporato.com/certificates/claude-certified-associate-foundations)):**

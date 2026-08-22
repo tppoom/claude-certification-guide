@@ -53,7 +53,7 @@ The blueprint is implementation-heavy. The dominant domain, Applications and Int
 - [Anthropic Partner Academy](https://claude.com/partners): courses and exam registration
 - [docs.anthropic.com](https://docs.anthropic.com): API reference, Agent SDK, MCP
 
-**Free deep-dives:**
+**Free articles:**
 - [CCDV-F complete guide](https://preporato.com/blog/claude-certified-developer-foundations-complete-guide-2026)
 - [4-week study plan](https://preporato.com/blog/ccdv-f-study-plan-4-week-preparation-2026)
 - [CCDV-F vs CCA-F: which to take](https://preporato.com/blog/ccdv-f-vs-cca-f-which-claude-certification-2026)

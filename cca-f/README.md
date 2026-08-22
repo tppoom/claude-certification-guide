@@ -59,7 +59,7 @@ This rewards candidates who can hold a whole architecture in their head. Practic
 - [Anthropic Partner Academy](https://claude.com/partners): courses and exam registration
 - [docs.anthropic.com](https://docs.anthropic.com): agents, tool use, MCP, Claude Code
 
-**Free deep-dives:**
+**Free articles:**
 - [CCA-F complete guide](https://preporato.com/blog/claude-certified-architect-complete-guide-2026)
 - [30-day study plan](https://preporato.com/blog/cca-f-study-plan-30-day-preparation)
 - [CCA-F vs CCAR-P: which to take](https://preporato.com/blog/cca-f-vs-ccar-p-which-claude-certification-2026)

@@ -702,7 +702,7 @@ Expanded version: [4-week CCDV-F study plan](https://preporato.com/blog/ccdv-f-s
   - [Introduction to subagents](https://anthropic.skilljar.com/introduction-to-subagents) and [Introduction to agent skills](https://anthropic.skilljar.com/introduction-to-agent-skills): the agents and workflows domain
   - [Claude Code 101](https://anthropic.skilljar.com/claude-code-101): the Claude Code domain
 
-**Free deep-dives (preporato.com):**
+**Free articles (preporato.com):**
 - [CCDV-F complete guide](https://preporato.com/blog/claude-certified-developer-foundations-complete-guide-2026) · [Cheat sheet](https://preporato.com/blog/claude-certified-developer-foundations-cheat-sheet-2026) · [Domains breakdown](https://preporato.com/blog/ccdv-f-exam-domains-complete-breakdown-2026) · [How to pass first attempt](https://preporato.com/blog/how-to-pass-ccdv-f-first-attempt-2026) · [CCDV-F vs CCA-F](https://preporato.com/blog/ccdv-f-vs-cca-f-which-claude-certification-2026)
 
 **Practice ([preporato.com/certificates/claude-certified-developer-foundations](https://preporato.com/certificates/claude-certified-developer-foundations)):**

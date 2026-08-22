@@ -679,7 +679,7 @@ Expanded week-by-week version: [6-week CCAR-P study plan](https://preporato.com/
   - [Claude with Amazon Bedrock](https://anthropic.skilljar.com/claude-in-amazon-bedrock) and [Claude on Google Cloud](https://anthropic.skilljar.com/claude-with-google-vertex): enterprise deployment surfaces the solution-design scenarios draw on
   - [Claude Code in Action](https://anthropic.skilljar.com/claude-code-in-action): the developer productivity and enablement domain
 
-**Free deep-dives (preporato.com):**
+**Free articles (preporato.com):**
 - [CCAR-P complete guide](https://preporato.com/blog/claude-certified-architect-professional-complete-guide-2026) · [Cheat sheet](https://preporato.com/blog/claude-certified-architect-professional-cheat-sheet-2026) · [Domains breakdown](https://preporato.com/blog/ccar-p-exam-domains-complete-breakdown-2026) · [Exam format](https://preporato.com/blog/ccar-p-exam-format-structure-what-to-expect-2026) · [How to pass first attempt](https://preporato.com/blog/how-to-pass-ccar-p-first-attempt-2026)
 - Topic guides: [enterprise deployment (Bedrock/Vertex/Foundry)](https://preporato.com/blog/ccar-p-enterprise-deployment-bedrock-vertex-foundry-guide) · [governance, guardrails & HITL](https://preporato.com/blog/ccar-p-governance-guardrails-hitl-compliance-guide) · [cost & latency optimization](https://preporato.com/blog/ccar-p-cost-latency-optimization-prompt-caching-guide) · [evaluation strategy](https://preporato.com/blog/ccar-p-evaluation-strategy-eval-datasets-metrics-guide) · [practice questions with explanations](https://preporato.com/blog/ccar-p-practice-questions-with-explanations-2026)
 

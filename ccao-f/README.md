@@ -61,7 +61,7 @@ CCAO-F fits professionals in operations, marketing, project management, educatio
 - [Anthropic Partner Academy](https://claude.com/partners): courses and exam registration
 - claude.ai Help Center: the primary source for this exam
 
-**Free deep-dives:**
+**Free articles:**
 - [CCAO-F complete guide](https://preporato.com/blog/claude-certified-associate-foundations-complete-guide-2026)
 - [3-week study plan](https://preporato.com/blog/ccao-f-study-plan-3-week-preparation-2026)
 - [CCAO-F vs CCDV-F: which to take](https://preporato.com/blog/ccao-f-vs-ccdv-f-which-claude-certification-2026)

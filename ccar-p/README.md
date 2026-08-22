@@ -60,7 +60,7 @@ The scenario questions demand judgment that is hard to cram. This is deliberate:
 - [Anthropic Partner Academy](https://claude.com/partners): courses and exam registration
 - [docs.anthropic.com](https://docs.anthropic.com): integration, agents, guardrails
 
-**Free deep-dives:**
+**Free articles:**
 - [CCAR-P complete guide](https://preporato.com/blog/claude-certified-architect-professional-complete-guide-2026)
 - [6-week study plan](https://preporato.com/blog/ccar-p-study-plan-6-week-preparation-2026)
 - [CCA-F vs CCAR-P: which to take](https://preporato.com/blog/cca-f-vs-ccar-p-which-claude-certification-2026)
