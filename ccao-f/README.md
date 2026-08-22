@@ -66,4 +66,4 @@ CCAO-F fits professionals in operations, marketing, project management, educatio
 
 **Practice ([preporato.com/certificates/claude-certified-associate-foundations](https://preporato.com/certificates/claude-certified-associate-foundations)):**
 - [20 free practice questions](https://preporato.com/free/claude-certified-associate-foundations/questions?utm_source=github&utm_medium=readme&utm_campaign=ccao-f) in the real exam format
-- (Paid) Six full-length 60-question practice tests and a 500-card flashcard deck built on the exact domain weights
+- (Paid) [Six full-length 60-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-associate-foundations?utm_source=github&utm_medium=readme&utm_campaign=ccao-f) built on the exact domain weights

@@ -479,8 +479,8 @@ Expanded version: [4-week CCDV-F study plan](https://preporato.com/blog/ccdv-f-s
 
 **Practice ([preporato.com/certificates/claude-certified-developer-foundations](https://preporato.com/certificates/claude-certified-developer-foundations)):**
 - [20 free practice questions](https://preporato.com/free/claude-certified-developer-foundations/questions?utm_source=github&utm_medium=guide&utm_campaign=ccdv-f) in the real exam format
-- (Paid) Six full-length 53-question practice tests and a 500-card flashcard deck built on the exact domain weights
-- (Paid) 21 hands-on projects: build-and-submit work (API integration, agents, tools, extraction pipelines) graded automatically against a rubric
+- (Paid) [Six full-length 53-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-developer-foundations?utm_source=github&utm_medium=guide&utm_campaign=ccdv-f) built on the exact domain weights
+- (Paid) [21 hands-on projects](https://preporato.com/certificates/claude-certified-developer-foundations?utm_source=github&utm_medium=guide&utm_campaign=ccdv-f): build-and-submit work (API integration, agents, tools, extraction pipelines) graded automatically against a rubric
 
 ---
 
