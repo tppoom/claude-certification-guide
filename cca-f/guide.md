@@ -27,6 +27,7 @@ Maintained by [preporato.com](https://preporato.com). Facts verified against the
   - [Domain 4: Prompt Engineering & Structured Output (20%)](#domain-4-prompt-engineering--structured-output-20)
   - [Domain 5: Context Management & Reliability (15%)](#domain-5-context-management--reliability-15)
 - **Part III: Exam preparation**
+  - [The preparation ladder](#the-preparation-ladder)
   - [The Golden Rule and five mental models](#the-golden-rule-and-five-mental-models)
   - [The seven anti-patterns](#the-seven-anti-patterns)
   - [Critical distinctions](#critical-distinctions)
@@ -572,6 +573,20 @@ Revision-oriented summaries. Each domain lists what you must know (facts) and wh
 
 # Part III: Exam preparation
 
+## The preparation ladder
+
+Five layers, in order. Each builds on the previous, and the free layers take you surprisingly far.
+
+| Step | Resource | Cost |
+|------|----------|------|
+| 1. Learn the vocabulary | [Anthropic Partner Academy courses](https://claude.com/partners) and the official exam guide | Free |
+| 2. Go to the source | [docs.anthropic.com](https://docs.anthropic.com): agents, tool use, MCP, Claude Code | Free |
+| 3. First calibration | [20 free CCA-F practice questions](https://preporato.com/free/claude-certified-architect/questions?utm_source=github&utm_medium=guide&utm_campaign=cca-f) in the real exam format | Free |
+| 4. Full calibration | [Six full-length scenario-format practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-architect?utm_source=github&utm_medium=guide&utm_campaign=cca-f) built on the exact domain weights | Paid |
+| 5. Prove it hands-on | [11 auto-graded build-and-submit projects](https://preporato.com/certificates/claude-certified-architect?utm_source=github&utm_medium=guide&utm_campaign=cca-f): agentic loops, hub-and-spoke systems, MCP servers, extraction pipelines | Paid |
+
+Steps 1-3 cost nothing and tell you honestly where you stand. Steps 4-5 are how you close the gap they reveal.
+
 ## The Golden Rule and five mental models
 
 **The Golden Rule: programmatic enforcement beats prompt-based guidance.** On any question where both appear, the mechanism (hook, gate, schema validation, retry loop, hard stop) beats the instruction. Prompts are probabilistic; mechanisms are deterministic. If a behavior must ALWAYS happen, the answer is never "add it to the system prompt."
@@ -721,7 +736,7 @@ Ten fresh questions in the exam's style, with reasoning. (These are written for 
 
 - **Days 1-7: official baseline.** Join the [Claude Partner Network](https://claude.com/partners) (free), complete the Partner Academy architect courses, read the official exam guide, and map your experience against the five domains.
 - **Days 8-21: build.** Work through [docs.anthropic.com](https://docs.anthropic.com) with a project open: an agent with tools and a real loop, an MCP server, a Claude Code setup with CLAUDE.md hierarchy, one hook, one skill, and a headless CI invocation. Part I of this guide is your reading companion; the exam rewards people who have hit these failure modes personally. If you want these builds checked, the [hands-on projects](https://preporato.com/certificates/claude-certified-architect) (paid) cover the same ground with automatic rubric grading.
-- **Days 22-30: calibrate.** Full-length, timed, scenario-format practice tests. Review per-domain results, re-read the matching Part II notes, and spend the final days on your two weakest domains. The night before, review Part III's tables and the [cheat sheet](https://preporato.com/blog/claude-certified-architect-cheat-sheet-2026).
+- **Days 22-30: calibrate.** Start with the [20 free questions](https://preporato.com/free/claude-certified-architect/questions?utm_source=github&utm_medium=guide&utm_campaign=cca-f) to see the format, then take [full-length, timed, scenario-format practice tests](https://preporato.com/certificates/claude-certified-architect?utm_source=github&utm_medium=guide&utm_campaign=cca-f). Review per-domain results, re-read the matching Part II notes, and spend the final days on your two weakest domains. The night before, review Part III's tables and the [cheat sheet](https://preporato.com/blog/claude-certified-architect-cheat-sheet-2026).
 
 The expanded week-by-week version: [30-day CCA-F study plan](https://preporato.com/blog/cca-f-study-plan-30-day-preparation).
 
@@ -767,7 +782,7 @@ You are ready when every line is true:
 - Technical deep-dives: [hooks](https://preporato.com/blog/claude-code-hooks-explained-cca-f-guide) · [subagent orchestration](https://preporato.com/blog/claude-code-subagents-orchestration-patterns-cca-f) · [MCP tool design](https://preporato.com/blog/mcp-tool-design-best-practices-cca-f) · [MCP architecture](https://preporato.com/blog/model-context-protocol-mcp-architecture-guide-2026) · [structured output](https://preporato.com/blog/structured-output-prompt-engineering-claude-cca-f) · [CLAUDE.md context management](https://preporato.com/blog/claude-md-context-management-best-practices-2026) · [permissions precedence](https://preporato.com/blog/claude-code-permissions-settings-precedence-guide)
 
 **Practice ([preporato.com/certificates/claude-certified-architect](https://preporato.com/certificates/claude-certified-architect)):**
-- Free sample questions on the certification page
+- [20 free practice questions](https://preporato.com/free/claude-certified-architect/questions?utm_source=github&utm_medium=guide&utm_campaign=cca-f) in the real exam format
 - (Paid) Six full-length scenario-format practice tests and a 500-card flashcard deck built on the exact domain weights
 - (Paid) 11 hands-on projects: build-and-submit work (agentic loops, hub-and-spoke systems, MCP servers, extraction pipelines) graded automatically against a rubric
 

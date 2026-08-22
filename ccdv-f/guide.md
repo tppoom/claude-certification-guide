@@ -22,6 +22,7 @@ Maintained by [preporato.com](https://preporato.com). Facts verified against the
 - **Part II: Exam domain notes**
   - [All eight domains](#part-ii-exam-domain-notes)
 - **Part III: Exam preparation**
+  - [The preparation ladder](#the-preparation-ladder)
   - [The nine trap answers](#the-nine-trap-answers)
   - [Exam-day strategy](#exam-day-strategy)
   - [Worked questions](#worked-questions)
@@ -305,6 +306,20 @@ Trace analysis: log the full request and response, token counts, stop reason, an
 
 # Part III: Exam preparation
 
+## The preparation ladder
+
+Five layers, in order. Each builds on the previous, and the free layers take you surprisingly far.
+
+| Step | Resource | Cost |
+|------|----------|------|
+| 1. Learn the vocabulary | [Anthropic Partner Academy courses](https://claude.com/partners) and the official exam guide | Free |
+| 2. Go to the source | [docs.anthropic.com](https://docs.anthropic.com): API reference, Agent SDK, MCP | Free |
+| 3. First calibration | [20 free CCDV-F practice questions](https://preporato.com/free/claude-certified-developer-foundations/questions?utm_source=github&utm_medium=guide&utm_campaign=ccdv-f) in the real exam format | Free |
+| 4. Full calibration | [Six full-length 53-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-developer-foundations?utm_source=github&utm_medium=guide&utm_campaign=ccdv-f) built on the exact domain weights | Paid |
+| 5. Prove it hands-on | [21 auto-graded build-and-submit projects](https://preporato.com/certificates/claude-certified-developer-foundations?utm_source=github&utm_medium=guide&utm_campaign=ccdv-f): API integration, agents, tools, extraction pipelines | Paid |
+
+Steps 1-3 cost nothing and tell you honestly where you stand. Steps 4-5 are how you close the gap they reveal.
+
 ## The nine trap answers
 
 | Trap | Why it fails |
@@ -424,7 +439,7 @@ Ten fresh questions in the exam's style. (Written for this guide; timed full-len
 
 - **Week 1: official baseline.** Join the [Claude Partner Network](https://claude.com/partners) (free), complete the Partner Academy developer courses, read the exam guide, and map yourself against all eight domains.
 - **Weeks 2-3: build against the API.** Work through [docs.anthropic.com](https://docs.anthropic.com) with code open: streaming, prompt caching verified via `cache_read_input_tokens`, a batch job, an Agent SDK loop with one hook, one MCP integration, and a structured-output pipeline with defensive parsing. Domain 1 is won in an editor, and this guide's Part I is the reading companion. The [hands-on projects](https://preporato.com/certificates/claude-certified-developer-foundations) (paid) cover the same builds with automatic rubric grading.
-- **Week 4: calibrate.** Full-length timed practice tests. With 53 questions, a weak 10% domain decides the outcome, so drill per-domain results, re-read the matching Part II notes, and review the trap table plus the [cheat sheet](https://preporato.com/blog/claude-certified-developer-foundations-cheat-sheet-2026) the night before.
+- **Week 4: calibrate.** Start with the [20 free questions](https://preporato.com/free/claude-certified-developer-foundations/questions?utm_source=github&utm_medium=guide&utm_campaign=ccdv-f) to see the format, then take [full-length timed practice tests](https://preporato.com/certificates/claude-certified-developer-foundations?utm_source=github&utm_medium=guide&utm_campaign=ccdv-f). With 53 questions, a weak 10% domain decides the outcome, so drill per-domain results, re-read the matching Part II notes, and review the trap table plus the [cheat sheet](https://preporato.com/blog/claude-certified-developer-foundations-cheat-sheet-2026) the night before.
 
 Expanded version: [4-week CCDV-F study plan](https://preporato.com/blog/ccdv-f-study-plan-4-week-preparation-2026).
 
@@ -463,7 +478,7 @@ Expanded version: [4-week CCDV-F study plan](https://preporato.com/blog/ccdv-f-s
 - [CCDV-F complete guide](https://preporato.com/blog/claude-certified-developer-foundations-complete-guide-2026) · [Cheat sheet](https://preporato.com/blog/claude-certified-developer-foundations-cheat-sheet-2026) · [Domains breakdown](https://preporato.com/blog/ccdv-f-exam-domains-complete-breakdown-2026) · [How to pass first attempt](https://preporato.com/blog/how-to-pass-ccdv-f-first-attempt-2026) · [CCDV-F vs CCA-F](https://preporato.com/blog/ccdv-f-vs-cca-f-which-claude-certification-2026)
 
 **Practice ([preporato.com/certificates/claude-certified-developer-foundations](https://preporato.com/certificates/claude-certified-developer-foundations)):**
-- Free sample questions on the certification page
+- [20 free practice questions](https://preporato.com/free/claude-certified-developer-foundations/questions?utm_source=github&utm_medium=guide&utm_campaign=ccdv-f) in the real exam format
 - (Paid) Six full-length 53-question practice tests and a 500-card flashcard deck built on the exact domain weights
 - (Paid) 21 hands-on projects: build-and-submit work (API integration, agents, tools, extraction pipelines) graded automatically against a rubric
 

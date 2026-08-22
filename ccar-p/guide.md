@@ -22,6 +22,7 @@ Maintained by [preporato.com](https://preporato.com). Facts verified against the
 - **Part II: Exam domain notes**
   - [All seven domains](#part-ii-exam-domain-notes)
 - **Part III: Exam preparation**
+  - [The preparation ladder](#the-preparation-ladder)
   - [The nine trap answers](#the-nine-trap-answers)
   - [Exam-day strategy](#exam-day-strategy)
   - [Worked questions](#worked-questions)
@@ -355,6 +356,20 @@ Decision rule: when a question asks how an entire team reliably gets a behavior,
 
 # Part III: Exam preparation
 
+## The preparation ladder
+
+Five layers, in order. Each builds on the previous, and the free layers take you surprisingly far.
+
+| Step | Resource | Cost |
+|------|----------|------|
+| 1. Learn the vocabulary | [Anthropic Partner Academy courses](https://claude.com/partners) and the official exam guide | Free |
+| 2. Go to the source | [docs.anthropic.com](https://docs.anthropic.com): integration, agents, evaluation, guardrails | Free |
+| 3. First calibration | [20 free CCAR-P practice questions](https://preporato.com/free/claude-certified-architect-professional/questions?utm_source=github&utm_medium=guide&utm_campaign=ccar-p) in the real exam format | Free |
+| 4. Full calibration | [Six full-length 63-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-architect-professional?utm_source=github&utm_medium=guide&utm_campaign=ccar-p) built on the exact domain weights | Paid |
+| 5. Prove it hands-on | [18 auto-graded build-and-submit projects](https://preporato.com/certificates/claude-certified-architect-professional?utm_source=github&utm_medium=guide&utm_campaign=ccar-p) at the architecture level | Paid |
+
+Steps 1-3 cost nothing and tell you honestly where you stand. Steps 4-5 are how you close the gap they reveal.
+
 ## The nine trap answers
 
 Professional-level distractors are plausible and technically true in some context. These patterns mark an option wrong for the scenario at hand:
@@ -476,7 +491,7 @@ Ten fresh questions in the exam's style. (Written for this guide; timed full-len
 
 - **Weeks 1-2: baseline and gap map.** Join the [Claude Partner Network](https://claude.com/partners) (free), complete the Partner Academy architect courses, read the official exam guide, and map your experience against all seven domains honestly. Most candidates' gap is governance or stakeholder work, and this guide's Chapters 6-7 exist for exactly that.
 - **Weeks 3-4: the enterprise domains.** Work through [docs.anthropic.com](https://docs.anthropic.com) on integration and evaluation while practicing the judgment tables here (pattern selection, failure diagnosis, framework matching). If you have never run discovery or written an ADR, do both on a hypothetical engagement end to end. The [hands-on projects](https://preporato.com/certificates/claude-certified-architect-professional) (paid) cover this ground with automatic rubric grading if you want the builds checked.
-- **Weeks 5-6: calibrate.** Full-length, timed, 63-question practice tests. With seven domains, a comfortable average can hide a failing stakeholder or governance score, so read the per-domain breakdown ruthlessly and drill the weak two. Final week: this guide's Part III daily, the [cheat sheet](https://preporato.com/blog/claude-certified-architect-professional-cheat-sheet-2026) the night before.
+- **Weeks 5-6: calibrate.** Start with the [20 free questions](https://preporato.com/free/claude-certified-architect-professional/questions?utm_source=github&utm_medium=guide&utm_campaign=ccar-p) to see the format, then take [full-length, timed, 63-question practice tests](https://preporato.com/certificates/claude-certified-architect-professional?utm_source=github&utm_medium=guide&utm_campaign=ccar-p). With seven domains, a comfortable average can hide a failing stakeholder or governance score, so read the per-domain breakdown ruthlessly and drill the weak two. Final week: this guide's Part III daily, the [cheat sheet](https://preporato.com/blog/claude-certified-architect-professional-cheat-sheet-2026) the night before.
 
 Expanded week-by-week version: [6-week CCAR-P study plan](https://preporato.com/blog/ccar-p-study-plan-6-week-preparation-2026).
 
@@ -516,7 +531,7 @@ Expanded week-by-week version: [6-week CCAR-P study plan](https://preporato.com/
 - Topic guides: [enterprise deployment (Bedrock/Vertex/Foundry)](https://preporato.com/blog/ccar-p-enterprise-deployment-bedrock-vertex-foundry-guide) · [governance, guardrails & HITL](https://preporato.com/blog/ccar-p-governance-guardrails-hitl-compliance-guide) · [cost & latency optimization](https://preporato.com/blog/ccar-p-cost-latency-optimization-prompt-caching-guide) · [evaluation strategy](https://preporato.com/blog/ccar-p-evaluation-strategy-eval-datasets-metrics-guide) · [practice questions with explanations](https://preporato.com/blog/ccar-p-practice-questions-with-explanations-2026)
 
 **Practice ([preporato.com/certificates/claude-certified-architect-professional](https://preporato.com/certificates/claude-certified-architect-professional)):**
-- Free sample questions on the certification page
+- [20 free practice questions](https://preporato.com/free/claude-certified-architect-professional/questions?utm_source=github&utm_medium=guide&utm_campaign=ccar-p) in the real exam format
 - (Paid) Six full-length 63-question practice tests and a 500-card flashcard deck built on the exact domain weights
 - (Paid) 18 hands-on projects: build-and-submit work at the architecture level graded automatically against a rubric
 

@@ -21,6 +21,7 @@ Maintained by [preporato.com](https://preporato.com). Facts verified against the
 - **Part II: Exam domain notes**
   - [All seven domains](#part-ii-exam-domain-notes)
 - **Part III: Exam preparation**
+  - [The preparation ladder](#the-preparation-ladder)
   - [The six trap answers](#the-six-trap-answers)
   - [Exam-day strategy](#exam-day-strategy)
   - [Worked questions](#worked-questions)
@@ -269,6 +270,19 @@ The optimization rule tying the domain together: **change one variable at a time
 
 # Part III: Exam preparation
 
+## The preparation ladder
+
+Four layers, in order. Each builds on the previous, and the free layers take you surprisingly far.
+
+| Step | Resource | Cost |
+|------|----------|------|
+| 1. Learn the vocabulary | [Anthropic Partner Academy courses](https://claude.com/partners) and the official exam guide | Free |
+| 2. Go to the source | The claude.ai Help Center, the primary source for this exam | Free |
+| 3. First calibration | [20 free CCAO-F practice questions](https://preporato.com/free/claude-certified-associate-foundations/questions?utm_source=github&utm_medium=guide&utm_campaign=ccao-f) in the real exam format | Free |
+| 4. Full calibration | [Six full-length 60-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-associate-foundations?utm_source=github&utm_medium=guide&utm_campaign=ccao-f) built on the exact domain weights | Paid |
+
+Steps 1-3 cost nothing and tell you honestly where you stand. Step 4 is how you close the gap they reveal.
+
 ## The six trap answers
 
 | Trap | Why it fails |
@@ -367,7 +381,7 @@ Eight fresh questions in the exam's style. (Written for this guide; timed full-l
 
 - **Week 1: official baseline.** Join the [Claude Partner Network](https://claude.com/partners) (free), complete the Partner Academy associate courses, read the exam guide, and map yourself against the seven domains.
 - **Week 2: deliberate product practice.** Work through the claude.ai Help Center systematically, and use every feature the blueprint names on your own real work: build a Project with instructions and knowledge, produce Artifacts, run research mode, connect a live source, and compare the three models on one task. Practice the judgment side deliberately: run the validation sequence on a real output, and apply the governance matrix to your own team's data.
-- **Week 3: calibrate.** Full-length timed practice tests, per-domain review, and a final pass on the two judgment domains (evaluation and governance), which catch feature-focused candidates. The night before: Part III here plus the [cheat sheet](https://preporato.com/blog/claude-certified-associate-foundations-cheat-sheet-2026).
+- **Week 3: calibrate.** Start with the [20 free questions](https://preporato.com/free/claude-certified-associate-foundations/questions?utm_source=github&utm_medium=guide&utm_campaign=ccao-f) to see the format, then take [full-length timed practice tests](https://preporato.com/certificates/claude-certified-associate-foundations?utm_source=github&utm_medium=guide&utm_campaign=ccao-f), with per-domain review and a final pass on the two judgment domains (evaluation and governance), which catch feature-focused candidates. The night before: Part III here plus the [cheat sheet](https://preporato.com/blog/claude-certified-associate-foundations-cheat-sheet-2026).
 
 Expanded version: [3-week CCAO-F study plan](https://preporato.com/blog/ccao-f-study-plan-3-week-preparation-2026).
 
@@ -401,7 +415,7 @@ Expanded version: [3-week CCAO-F study plan](https://preporato.com/blog/ccao-f-s
 - [CCAO-F complete guide](https://preporato.com/blog/claude-certified-associate-foundations-complete-guide-2026) · [Cheat sheet](https://preporato.com/blog/claude-certified-associate-foundations-cheat-sheet-2026) · [Domains breakdown](https://preporato.com/blog/ccao-f-exam-domains-complete-breakdown-2026) · [How to pass first attempt](https://preporato.com/blog/how-to-pass-ccao-f-first-attempt-2026) · [CCAO-F vs CCDV-F](https://preporato.com/blog/ccao-f-vs-ccdv-f-which-claude-certification-2026)
 
 **Practice ([preporato.com/certificates/claude-certified-associate-foundations](https://preporato.com/certificates/claude-certified-associate-foundations)):**
-- Free sample questions on the certification page
+- [20 free practice questions](https://preporato.com/free/claude-certified-associate-foundations/questions?utm_source=github&utm_medium=guide&utm_campaign=ccao-f) in the real exam format
 - (Paid) Six full-length 60-question practice tests and a 500-card flashcard deck built on the exact domain weights
 
 ---

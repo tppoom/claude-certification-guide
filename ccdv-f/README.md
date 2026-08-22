@@ -57,6 +57,6 @@ The blueprint is implementation-heavy. The dominant domain, Applications and Int
 - [CCDV-F vs CCA-F: which to take](https://preporato.com/blog/ccdv-f-vs-cca-f-which-claude-certification-2026)
 
 **Practice ([preporato.com/certificates/claude-certified-developer-foundations](https://preporato.com/certificates/claude-certified-developer-foundations)):**
-- Free sample questions on the certification page
+- [20 free practice questions](https://preporato.com/free/claude-certified-developer-foundations/questions?utm_source=github&utm_medium=readme&utm_campaign=ccdv-f) in the real exam format
 - (Paid) Six full-length 53-question practice tests and a 500-card flashcard deck built on the exact domain weights
 - (Paid) 21 hands-on projects: build-and-submit work (API integration, agents, tools, extraction pipelines) graded automatically against a rubric

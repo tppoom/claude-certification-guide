@@ -63,6 +63,6 @@ This rewards candidates who can hold a whole architecture in their head. Practic
 - [CCA-F vs CCAR-P: which to take](https://preporato.com/blog/cca-f-vs-ccar-p-which-claude-certification-2026)
 
 **Practice ([preporato.com/certificates/claude-certified-architect](https://preporato.com/certificates/claude-certified-architect)):**
-- Free sample questions on the certification page
+- [20 free practice questions](https://preporato.com/free/claude-certified-architect/questions?utm_source=github&utm_medium=readme&utm_campaign=cca-f) in the real exam format
 - (Paid) Six full-length scenario-format practice tests and a 500-card flashcard deck built on the exact domain weights
 - (Paid) 11 hands-on projects: build-and-submit work (agentic loops, hub-and-spoke systems, MCP servers, extraction pipelines) graded automatically against a rubric

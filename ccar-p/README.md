@@ -65,6 +65,6 @@ The scenario questions demand judgment that is hard to cram. This is deliberate:
 - [Exam domains: complete breakdown](https://preporato.com/blog/ccar-p-exam-domains-complete-breakdown-2026)
 
 **Practice ([preporato.com/certificates/claude-certified-architect-professional](https://preporato.com/certificates/claude-certified-architect-professional)):**
-- Free sample questions on the certification page
+- [20 free practice questions](https://preporato.com/free/claude-certified-architect-professional/questions?utm_source=github&utm_medium=readme&utm_campaign=ccar-p) in the real exam format
 - (Paid) Six full-length 63-question practice tests and a 500-card flashcard deck built on the exact domain weights
 - (Paid) 18 hands-on projects: build-and-submit work at the architecture level graded automatically against a rubric
