@@ -720,7 +720,7 @@ Ten fresh questions in the exam's style, with reasoning. (These are written for 
 ## 30-day study plan
 
 - **Days 1-7: official baseline.** Join the [Claude Partner Network](https://claude.com/partners) (free), complete the Partner Academy architect courses, read the official exam guide, and map your experience against the five domains.
-- **Days 8-21: build.** Work through [docs.anthropic.com](https://docs.anthropic.com) with a project open: an agent with tools and a real loop, an MCP server, a Claude Code setup with CLAUDE.md hierarchy, one hook, one skill, and a headless CI invocation. Part I of this guide is your reading companion; the exam rewards people who have hit these failure modes personally.
+- **Days 8-21: build.** Work through [docs.anthropic.com](https://docs.anthropic.com) with a project open: an agent with tools and a real loop, an MCP server, a Claude Code setup with CLAUDE.md hierarchy, one hook, one skill, and a headless CI invocation. Part I of this guide is your reading companion; the exam rewards people who have hit these failure modes personally. If you want these builds checked, the [hands-on projects](https://preporato.com/certificates/claude-certified-architect) (paid) cover the same ground with automatic rubric grading.
 - **Days 22-30: calibrate.** Full-length, timed, scenario-format practice tests. Review per-domain results, re-read the matching Part II notes, and spend the final days on your two weakest domains. The night before, review Part III's tables and the [cheat sheet](https://preporato.com/blog/claude-certified-architect-cheat-sheet-2026).
 
 The expanded week-by-week version: [30-day CCA-F study plan](https://preporato.com/blog/cca-f-study-plan-30-day-preparation).
@@ -766,11 +766,10 @@ You are ready when every line is true:
 - [CCA-F complete guide](https://preporato.com/blog/claude-certified-architect-complete-guide-2026) · [Cheat sheet](https://preporato.com/blog/claude-certified-architect-cheat-sheet-2026) · [Domains breakdown](https://preporato.com/blog/cca-f-exam-domains-complete-breakdown-2026) · [Exam format](https://preporato.com/blog/cca-f-exam-format-structure-what-to-expect) · [How to pass first attempt](https://preporato.com/blog/how-to-pass-cca-f-first-attempt-2026) · [Hardest topics by attempt data](https://preporato.com/blog/hardest-cca-f-exam-topics-practice-attempt-data-2026)
 - Technical deep-dives: [hooks](https://preporato.com/blog/claude-code-hooks-explained-cca-f-guide) · [subagent orchestration](https://preporato.com/blog/claude-code-subagents-orchestration-patterns-cca-f) · [MCP tool design](https://preporato.com/blog/mcp-tool-design-best-practices-cca-f) · [MCP architecture](https://preporato.com/blog/model-context-protocol-mcp-architecture-guide-2026) · [structured output](https://preporato.com/blog/structured-output-prompt-engineering-claude-cca-f) · [CLAUDE.md context management](https://preporato.com/blog/claude-md-context-management-best-practices-2026) · [permissions precedence](https://preporato.com/blog/claude-code-permissions-settings-precedence-guide)
 
-**Community:**
-- [paullarionov/claude-certified-architect](https://github.com/paullarionov/claude-certified-architect): community CCA-F study materials in 15 languages with Anki decks
-
-**Practice:**
-- [Free CCA-F practice questions](https://preporato.com/certificates/claude-certified-architect), plus six full-length scenario-format practice tests and a 500-card flashcard deck built on the exact domain weights
+**Practice ([preporato.com/certificates/claude-certified-architect](https://preporato.com/certificates/claude-certified-architect)):**
+- Free sample questions on the certification page
+- (Paid) Six full-length scenario-format practice tests and a 500-card flashcard deck built on the exact domain weights
+- (Paid) 11 hands-on projects: build-and-submit work (agentic loops, hub-and-spoke systems, MCP servers, extraction pipelines) graded automatically against a rubric
 
 ---
 

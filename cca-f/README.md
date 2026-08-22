@@ -62,8 +62,7 @@ This rewards candidates who can hold a whole architecture in their head. Practic
 - [30-day study plan](https://preporato.com/blog/cca-f-study-plan-30-day-preparation)
 - [CCA-F vs CCAR-P: which to take](https://preporato.com/blog/cca-f-vs-ccar-p-which-claude-certification-2026)
 
-**Community:**
-- [paullarionov/claude-certified-architect](https://github.com/paullarionov/claude-certified-architect): community CCA-F study materials in 15 languages with Anki decks
-
-**Practice:**
-- [Free CCA-F practice questions](https://preporato.com/certificates/claude-certified-architect), plus six full-length practice tests and a 500-card flashcard deck built on the exact domain weights
+**Practice ([preporato.com/certificates/claude-certified-architect](https://preporato.com/certificates/claude-certified-architect)):**
+- Free sample questions on the certification page
+- (Paid) Six full-length scenario-format practice tests and a 500-card flashcard deck built on the exact domain weights
+- (Paid) 11 hands-on projects: build-and-submit work (agentic loops, hub-and-spoke systems, MCP servers, extraction pipelines) graded automatically against a rubric

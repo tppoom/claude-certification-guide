@@ -62,5 +62,6 @@ CCAO-F fits professionals in operations, marketing, project management, educatio
 - [3-week study plan](https://preporato.com/blog/ccao-f-study-plan-3-week-preparation-2026)
 - [CCAO-F vs CCDV-F: which to take](https://preporato.com/blog/ccao-f-vs-ccdv-f-which-claude-certification-2026)
 
-**Practice:**
-- [Free CCAO-F practice questions](https://preporato.com/certificates/claude-certified-associate-foundations), plus six full-length 60-question practice tests and a 500-card flashcard deck built on the exact domain weights
+**Practice ([preporato.com/certificates/claude-certified-associate-foundations](https://preporato.com/certificates/claude-certified-associate-foundations)):**
+- Free sample questions on the certification page
+- (Paid) Six full-length 60-question practice tests and a 500-card flashcard deck built on the exact domain weights

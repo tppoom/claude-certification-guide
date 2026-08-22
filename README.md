@@ -74,6 +74,6 @@ Exam blueprints change and this program is young. If you spot something outdated
 
 ## About
 
-Maintained by [preporato.com](https://preporato.com), where we build full-length practice tests, 500-card flashcard decks, and hands-on labs for these certifications.
+Maintained by [preporato.com](https://preporato.com), where we build full-length practice tests, 500-card flashcard decks, and auto-graded hands-on projects for these certifications.
 
 Content is licensed [CC BY 4.0](./LICENSE). This project is not affiliated with, endorsed by, or sponsored by Anthropic. Claude is a trademark of Anthropic, PBC. Exam facts (prices, question counts, domains) reflect the program as of August 2026 and may change; the Partner Academy is authoritative.
