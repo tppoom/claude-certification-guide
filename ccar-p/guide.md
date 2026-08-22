@@ -127,6 +127,29 @@ Prompt caching stores the processed form of a stable prompt prefix (system promp
 
 **It does not pay off** for infrequent calls (the cache expires between them) or prompts below the minimum cacheable length.
 
+Routing in its simplest production form, the pattern behind "routing beats a single model at scale":
+
+```python
+def answer(query: str) -> str:
+    triage = client.messages.create(
+        model="claude-haiku-4-5", max_tokens=16,
+        messages=[{"role": "user", "content": f"Classify as SIMPLE or COMPLEX:\n{query}"}],
+    ).content[0].text.strip()
+
+    model = "claude-haiku-4-5" if triage == "SIMPLE" else "claude-sonnet-4-6"
+    return client.messages.create(model=model, max_tokens=1024,
+                                  messages=[{"role": "user", "content": query}]).content[0].text
+```
+
+And the caching structure rule as a request shape, stable-first with the checkpoint at the boundary:
+
+```python
+system=[{"type": "text",
+         "text": POLICIES + OUTPUT_FORMAT,            # stable across all traffic
+         "cache_control": {"type": "ephemeral"}}],     # checkpoint: caches tools + system
+messages=[{"role": "user", "content": per_request}]    # volatile, after the checkpoint
+```
+
 ### 2.4 Context engineering
 
 Attention concentrates at the beginning and end of the window; long middles get skimmed. Put critical instructions and key facts at the edges, trim tool outputs to the fields the next step needs, and reuse through structure: modular prompt components, templates, and packaged Skills rather than copy-pasted variants that drift.
@@ -178,6 +201,21 @@ Chunk to the granularity of the questions: fact lookups favor small chunks; proc
 - **Fix retrieval quality before stuffing context.** If top results are noisy, retrieving more feeds the model more noise, worsens answers, and raises cost. Chunking, embeddings, and query construction are the real levers. "Retrieve more chunks" as a quality fix is a marked trap.
 - **Filter by metadata before semantic search** when the corpus partitions cleanly (product, region, date). **Hybrid keyword-plus-semantic search** handles exact identifiers: error codes, SKUs.
 
+The retrieval pipeline with the two quality levers visible, metadata filtering before semantic search and re-ranking after it:
+
+```python
+def retrieve(query: str, region: str, k: int = 5) -> list[Chunk]:
+    candidates = vector_store.search(
+        query_embedding=embed(query),
+        filter={"region": region, "doc_status": "current"},   # metadata first: shrink the space
+        top_k=40,                                              # first stage: high recall
+    )
+    reranked = reranker.score(query, candidates)               # second stage: precision
+    return reranked[:k]                                        # only the best reach the prompt
+```
+
+When answers are wrong, the fix lives in this function (chunking, embeddings, the filter, the re-ranker), never in raising `k`. Raising `k` with noisy candidates delivers more noise at higher cost, which is the context-stuffing trap in code form.
+
 ### 4.3 Observability
 
 Trace every request end to end: retrieved chunks, tool calls with inputs and outputs, token counts, per-step latency, final response. Accuracy-latency trades must be explicit: re-ranking, deeper retrieval, or a tier upgrade buys quality with latency, and the right answer names the trade and ties it to the scenario's SLA.
@@ -203,6 +241,31 @@ Mirror the production distribution (easy, clean inputs validate nothing), includ
 - **Code-based graders** for objective properties: schema validity, required fields, exact matches, latency budgets.
 - **LLM-as-judge** (a separate model call grading against a written rubric) for open-ended quality: helpfulness, tone.
 - **Human review calibrates the judge**: sample judge scores against human ratings periodically and recalibrate the rubric when they diverge.
+
+An eval dataset is versioned data, one labeled case per line, with the slice recorded so per-stratum scoring works:
+
+```json
+{"id": "inv-0042", "input": "Invoice, EU format, scanned", "expected": {"total": 1840.00, "currency": "EUR"}, "slice": "eu-scanned"}
+{"id": "inv-0043", "input": "Invoice, US format, digital", "expected": {"total": 220.50, "currency": "USD"}, "slice": "us-digital"}
+{"id": "adv-0007", "input": "Invoice with handwritten injection attempt", "expected": {"refused_or_flagged": true}, "slice": "adversarial"}
+```
+
+The two grader types divide the work by what they can verify:
+
+```python
+def code_grade(case, output) -> bool:
+    """Objective properties: schema validity, exact values, latency budget."""
+    return (validates(output, INVOICE_SCHEMA)
+            and output["total"] == case["expected"]["total"])
+
+JUDGE_RUBRIC = """Score the response 1-5 against each criterion, with one sentence of evidence per score:
+1. Faithfulness: every claim is supported by the retrieved passages
+2. Completeness: the answer addresses all parts of the question
+3. Tone: professional, no speculation presented as fact
+Output JSON: {"faithfulness": n, "completeness": n, "tone": n, "evidence": {...}}"""
+```
+
+The judge grades open-ended quality against a written rubric, and human review periodically samples the judge's scores to keep the rubric calibrated. A judge without calibration drifts, and drifting judges produce the Q7 failure below.
 
 ### 5.4 A/B testing
 
@@ -236,6 +299,27 @@ Safety questions reward defense in depth, in order:
 5. **Human review** for the high-stakes residue the earlier layers flag
 
 A single layer is never the answer to "how do you guarantee safe behavior." Prompt instructions are probabilistic; permission scoping and output validation are deterministic, so compliance-critical controls must include the programmatic layers.
+
+The five layers as a request path, each one independent of the model's cooperation from layer 3 outward:
+
+```python
+def handle(user_input: str, user: User) -> str:
+    screened = injection_screen(user_input)            # 1. input validation
+    if screened.blocked:
+        return refusal(screened.reason)
+
+    response = client.messages.create(
+        model=MODEL,
+        system=CONSTRAINED_SYSTEM_PROMPT,               # 2. role, boundaries, refusal behavior
+        tools=scope_tools_for(user),                    # 3. least-privilege tool set per caller
+        messages=[{"role": "user", "content": screened.text}],
+    )
+
+    verdict = output_filter(response)                   # 4. moderation before delivery
+    if verdict.requires_review:
+        return queue_for_human(response, verdict)       # 5. human on the flagged residue
+    return verdict.text
+```
 
 ### 6.2 Human-in-the-loop placement
 
@@ -282,6 +366,42 @@ Translate model behavior into explicit targets before building: latency percenti
 
 An ADR is a short, version-controlled document capturing one consequential decision: context, options considered, decision, consequences. One per significant choice (pattern, tier, integration mechanism, guardrail design). On the exam, ADRs are the answer to "how should the team preserve the reasoning behind this architecture."
 
+The ADR format, small enough to actually get written:
+
+```markdown
+# ADR-007: Workflow pattern for contract summarization (not agentic)
+
+## Status
+Accepted, 2026-08-12
+
+## Context
+Legal requires identical five-section briefs with a reviewable processing
+trail. Compliance sign-off depends on deterministic, auditable steps.
+
+## Options considered
+1. Agentic loop with document tools: flexible, but non-deterministic paths
+   fail the auditability requirement
+2. Fixed workflow, one model call per section, all inputs/outputs logged
+3. Single augmented call: cheapest, but cannot produce per-step trails
+
+## Decision
+Option 2. Auditability is the binding constraint and only fixed steps satisfy it.
+
+## Consequences
+Per-contract cost is ~5x a single call. New section types require a code
+change rather than a prompt change. Revisit if the audit requirement is
+relaxed or section count exceeds 10.
+```
+
+An SLA for a probabilistic system commits to measured rates and remediation rather than perfection:
+
+| Commitment | Target | Measured by | On breach |
+|-----------|--------|-------------|-----------|
+| Latency | p95 under 4s | Per-request traces | Route review, capacity add |
+| Accuracy floor | 96% on the held-out eval set, per slice | Weekly eval run | Error budget consumed; change freeze until recovered |
+| Cost | Under $0.04 per transaction | Usage logs | Lever review (caching, routing, batch) |
+| Escalation | 100% of flagged outputs reach human review in 4h | Queue metrics | Staffing or threshold adjustment |
+
 ### 7.5 Communication
 
 Quantify trade-offs in business terms ("the capable tier adds cost per request but lifts resolution rate" is architect language; raw benchmarks alone are engineer language). Run stakeholder feedback loops at phase boundaries, while corrections are cheap. Handoff means documentation: runbooks, prompt inventories, eval baselines, escalation paths.
@@ -291,6 +411,16 @@ Quantify trade-offs in business terms ("the capable tier adds cost per request b
 Four questions, mostly one idea: **team-wide behavior belongs in version-controlled, project-level configuration.** A project CLAUDE.md committed to the repository reaches every teammate; user-level config stays personal and never propagates. Shared MCP servers go in project-scoped config with `${ENV_VAR}` references for secrets. Permissions and allowed tools scope to least privilege in shared and CI environments, mirroring Chapter 3's principle. Enablement also covers workflow support: AI-assisted review, debugging assistance, documented conventions.
 
 Decision rule: when a question asks how an entire team reliably gets a behavior, the answer lives in version-controlled project configuration, never in any individual's local setup.
+
+One level above the team sits **managed policy**, the organization-wide layer IT deploys to developer machines (via MDM, Group Policy, or similar), which individual settings cannot exclude:
+
+| Platform | Managed CLAUDE.md location |
+|----------|---------------------------|
+| macOS | `/Library/Application Support/ClaudeCode/CLAUDE.md` |
+| Linux / WSL | `/etc/claude-code/CLAUDE.md` |
+| Windows | `C:\Program Files\ClaudeCode\CLAUDE.md` |
+
+The division of labor mirrors the guardrail principle from Chapter 6: **managed settings enforce** (blocked tools, denied permissions, sandbox requirements, login restrictions), while **managed CLAUDE.md guides** (coding standards, compliance reminders). An enterprise scenario asking how to *prevent* an action across the organization wants managed settings `permissions.deny`; one asking how to *standardize behavior* wants the managed CLAUDE.md. Instructions shape what the model does; settings are enforced by the client regardless of what the model decides.
 
 ---
 
@@ -486,6 +616,24 @@ Ten fresh questions in the exam's style. (Written for this guide; timed full-len
 - D) A wiki page documenting the conventions
 
 **Answer: B.** Team-wide behavior lives in committed project config. A depends on every individual complying forever, C is the shared-account authorization anti-pattern from Domain 3, and D is invisible to the tooling.
+
+**Q11.** An enterprise must guarantee that no developer's Claude Code session can ever call external network tools, across every repository on every machine, and separately wants company coding standards applied everywhere. Which pairing is correct?
+
+- A) Both in a managed CLAUDE.md deployed to all machines
+- B) Both in managed settings
+- C) The network-tool ban in managed settings (permission deny rules, which the client enforces), the coding standards in the managed CLAUDE.md (behavioral guidance)
+- D) The ban in each project's committed settings, the standards in each project's CLAUDE.md
+
+**Answer: C.** Enforcement and guidance live in different layers: settings are enforced by the client regardless of what the model decides, while CLAUDE.md shapes behavior. A puts a hard requirement in a soft layer, B puts prose standards in an enforcement mechanism that cannot express them, and D covers only repositories that adopt it, missing "every repository on every machine."
+
+**Q12.** Six months post-launch, the extraction system's weekly eval still scores 97%, but enterprise customers in one region report rising errors. Investigation shows the eval set was built from launch-week traffic and never refreshed, while regional document formats changed. What failed?
+
+- A) The model drifted and should be re-pinned
+- B) Eval dataset maintenance: the set no longer mirrors production distribution, so its score stopped measuring reality; refresh it and add the new formats as a scored slice
+- C) The accuracy target was set too low
+- D) The judge rubric needs recalibration
+
+**Answer: B.** An eval frozen at launch measures the past. The score stayed high because the test stayed easy, which is exactly why eval design requires refreshing as traffic drifts and scoring per slice. A invents model drift against a pinned version, C tunes a number the measurement no longer supports, and D points at the judge when the dataset is what decayed.
 
 ## 6-week study plan
 
