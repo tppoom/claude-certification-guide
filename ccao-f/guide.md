@@ -276,7 +276,7 @@ Four layers, in order. Each builds on the previous, and the free layers take you
 
 | Step | Resource | Cost |
 |------|----------|------|
-| 1. Learn the vocabulary | [Anthropic Partner Academy courses](https://claude.com/partners) and the official exam guide | Free |
+| 1. Learn the vocabulary | [Anthropic Partner Academy courses](https://claude.com/partners), the official exam guide, and the [Anthropic Academy courses](https://www.anthropic.com/learn) mapped in Resources | Free |
 | 2. Go to the source | The claude.ai Help Center, the primary source for this exam | Free |
 | 3. First calibration | [20 free CCAO-F practice questions](https://preporato.com/free/claude-certified-associate-foundations/questions?utm_source=github&utm_medium=guide&utm_campaign=ccao-f) in the real exam format | Free |
 | 4. Full calibration | [Six full-length 60-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-associate-foundations?utm_source=github&utm_medium=guide&utm_campaign=ccao-f) built on the exact domain weights | Paid |
@@ -408,8 +408,13 @@ Expanded version: [3-week CCAO-F study plan](https://preporato.com/blog/ccao-f-s
 ## Resources
 
 **Official (free):**
-- [Anthropic Partner Academy](https://claude.com/partners): courses and exam registration
+- [Anthropic Partner Academy](https://claude.com/partners): the exam guide, prep courses, and registration
 - claude.ai Help Center: the primary source for this exam
+- Anthropic Academy courses, mapped to this exam's domains:
+  - [Claude 101](https://anthropic.skilljar.com/claude-101): the product tour this exam assumes
+  - [AI Fluency: Framework & Foundations](https://anthropic.skilljar.com/ai-fluency-framework-foundations): delegation, description, discernment, and diligence; a direct match for the output evaluation and governance domains, with a certificate of completion
+  - [AI Capabilities and Limitations](https://anthropic.skilljar.com/ai-capabilities-and-limitations): the judgment layer behind hallucination spotting and appropriate use
+  - Audience variants exist too ([small businesses](https://anthropic.skilljar.com/ai-fluency-for-small-businesses), [educators](https://anthropic.skilljar.com/ai-fluency-for-educators), [students](https://anthropic.skilljar.com/ai-fluency-for-students)) if one matches your role
 
 **Free deep-dives (preporato.com):**
 - [CCAO-F complete guide](https://preporato.com/blog/claude-certified-associate-foundations-complete-guide-2026) · [Cheat sheet](https://preporato.com/blog/claude-certified-associate-foundations-cheat-sheet-2026) · [Domains breakdown](https://preporato.com/blog/ccao-f-exam-domains-complete-breakdown-2026) · [How to pass first attempt](https://preporato.com/blog/how-to-pass-ccao-f-first-attempt-2026) · [CCAO-F vs CCDV-F](https://preporato.com/blog/ccao-f-vs-ccdv-f-which-claude-certification-2026)

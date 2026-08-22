@@ -579,7 +579,7 @@ Five layers, in order. Each builds on the previous, and the free layers take you
 
 | Step | Resource | Cost |
 |------|----------|------|
-| 1. Learn the vocabulary | [Anthropic Partner Academy courses](https://claude.com/partners) and the official exam guide | Free |
+| 1. Learn the vocabulary | [Anthropic Partner Academy courses](https://claude.com/partners), the official exam guide, and the [Anthropic Academy courses](https://www.anthropic.com/learn) mapped in Resources | Free |
 | 2. Go to the source | [docs.anthropic.com](https://docs.anthropic.com): agents, tool use, MCP, Claude Code | Free |
 | 3. First calibration | [20 free CCA-F practice questions](https://preporato.com/free/claude-certified-architect/questions?utm_source=github&utm_medium=guide&utm_campaign=cca-f) in the real exam format | Free |
 | 4. Full calibration | [Six full-length scenario-format practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-architect?utm_source=github&utm_medium=guide&utm_campaign=cca-f) built on the exact domain weights | Paid |
@@ -774,8 +774,13 @@ You are ready when every line is true:
 ## Resources
 
 **Official (free):**
-- [Anthropic Partner Academy](https://claude.com/partners): courses and exam registration
+- [Anthropic Partner Academy](https://claude.com/partners): the exam guide, prep courses, and registration
 - [docs.anthropic.com](https://docs.anthropic.com): API, agents, tool use, MCP, Claude Code
+- Anthropic Academy courses, mapped to this exam's domains:
+  - [Claude Code 101](https://anthropic.skilljar.com/claude-code-101) and [Claude Code in Action](https://anthropic.skilljar.com/claude-code-in-action): the 20% Claude Code domain
+  - [Introduction to Model Context Protocol](https://anthropic.skilljar.com/introduction-to-model-context-protocol) and [MCP: Advanced Topics](https://anthropic.skilljar.com/model-context-protocol-advanced-topics): the 18% tool design and MCP domain
+  - [Introduction to subagents](https://anthropic.skilljar.com/introduction-to-subagents) and [Introduction to agent skills](https://anthropic.skilljar.com/introduction-to-agent-skills): orchestration and Claude Code configuration
+  - [Building with the Claude API](https://anthropic.skilljar.com/claude-with-the-anthropic-api): the API foundation everything else builds on
 
 **Free deep-dives (preporato.com):**
 - [CCA-F complete guide](https://preporato.com/blog/claude-certified-architect-complete-guide-2026) · [Cheat sheet](https://preporato.com/blog/claude-certified-architect-cheat-sheet-2026) · [Domains breakdown](https://preporato.com/blog/cca-f-exam-domains-complete-breakdown-2026) · [Exam format](https://preporato.com/blog/cca-f-exam-format-structure-what-to-expect) · [How to pass first attempt](https://preporato.com/blog/how-to-pass-cca-f-first-attempt-2026) · [Hardest topics by attempt data](https://preporato.com/blog/hardest-cca-f-exam-topics-practice-attempt-data-2026)

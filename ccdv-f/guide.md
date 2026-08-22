@@ -312,7 +312,7 @@ Five layers, in order. Each builds on the previous, and the free layers take you
 
 | Step | Resource | Cost |
 |------|----------|------|
-| 1. Learn the vocabulary | [Anthropic Partner Academy courses](https://claude.com/partners) and the official exam guide | Free |
+| 1. Learn the vocabulary | [Anthropic Partner Academy courses](https://claude.com/partners), the official exam guide, and the [Anthropic Academy courses](https://www.anthropic.com/learn) mapped in Resources | Free |
 | 2. Go to the source | [docs.anthropic.com](https://docs.anthropic.com): API reference, Agent SDK, MCP | Free |
 | 3. First calibration | [20 free CCDV-F practice questions](https://preporato.com/free/claude-certified-developer-foundations/questions?utm_source=github&utm_medium=guide&utm_campaign=ccdv-f) in the real exam format | Free |
 | 4. Full calibration | [Six full-length 53-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-developer-foundations?utm_source=github&utm_medium=guide&utm_campaign=ccdv-f) built on the exact domain weights | Paid |
@@ -471,8 +471,14 @@ Expanded version: [4-week CCDV-F study plan](https://preporato.com/blog/ccdv-f-s
 ## Resources
 
 **Official (free):**
-- [Anthropic Partner Academy](https://claude.com/partners): courses and exam registration
+- [Anthropic Partner Academy](https://claude.com/partners): the exam guide, prep courses, and registration
 - [docs.anthropic.com](https://docs.anthropic.com): API reference, Agent SDK, MCP
+- Anthropic Academy courses, mapped to this exam's domains:
+  - [Building with the Claude API](https://anthropic.skilljar.com/claude-with-the-anthropic-api): prompting, tool use, RAG, agents, MCP, and production patterns; the closest single course to the 33% integration domain
+  - [Claude Platform 101](https://anthropic.skilljar.com/claude-platform-101): the platform from the ground up
+  - [Introduction to Model Context Protocol](https://anthropic.skilljar.com/introduction-to-model-context-protocol) and [MCP: Advanced Topics](https://anthropic.skilljar.com/model-context-protocol-advanced-topics): the tools and MCPs domain
+  - [Introduction to subagents](https://anthropic.skilljar.com/introduction-to-subagents) and [Introduction to agent skills](https://anthropic.skilljar.com/introduction-to-agent-skills): the agents and workflows domain
+  - [Claude Code 101](https://anthropic.skilljar.com/claude-code-101): the Claude Code domain
 
 **Free deep-dives (preporato.com):**
 - [CCDV-F complete guide](https://preporato.com/blog/claude-certified-developer-foundations-complete-guide-2026) · [Cheat sheet](https://preporato.com/blog/claude-certified-developer-foundations-cheat-sheet-2026) · [Domains breakdown](https://preporato.com/blog/ccdv-f-exam-domains-complete-breakdown-2026) · [How to pass first attempt](https://preporato.com/blog/how-to-pass-ccdv-f-first-attempt-2026) · [CCDV-F vs CCA-F](https://preporato.com/blog/ccdv-f-vs-cca-f-which-claude-certification-2026)
