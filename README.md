@@ -57,10 +57,12 @@ Whichever exam you choose, the preparation pattern is the same four layers:
 
 ## In this repo
 
-- [`cca-f/`](./cca-f/): Claude Certified Architect - Foundations. Includes the [complete study guide](./cca-f/guide.md): 8 technology chapters, per-domain exam notes, worked questions, and exam-day strategy.
-- [`ccdv-f/`](./ccdv-f/): Claude Certified Developer - Foundations. Domains, API and agent coverage, study path.
-- [`ccao-f/`](./ccao-f/): Claude Certified Associate - Foundations. The non-technical exam, domains, study path.
-- [`ccar-p/`](./ccar-p/): Claude Certified Architect - Professional. Domains, enterprise scope, study path.
+Every certification directory contains a summary README plus a **complete study guide**: technology chapters, per-domain exam notes, worked questions with explanations, trap-answer patterns, a study plan, and a pre-exam checklist.
+
+- [`cca-f/`](./cca-f/): Claude Certified Architect - Foundations → [complete study guide](./cca-f/guide.md)
+- [`ccdv-f/`](./ccdv-f/): Claude Certified Developer - Foundations → [complete study guide](./ccdv-f/guide.md)
+- [`ccao-f/`](./ccao-f/): Claude Certified Associate - Foundations → [complete study guide](./ccao-f/guide.md)
+- [`ccar-p/`](./ccar-p/): Claude Certified Architect - Professional → [complete study guide](./ccar-p/guide.md)
 
 ## Free resources
 

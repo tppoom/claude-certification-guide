@@ -1,5 +1,7 @@
 # CCAR-P: Claude Certified Architect - Professional
 
+> **[📖 The Complete CCAR-P Study Guide](./guide.md)** — the full preparation guide: 8 chapters, per-domain exam notes, worked questions, the nine trap answers, and exam-day strategy. This page is the summary; the guide is the study material.
+
 The top tier of the Anthropic certification program and its only Professional-level credential. CCAR-P certifies the person accountable for a Claude solution across its whole life: translating a vague business request into an architecture, selecting integration mechanisms, designing evaluation and governance into the system from day one, managing stakeholder expectations, and enabling the teams who build and operate the result.
 
 ## Quick facts

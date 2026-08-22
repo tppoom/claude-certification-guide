@@ -2,6 +2,8 @@
 
 The one Claude certification that requires no code, no API knowledge, and no engineering background. CCAO-F validates that a professional can use the claude.ai product (the web and desktop application, as opposed to the developer platform) effectively and responsibly for real business work: drafting, research, analysis, planning, and process improvement.
 
+> **[📖 The Complete CCAO-F Study Guide](./guide.md)** — the full preparation guide: 7 chapters, per-domain exam notes, worked questions, trap answers, and exam-day strategy. This page is the summary; the guide is the study material.
+
 ## Quick facts
 
 | | |
