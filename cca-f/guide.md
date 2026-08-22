@@ -140,7 +140,33 @@ while True:
                          "content": "TOKEN BUDGET WARNING: summarize findings and conclude."})
 ```
 
-### 1.4 Model selection
+### 1.4 Handling truncation and refusal
+
+Two `stop_reason` values break naive response handling, and both appear in exam scenarios. `"max_tokens"` means the response was cut off by the output cap; treating it as a complete answer silently corrupts downstream processing. A refusal means Claude declined the request; code that reads the first content block unconditionally crashes or mishandles it.
+
+```python
+response = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=2048,
+    messages=messages,
+)
+
+match response.stop_reason:
+    case "end_turn":
+        result = response.content[0].text          # complete answer
+    case "max_tokens":
+        # Truncated: never parse as complete. Retry with a higher cap,
+        # stream, or split the task.
+        handle_truncation(response)
+    case "tool_use":
+        run_tool_loop(response)                     # continue the loop
+    case _:
+        log_and_escalate(response)                  # refusal and anything new
+```
+
+**Anti-pattern:** `text = response.content[0].text` with no `stop_reason` check. It works in every demo and fails in production the first time an output hits the cap.
+
+### 1.5 Model selection
 
 Reason by tier, and anchor production answers to the mid tier:
 
@@ -163,6 +189,26 @@ Claude selects tools by reading their **descriptions**. Not the tool name, and n
 - A boundary statement naming what the tool does NOT do and which tool to use instead ("This tool searches existing records. To create records, use create_customer.")
 - One or two example invocations
 - Error behavior ("Returns { error: 'not_found' } if no records match.")
+
+A complete tool definition puts that description to work alongside a JSON Schema for the inputs:
+
+```json
+{
+  "name": "search_customers",
+  "description": "Searches existing customer records in the CRM by name, email, or region. Returns up to 20 matches with id, name, email, and account status. Use this to FIND existing customers. To create a new customer record, use create_customer instead. Returns {\"matches\": []} when no records match; returns {\"error\": \"permission_denied\"} if the caller lacks CRM read access.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "query":  { "type": "string", "description": "Name, email, or partial match" },
+      "region": { "type": "string", "enum": ["NA", "EMEA", "APAC"], "description": "Optional region filter" },
+      "limit":  { "type": "integer", "minimum": 1, "maximum": 20, "default": 10 }
+    },
+    "required": ["query"]
+  }
+}
+```
+
+Notice what the description carries: purpose, the boundary against the neighboring tool, and the exact shape of both empty and error results. That last part is what lets the agent distinguish "no customers found" from "not allowed to look", the distinction Section 2.5 tests.
 
 ### 2.2 How many tools
 
@@ -267,6 +313,36 @@ Session mechanics that appear in questions:
 - `--resume <session>` continues a prior session with full history intact.
 - `fork_session` branches an independent copy from a shared baseline; changes in the fork never propagate back.
 
+### 3.6 Orchestration in code
+
+The coordinator patterns above, as they actually look. Parallel fan-out means emitting several delegations in one turn and merging when all return; sequential means awaiting each dependency:
+
+```python
+# Parallel: independent subtasks, spawned together, merged once
+scan_prompts = [scanner_prompt(repo, findings_schema) for repo in repos]
+results = run_subagents_parallel(scan_prompts, timeout_s=300)   # isolated contexts
+merged = merge_findings([r for r in results if r is not None])  # tolerate failures
+
+# Sequential: B needs A's output, so A completes first
+outline = run_subagent(outline_prompt(document))
+draft   = run_subagent(draft_prompt(document, outline))          # outline passed explicitly
+```
+
+The two rules the exam checks are visible right in the shape of the code: every subagent receives its inputs **explicitly in its prompt** (nothing is inherited), and a failed subagent becomes a `None` to tolerate rather than an exception that destroys its siblings' work.
+
+A structured handoff, whether subagent-to-coordinator or agent-to-human, carries state rather than prose:
+
+```json
+{
+  "handoff_reason": "policy_ambiguity",
+  "conversation_summary": "Customer requests refund of $840 for order 19384, outside the 30-day window by 3 days",
+  "attempted": ["standard_refund_policy_check", "manager_exception_lookup"],
+  "blocking_question": "Does the loyalty-tier exception apply to window overruns under 7 days?",
+  "customer_sentiment": "calm",
+  "urgency": "normal"
+}
+```
+
 ## Chapter 4: Model Context Protocol (MCP)
 
 ### 4.1 What MCP is
@@ -280,6 +356,33 @@ The exam expects you to keep these apart:
 - **Tools**: functions Claude can call, with parameters and results (`create_issue`, `search_documents`).
 - **Resources**: read-only content catalogs Claude can browse. Data, never actions (GitHub issues, documentation, database schemas).
 - **Prompts**: reusable prompt templates the server provides, encapsulating domain-specific prompt engineering.
+
+The three primitives in server code, using the Python SDK's FastMCP style:
+
+```python
+from mcp.server.fastmcp import FastMCP
+
+mcp = FastMCP("support-kb")
+
+@mcp.tool()
+def search_tickets(query: str, status: str = "open") -> str:
+    """Search support tickets by keyword. Use status='closed' for resolved tickets."""
+    return json.dumps(ticket_store.search(query, status))
+
+@mcp.resource("kb://articles/{article_id}")
+def get_article(article_id: str) -> str:
+    """A knowledge-base article, addressable by id, browsable by the client."""
+    return kb.fetch(article_id)
+
+@mcp.prompt()
+def triage_ticket(ticket_text: str) -> str:
+    """Reusable triage prompt with the team's severity rubric baked in."""
+    return f"Classify severity using the P1-P4 rubric...\n\nTicket:\n{ticket_text}"
+
+mcp.run()
+```
+
+One server, three capability types: the tool is an **action** the model invokes, the resource is **data** the client can browse and attach, and the prompt is packaged **know-how**. Exam questions describe a requirement and ask which primitive fits; the answer follows from whether the requirement is an action, data, or a reusable instruction set.
 
 ### 4.3 Configuration and scope
 
@@ -348,28 +451,76 @@ argument-hint: "file path or directory to review"
 
 ### 5.4 Hooks
 
-Hooks run shell commands at lifecycle events. They are the exam's canonical example of programmatic enforcement:
+Hooks run shell commands at lifecycle events. They are the exam's canonical example of programmatic enforcement. The core events:
 
 | Event | Fires | Typical use |
 |-------|-------|-------------|
-| preToolUse | Before a tool executes | Block dangerous operations |
-| postToolUse | After a tool completes | Linters, formatters, validation |
-| preCommit | Before git commit | Tests, secret scanning |
-| notification | On status changes | Alerts, logging |
+| PreToolUse | Before a tool executes | Block dangerous operations, gate compliance requirements |
+| PostToolUse | After a tool completes | Linters, formatters, output validation |
+| UserPromptSubmit | When the user submits a prompt | Inject context, screen inputs |
+| Stop | When Claude is about to finish | Verify required steps actually ran |
+| PreCompact | Before history compaction | Preserve critical state |
+| SessionStart / SessionEnd | Session lifecycle | Setup, logging |
+| SubagentStop | A subagent finishes | Validate subagent output |
+
+Configuration in `settings.json` nests event → matcher group → hook handlers. The matcher filters by tool name (exact, `|`-separated, or regex), and an `if` field narrows to specific invocations:
 
 ```json
 {
   "hooks": {
-    "preToolUse": [
-      { "matcher": "Bash", "command": "python3 /scripts/validate-command.py \"$TOOL_INPUT\"" }
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(rm *)",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/block-rm.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [ { "type": "command", "command": "npx eslint --fix" } ]
+      }
     ]
   }
 }
 ```
 
+A hook script controls the outcome through its exit code and output: **exit 0** allows (and can return structured JSON for fine-grained decisions), **exit 2 blocks the action**, with the stderr text or a JSON `permissionDecision` explaining why:
+
+```bash
+#!/bin/bash
+# .claude/hooks/block-rm.sh: deny recursive deletes, allow everything else
+COMMAND=$(jq -r '.tool_input.command')
+if echo "$COMMAND" | grep -q 'rm -rf'; then
+  jq -n '{ hookSpecificOutput: {
+    hookEventName: "PreToolUse",
+    permissionDecision: "deny",
+    permissionDecisionReason: "Destructive command blocked by policy"
+  } }'
+else
+  exit 0
+fi
+```
+
+Two details worth having cold: there is no dedicated commit event, so "always run tests before committing" is a `PreToolUse` hook matching `Bash` with an `if` on `git commit`, and hooks defined in the committed project `settings.json` reach the whole team while `~/.claude/settings.json` hooks are personal.
+
 Whenever a question asks how to **guarantee** a behavior (tests always run before commit, `rm -rf` never executes), the answer is a hook. A CLAUDE.md instruction is guidance the model probably follows; a hook is a mechanism it cannot bypass.
 
-### 5.5 Plan Mode versus direct execution
+### 5.5 Imports, local files, and session commands
+
+Four mechanics round out the configuration surface, and each has appeared in scenario questions:
+
+- **`@path` imports.** A CLAUDE.md can pull in other files with `@path/to/file` syntax: `See @README for the project overview and @docs/git-instructions.md for the git workflow.` Imports resolve relative to the importing file, recurse up to four hops deep, and are skipped inside backticks and code blocks. Imported files load at launch, so imports organize content without saving context.
+- **`CLAUDE.local.md`.** Personal, project-specific instructions that load alongside the project CLAUDE.md and belong in `.gitignore`: sandbox URLs, preferred test data, anything true for you and wrong for the team. This completes the placement question: team-wide → committed project file; personal-everywhere → `~/.claude/CLAUDE.md`; personal-this-project → `CLAUDE.local.md`.
+- **`/compact` and what survives it.** Compaction summarizes conversation history to reclaim context. The project-root CLAUDE.md survives: it is re-read from disk and re-injected afterward. Instructions given only in conversation do not survive, which is exactly why durable rules belong in files rather than chat.
+- **`/init`, `/memory`, `/context`.** `/init` generates a starting CLAUDE.md by analyzing the codebase, `/memory` opens the memory files for editing, and `/context` shows which files actually loaded into the current session, the first debugging step when Claude ignores an instruction.
+
+### 5.6 Plan Mode versus direct execution
 
 | Plan Mode | Direct execution |
 |-----------|-----------------|
@@ -378,7 +529,7 @@ Whenever a question asks how to **guarantee** a behavior (tests always run befor
 | Unfamiliar codebase exploration | Simple additions to known files |
 | Cross-cutting refactors | Typos and small edits |
 
-### 5.6 Built-in tools
+### 5.7 Built-in tools
 
 | Tool | Purpose | Detail with exam weight |
 |------|---------|------------------------|
@@ -391,7 +542,7 @@ Whenever a question asks how to **guarantee** a behavior (tests always run befor
 
 Investigate incrementally: Grep/Glob to locate, Read the relevant region, then Edit. Reading entire large files into context when a search would do is the anti-pattern being probed.
 
-### 5.7 CI/CD and headless mode
+### 5.8 CI/CD and headless mode
 
 - `-p` / `--print`: non-interactive mode; without it the pipeline hangs waiting for input. The essential flag.
 - `--output-format json`: machine-parseable output.
@@ -421,7 +572,14 @@ What few-shot cannot do, and the exam checks: **enforce ordering or compliance**
 
 Complex work splits into focused chained prompts, each doing one job: extract → validate → enrich → format. Each stage gets its own instructions and its own validation. One giant prompt doing everything at once is less reliable and much harder to debug.
 
-### 6.4 Schema design for structured output
+### 6.4 The interview pattern and self-correction
+
+Two named patterns extend chaining and both show up in scenario questions:
+
+- **The interview pattern** inverts the flow: instead of guessing what the model needs, you instruct it to ask. "Before drafting the migration plan, ask me up to five questions about constraints you need and cannot infer from the repository." This fits tasks where requirements live in a human's head, and it beats a long speculative prompt that guesses wrong.
+- **Self-correction as a separate pass.** After generation, a follow-up prompt asks the model to check its own output against explicit criteria: "Review the extraction above against the schema. List any field where the value is not directly supported by the source text, then output the corrected JSON." A self-correction pass with named criteria catches real errors; the same instruction folded into the original prompt ("double-check your work") mostly does not. Note the boundary from Section 6.7: self-correction against *criteria* helps, while self-*review* of open-ended quality in the same context stays biased, which is why independent review instances exist.
+
+### 6.5 Schema design for structured output
 
 Force extraction through `tool_choice` plus a JSON schema, and design the schema for the real world:
 
@@ -431,13 +589,13 @@ Force extraction through `tool_choice` plus a JSON schema, and design the schema
 
 Every field should have a graceful "I don't know" path. A required, non-nullable field for information that is sometimes absent guarantees validation failures no retry can fix.
 
-### 6.5 Validation and retry
+### 6.6 Validation and retry
 
 When extraction fails validation, the retry prompt carries three things: the original document, the failed output, and the specific validation errors, with an instruction to fix only those errors.
 
 The boundary that gets tested: **retries fix execution errors, never information gaps.** If Claude misformatted a date, a retry fixes it. If the source document simply lacks the revenue figure, no number of retries will produce it; the nullable schema absorbs it instead.
 
-### 6.6 Batch API
+### 6.7 Batch API
 
 | Aspect | Batch API | Real-time API |
 |--------|-----------|---------------|
@@ -450,7 +608,7 @@ The boundary that gets tested: **retries fix execution errors, never information
 
 The all-time trap: proposing Batch for anything a user is waiting on. No SLA means possibly 24 hours. The reverse trap also appears: paying real-time prices for overnight bulk work that Batch would halve.
 
-### 6.7 Multi-instance review
+### 6.8 Multi-instance review
 
 Self-review in the same context is biased: the model retains the reasoning that produced the output and tends to confirm it. Production review uses independent instances that see only the artifact, not the conversation that generated it. For code, split per-file passes (local issues) from a cross-file integration pass (systemic issues).
 
@@ -472,7 +630,37 @@ Models attend well to the beginning and end of the context window and poorly to 
 - **Scratchpad files**: persist findings outside the window entirely, and read back only what is needed.
 - **Subagent offloading**: ten files to analyze means ten focused subagent contexts returning summaries, never one context holding all ten.
 
-### 7.3 Detecting context degradation
+### 7.3 Position-aware input and scratchpads
+
+Position-aware input applies the attention curve deliberately. The same facts, restructured so the critical block leads:
+
+```python
+prompt = f"""CASE FACTS (authoritative, extracted from prior steps):
+- Customer: {facts['customer_id']}, tier: {facts['tier']}
+- Order {facts['order_id']}: ${facts['amount']}, delivered {facts['delivered']}
+- Policy window: 30 days; request is {facts['days_over']} days past it
+
+TASK: {task}
+
+SUPPORTING MATERIAL (reference only):
+{long_tool_outputs}"""
+```
+
+A scratchpad moves state out of the window entirely. The agent appends findings to a file as it works and reads back only what the next step needs:
+
+```python
+def note(finding: dict):
+    with open("scratchpad.jsonl", "a") as f:
+        f.write(json.dumps(finding) + "\n")
+
+def recall(topic: str) -> list[dict]:
+    return [json.loads(l) for l in open("scratchpad.jsonl")
+            if topic in l]          # selective read-back, never the whole file
+```
+
+The pattern's point is the selective read-back: a scratchpad that gets dumped wholesale into every prompt has just reinvented the bloated context it was meant to prevent.
+
+### 7.4 Detecting context degradation
 
 Signals that the model has lost the thread:
 
@@ -515,11 +703,27 @@ Long-running agents checkpoint to a **manifest file**: completed steps, pending 
 - **Circuit breaker**: after N consecutive failures of a tool, stop retrying, switch to a fallback, reset after cooldown.
 - **Graceful degradation**: a non-critical tool failing should narrow the output ("results exclude the security scan, which was unavailable"), never abort the workflow.
 
-### 8.4 Provenance
+### 8.4 Coverage annotations
+
+When an agent reports on work spanning many items (files reviewed, repos scanned, documents processed), require an explicit coverage annotation rather than trusting silence:
+
+```json
+{
+  "reviewed": ["auth.py", "sessions.py", "tokens.py"],
+  "skipped": [
+    { "file": "legacy_crypto.py", "reason": "exceeds single-pass size; queued for focused pass" }
+  ],
+  "coverage": "3 of 4 files"
+}
+```
+
+Without the annotation, "no issues found in the audit" and "no issues found in the 60% of the audit that actually ran" are indistinguishable, which is the failure the exam probes. The same principle produced the structured partial-failure responses in Chapter 2.5; coverage annotations extend it from errors to normal operation.
+
+### 8.5 Provenance
 
 When synthesizing from multiple sources: map every claim to its source (URL, document, excerpt, date). When sources conflict, annotate BOTH values with attribution and surface the conflict; silently picking one is the tested anti-pattern. Distinguish quotes, paraphrases, and inferences, and track recency.
 
-### 8.5 Quality assurance beyond the average
+### 8.6 Quality assurance beyond the average
 
 A 97% aggregate accuracy can conceal complete failure on a rare document type: if 90% of inputs are easy, the hard 10% can be failing entirely behind a comfortable average. The tested answer is **stratified sampling**: sample by document type AND by field, set thresholds per stratum, and route low-confidence extractions to human review rather than accepting them silently.
 
@@ -731,6 +935,24 @@ Ten fresh questions in the exam's style, with reasoning. (These are written for 
 - D) An independent session that receives the code plus the generator's full reasoning transcript
 
 **Answer: B.** Independence requires not inheriting the generation reasoning; per-file plus integration passes catch both local and systemic issues. A and C keep the bias, and D reintroduces it through the transcript.
+
+**Q11.** A compliance team requires that Claude Code can never execute a shell command containing `curl` against production hosts, for any developer, with no exceptions. Which implementation meets the requirement?
+
+- A) A rule in the committed project CLAUDE.md: "Never run curl against production hosts"
+- B) A `PreToolUse` hook in the committed project settings, matching the Bash tool, whose script inspects the command and exits 2 (or returns a deny decision) on violations
+- C) A `PostToolUse` hook that reports violations to the security channel
+- D) A note in each developer's `~/.claude/CLAUDE.md`
+
+**Answer: B.** "Never, for any developer, no exceptions" is enforcement, and only a blocking `PreToolUse` hook in *committed project* settings delivers it: deterministic, team-wide, and evaluated before execution. A is probabilistic guidance, C fires after the damage, and D is personal scope that reaches nobody else.
+
+**Q12.** A developer keeps personal sandbox URLs and test credentials paths in the project's committed CLAUDE.md "so Claude remembers them", and teammates complain about the noise. Where does that content belong?
+
+- A) A subdirectory CLAUDE.md
+- B) The system prompt of each session
+- C) `CLAUDE.local.md` at the project root, listed in `.gitignore`
+- D) An `@import` from the committed CLAUDE.md to the developer's home directory
+
+**Answer: C.** Personal, project-specific content has a dedicated home: `CLAUDE.local.md`, loaded alongside the project file and kept out of version control. A still ships to the team, B does not persist, and D commits a reference to one person's home directory into the shared file, which breaks for everyone else.
 
 ## 30-day study plan
 
