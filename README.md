@@ -4,7 +4,7 @@ Study guides for all four Anthropic Claude certifications: **CCAO-F**, **CCDV-F*
 
 Anthropic's certification program launched with a single exam (Claude Certified Architect - Foundations, March 12, 2026) and expanded on July 23, 2026 into a role-based program with four credentials. The names are similar, the prices are similar, and choosing wrong wastes an exam fee on a blueprint written for a different job. This repo exists to make that choice obvious and the preparation efficient.
 
-## The four certifications at a glance
+## The four certifications compared
 
 | Code | Certification | Price | Questions | Audience | Level |
 |------|---------------|-------|-----------|----------|-------|
