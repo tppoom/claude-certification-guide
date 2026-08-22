@@ -83,6 +83,16 @@ A hallucination is a confident, plausible statement that is factually wrong or u
 - **Uniform confidence across every claim.** The weakest guesses arrive in the same fluent tone as established facts, so tone can never substitute for verification.
 - **Answers about events after the model's knowledge cutoff** with no research mode or attached source grounding them.
 
+A worked example, in the form the exam uses. You attached this excerpt from a quarterly report:
+
+> Q2 revenue was $4.2M, up from Q1. The Enterprise segment led growth. We closed 14 new enterprise accounts during the quarter.
+
+Claude's summary reads:
+
+> Revenue grew 18% quarter-over-quarter to $4.2M, driven by the Enterprise segment, which closed 14 new accounts including two Fortune 500 logos. According to a Gartner study, this growth rate places the company in the top decile of its peer group.
+
+Three hallucinations, each matching a red flag: **"18%"** is a specific figure the source never states (the source says only "up from Q1"), **"two Fortune 500 logos"** goes beyond the provided material, and **the Gartner study** is a citation you will not locate. The revenue figure, the segment, and the account count are grounded. The tone is identical across all six claims, which is exactly why tone cannot be the filter.
+
 ### 1.2 The validation sequence
 
 For any output that carries consequences: verify every name, number, date, and quotation against the original source. Ask Claude directly which part of the attached document supports a specific claim; a grounded answer can point to its evidence, and a hallucinated one cannot. Cross-check external facts in an independent reference before repeating them. And watch for bias as well as error: one-sided analysis, stereotyped examples, and missing counterarguments all count as evaluation failures.
@@ -132,6 +142,14 @@ Two decision rules cover most scenarios: if an output affects people's **rights,
 ### 4.1 The five-part business prompt
 
 Role or context ("You are helping a project manager prepare a stakeholder update"), the task, the source material, the constraints (audience, length, tone), and the output format. "Summarize these meeting notes for the executive team in five bullet points, each naming an owner and a deadline" beats "summarize this" on every axis the exam measures.
+
+Before and after, on the same task:
+
+> **Weak:** "Summarize these meeting notes."
+
+> **Strong:** "You are helping a project manager prepare a stakeholder update. Summarize the attached meeting notes for the executive team in five bullet points. Each bullet names the decision made, the owner, and the deadline. Formal tone, no jargon, nothing that was only discussed without a decision."
+
+The strong version carries all five parts: role, task, source, constraints, format. Every improvement in the output is traceable to one of those five additions, which is how the exam expects you to diagnose weak prompts in reverse.
 
 ### 4.2 Task decomposition
 
@@ -188,6 +206,16 @@ A Project has two configurable layers, and the classic exam question is knowing 
 | Make reference documents available to every chat | Project knowledge |
 | Give details that matter only for today's task | The individual chat prompt |
 | Pull from email or files that change frequently | A connector (Gmail, Google Drive) |
+
+What good Project instructions look like, for a marketing team's content workspace:
+
+> You are a content editor for Meridian Software's marketing team. In every chat:
+> - Follow the brand voice guide in Project knowledge; flag any request that conflicts with it
+> - Audience is IT decision-makers; avoid consumer-marketing tone
+> - All statistics must come from the attached fact sheet; if a claim is not there, say so instead of estimating
+> - Default deliverable format: headline options first, then body copy, then a three-line summary for approvals
+
+Standing role, standards, a guardrail against invented statistics, and a default format. The documents those instructions reference (the voice guide, the fact sheet) live in Project knowledge; today's campaign brief goes in the individual chat.
 
 **Connectors** link Claude to live sources with your permission; reach for one when material lives in those tools and changes often enough that a static upload would go stale. Configuration needs maintenance: revisit instructions when outputs drift from standards, and update or remove knowledge files when the underlying documents change, because stale knowledge produces confidently outdated answers.
 
@@ -376,6 +404,24 @@ Eight fresh questions in the exam's style. (Written for this guide; timed full-l
 - D) Ask three times and keep the consistent answers
 
 **Answer: B.** Recent, verifiable information is the research mode trigger, and the citations still get checked before an external-facing deliverable. A and C rely on training data for post-cutoff facts (model capability does not change the cutoff), and D mistakes consistency for accuracy.
+
+**Q9.** Your team's five analysts produce weekly client reports with Claude, and quality varies wildly: different tones, different structures, statistics of unclear origin. Which single change addresses all three symptoms?
+
+- A) Have the strongest analyst review everyone's output before it ships
+- B) A shared Project: tone and structure standards in the instructions, the approved data sources in knowledge, used by all five analysts
+- C) Standardize on the most capable model
+- D) A shared document of prompt examples analysts can copy from
+
+**Answer: B.** Variance across teammates on the same task is the no-shared-setup symptom, and a shared Project fixes tone (instructions), structure (instructions), and data provenance (knowledge) in one move. A adds a bottleneck without fixing the source, C changes quality but not consistency, and D depends on five people copying correctly forever.
+
+**Q10.** A colleague asks Claude for your company's Q3 market share, gets "23.4%, per IDC's industry tracker," and pastes it into a board slide. No source was attached to the chat. What should have happened?
+
+- A) Nothing; the citation makes it credible
+- B) Ask Claude to double-check its own number in the same chat
+- C) Treat it as unverified: a specific figure with a named study and no attached source is the hallucination profile, so verify against the actual IDC data (or use research mode with checkable citations) before it reaches the board
+- D) Rephrase the question and compare the two answers
+
+**Answer: C.** Specific number, named study, no grounding: two red flags at once, headed for an external-facing, high-stakes surface, which also makes human verification mandatory. A trusts the tell that most needs checking, B asks the same ungrounded process to grade itself, and D mistakes consistency for accuracy.
 
 ## 3-week study plan
 
