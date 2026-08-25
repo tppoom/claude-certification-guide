@@ -5,6 +5,8 @@ The one Claude certification that requires no code, no API knowledge, and no eng
 > **[📖 The Complete CCAO-F Study Guide](./guide.md)**: the full preparation guide with 7 chapters, per-domain exam notes, worked questions, trap answers, and exam-day strategy. This page is the summary; the guide is the study material.
 >
 > **Jump straight in:** [20 free questions](https://preporato.com/free/claude-certified-associate-foundations/questions?utm_source=github&utm_medium=readme&utm_campaign=ccao-f) · [Practice tests](https://preporato.com/certificates/claude-certified-associate-foundations?utm_source=github&utm_medium=readme&utm_campaign=ccao-f#practice-tests) · [Flashcards](https://preporato.com/certificates/claude-certified-associate-foundations?utm_source=github&utm_medium=readme&utm_campaign=ccao-f#flashcards)
+>
+> **At a glance:** 7 chapters · worked text scenarios (non-technical exam, no code) · 10 worked questions · ~5,100 words
 
 ## Quick facts
 

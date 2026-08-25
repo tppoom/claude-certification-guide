@@ -535,7 +535,7 @@ On multiple-response items, apply the traps per option: one bad pick costs the w
 
 ## Worked questions
 
-Ten fresh questions in the exam's style. (Written for this guide; timed full-length practice is linked in Resources.)
+Twelve fresh questions in the exam's style. (Written for this guide; timed full-length practice is linked in Resources.)
 
 **Q1.** A chat product parses `response.content[0].text` directly and intermittently crashes or shows half-finished answers. What is the correct hardening?
 

@@ -524,7 +524,7 @@ For multiple-response items, apply the traps to each option independently. Every
 
 ## Worked questions
 
-Ten fresh questions in the exam's style. (Written for this guide; timed full-length practice is linked in Resources.)
+Twelve fresh questions in the exam's style. (Written for this guide; timed full-length practice is linked in Resources.)
 
 **Q1.** A legal team needs contracts summarized into a fixed five-section brief, every time, with an auditable processing trail for compliance sign-off. Which pattern?
 

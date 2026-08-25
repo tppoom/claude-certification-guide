@@ -330,7 +330,7 @@ On multiple-response items, apply the traps per option: one paste-first or trust
 
 ## Worked questions
 
-Eight fresh questions in the exam's style. (Written for this guide; timed full-length practice is linked in Resources.)
+Ten fresh questions in the exam's style. (Written for this guide; timed full-length practice is linked in Resources.)
 
 **Q1.** Claude summarizes your attached quarterly report and includes a revenue growth percentage. The report contains no such percentage. What happened, and what is the correct response?
 

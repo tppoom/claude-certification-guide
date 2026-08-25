@@ -4,6 +4,19 @@ Study guides for all four Anthropic Claude certifications: **CCAO-F**, **CCDV-F*
 
 Anthropic's certification program launched with a single exam (Claude Certified Architect - Foundations, March 12, 2026) and expanded on July 23, 2026 into a role-based program with four credentials. The names are similar, the prices are similar, and choosing wrong wastes an exam fee on a blueprint written for a different job. This repo exists to make that choice obvious and the preparation efficient.
 
+*Exam facts (prices, question counts, domains) current as of August 2026 — see [About](#about) for the full disclaimer.*
+
+## Contents
+
+- [The four certifications compared](#the-four-certifications-compared)
+- [Which one should you take?](#which-one-should-you-take)
+- [How the program works](#how-the-program-works)
+- [Typical preparation timelines](#typical-preparation-timelines)
+- [In this repo](#in-this-repo)
+- [Free resources](#free-resources)
+- [Contributing](#contributing)
+- [About](#about)
+
 ## The four certifications compared
 
 | Code | Certification | Price | Questions | Audience | Level |
@@ -69,7 +82,14 @@ Whichever exam you choose, the preparation pattern is the same four layers:
 
 ## In this repo
 
-Every certification directory contains a summary README plus a **complete study guide**: technology chapters, per-domain exam notes, worked questions with explanations, trap-answer patterns, a study plan, and a pre-exam checklist.
+Every certification directory contains a summary README plus a **complete study guide**: technology chapters, per-domain exam notes, worked questions with explanations, trap-answer patterns, a study plan, and a pre-exam checklist. These aren't stubs:
+
+| Guide | Chapters | Code examples | Worked questions | Length |
+|-------|----------|----------------|-------------------|--------|
+| [CCA-F](./cca-f/guide.md) | 8 | 17 | 12 | ~9,200 words |
+| [CCDV-F](./ccdv-f/guide.md) | 8 | 11 | 12 | ~6,300 words |
+| [CCAO-F](./ccao-f/guide.md) | 7 | 0 (non-technical exam; worked text scenarios instead) | 10 | ~5,100 words |
+| [CCAR-P](./ccar-p/guide.md) | 8 | 7 | 12 | ~6,900 words |
 
 - [`cca-f/`](./cca-f/): Claude Certified Architect - Foundations → [complete study guide](./cca-f/guide.md)
 - [`ccdv-f/`](./ccdv-f/): Claude Certified Developer - Foundations → [complete study guide](./ccdv-f/guide.md)

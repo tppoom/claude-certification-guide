@@ -843,7 +843,7 @@ Five mental models for evaluating answer choices:
 
 ## Worked questions
 
-Ten fresh questions in the exam's style, with reasoning. (These are written for this guide; timed full-length practice is linked in Resources.)
+Twelve fresh questions in the exam's style, with reasoning. (These are written for this guide; timed full-length practice is linked in Resources.)
 
 **Q1.** Your agentic loop sometimes runs forever on ambiguous tasks. A teammate proposes `max_iterations = 15` as the fix. What is the strongest objection?
 
