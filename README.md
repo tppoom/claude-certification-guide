@@ -78,7 +78,7 @@ Whichever exam you choose, the preparation pattern is the same four layers:
 1. **Official courses** on the Anthropic Partner Academy define the vocabulary the exam uses.
 2. **Primary sources**: [docs.anthropic.com](https://docs.anthropic.com) for the technical exams, the claude.ai Help Center for CCAO-F.
 3. **Build or use the real thing.** Every exam writes its questions from production judgment rather than trivia.
-4. **Calibrate with full-length practice tests** under timed conditions, and let per-domain results direct your remaining study time.
+4. **Calibrate with full-length practice tests** under timed conditions, and let per-domain results direct your remaining study time. Timed tests for each exam are on preporato.com: [CCAO-F](https://preporato.com/certificates/claude-certified-associate-foundations#practice-tests) · [CCDV-F](https://preporato.com/certificates/claude-certified-developer-foundations#practice-tests) · [CCA-F](https://preporato.com/certificates/claude-certified-architect#practice-tests) · [CCAR-P](https://preporato.com/certificates/claude-certified-architect-professional#practice-tests).
 
 ## In this repo
 
