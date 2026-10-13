@@ -2,7 +2,7 @@
 
 A full preparation guide for Anthropic's developer certification. Part I teaches the material by topic. Part II re-indexes it by exam domain for revision. Part III covers trap answers, worked questions, and a final checklist.
 
-Maintained by [preporato.com](https://preporato.com). Facts verified against the official exam guide and program pages as of August 2026.
+Maintained by [preporato.com](https://preporato.com). Facts checked against the official exam guide and Anthropic's program pages in October 2026.
 
 ---
 
@@ -45,12 +45,14 @@ The blueprint is implementation-heavy, and its two largest domains (API mechanic
 | | |
 |---|---|
 | Questions | 53, all scored, the smallest count in the program |
-| Duration | 120 minutes |
+| Duration | 120 minutes to answer, about 135 minutes of seat time |
 | Passing score | 720 on a 100-1000 scaled score, with per-domain percent-correct on the report |
 | Question style | Single-answer plus multiple-response (~a quarter of items), **no partial credit** |
 | Delivery | Pearson VUE, test center or online proctored |
 | Price | $125 per attempt |
-| Registration | Anthropic Partner Academy (free Claude Partner Network membership required) |
+| Registration | Anthropic Partner Academy, open to people who work at Claude Partner Network organizations (sign in with a company email) |
+| Languages | English or Japanese |
+| Retakes | Full fee for every attempt; waits of 14, 30 and 90 days after the first, second and third failed attempts; at most 4 attempts in any 12 months |
 | Validity | 1 year; free non-proctored renewal before expiration, full proctored retake after a lapse |
 
 The small question count changes strategy: each miss costs more, so even coverage across the blueprint beats deep expertise in one domain. A weak 10% domain is the difference between passing and retaking.
@@ -80,7 +82,7 @@ The API is stateless: you send the full conversation history on every request. M
 
 ### 1.2 stop_reason before content
 
-`max_tokens` is a hard output cap, and `stop_reason` tells you why generation ended: `end_turn` (finished naturally), `max_tokens` (truncated), `tool_use` (wants a tool executed), `refusal` (declined). **Check it before parsing content.** Code that reads the first content block unconditionally breaks the moment a response is truncated or refused, and the exam tests exactly that failure.
+`max_tokens` is a hard output cap, and `stop_reason` tells you why generation ended: `end_turn` (finished naturally), `max_tokens` (truncated), `tool_use` (wants a tool executed), `refusal` (declined), `stop_sequence` (hit one of your stop sequences), `pause_turn` (a server-side tool loop paused; send the response back as-is to continue) and `model_context_window_exceeded` (the response filled the context window). **Check it before parsing content.** Code that reads the first content block unconditionally breaks the moment a response is truncated or refused, and the exam tests exactly that failure.
 
 The branching in code, which Domain 1 tests directly:
 
@@ -146,7 +148,7 @@ final = stream.get_final_message()            # complete message, usage, stop_re
 
 ### 2.2 Prompt caching
 
-Caching stores the processed form of a stable prompt prefix so repeated calls skip reprocessing it. Cached reads bill at roughly a tenth of the base input rate; writes carry a small premium.
+Caching stores the processed form of a stable prompt prefix so repeated calls skip reprocessing it. Cached reads bill at a tenth of the base input rate or less, depending on the model; writes carry a premium (1.25x the base rate for the default 5-minute cache, 2x for the 1-hour cache).
 
 The mechanics the exam tests:
 
@@ -249,6 +251,8 @@ response = client.messages.create(
 
 The judgment being tested: thinking buys accuracy on genuinely multi-step problems and wastes tokens and latency on simple ones, so it is a per-workload decision backed by evals rather than a default.
 
+Current API note: the `budget_tokens` form above is manual extended thinking. Newer models think adaptively, and the `effort` parameter (`output_config.effort`, from `low` to `max`) is the main control for how much they reason and spend. The same judgment applies to both: match the reasoning depth to the workload and confirm it with evals.
+
 ### 3.4 Cost levers, in order
 
 Trim context → cache stable prefixes → route easy traffic to the fast tier → push non-urgent volume through Batch. **Downgrading the model tier comes last, and only with eval evidence.** Measure prompts with the token counting endpoint rather than estimating.
@@ -282,7 +286,8 @@ The **Claude Agent SDK** packages the full agent harness as a library: the loop,
 - **Bloat and drift.** Context bloat is accumulated stale content (old tool results, dead ends); drift is the model gradually losing the original instructions under that weight. Two distinct fixes the exam separates: **pruning** removes stale content outright; **compaction** summarizes earlier history into a shorter form.
 - **Subagents isolate context**: delegate a reading-heavy subtask and only the report comes back.
 - **Testable criteria.** "Flag SQL injection and authentication bypass" is checkable; "be careful" is not. Few-shot uses 2-4 worked examples, ideally including a correct rejection so the model learns what to leave alone.
-- **Structured output plus defensive parsing.** Constrain the response to a schema, parse with a real JSON parser, validate against the schema, and handle `refusal` and `max_tokens` stop reasons. Regex over raw response text is the tested anti-pattern.
+- **Structured output plus defensive parsing.** Constrain the response to a schema (structured outputs, set with `output_config.format`, guarantee schema-valid JSON on supported models), parse with a real JSON parser, validate against the schema, and handle `refusal` and `max_tokens` stop reasons. Regex over raw response text is the tested anti-pattern.
+- **Prefill is gone on newer models.** Starting with the Claude 4.6 models, a request that prefills the final assistant turn returns a 400 error. Structured outputs replace prefill for format control, and a direct instruction replaces it for skipping preambles.
 
 ```python
 def parse_extraction(response) -> dict | None:
@@ -501,15 +506,15 @@ The three choices in this snippet are each a tested fact: only transient statuse
 
 ## The preparation ladder
 
-Five layers, in order. Each builds on the previous, and the free layers take you surprisingly far.
+Five layers, in order. Each builds on the previous, and the free layers take you surprisingly far. Anthropic retired its official practice exam when the exams moved to Pearson VUE; the sample questions in the official exam guide are what remains.
 
 | Step | Resource | Cost |
 |------|----------|------|
 | 1. Learn the vocabulary | [Anthropic Partner Academy courses](https://claude.com/partners), the official exam guide, and the [Anthropic Academy courses](https://www.anthropic.com/learn) mapped in Resources | Free |
 | 2. Go to the source | [docs.anthropic.com](https://docs.anthropic.com): API reference, Agent SDK, MCP | Free |
-| 3. First calibration | [20 free CCDV-F practice questions](https://preporato.com/free/claude-certified-developer-foundations/questions?utm_source=github&utm_medium=guide&utm_campaign=ccdv-f) in the real exam format | Free |
-| 4. Full calibration | [Six full-length 53-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-developer-foundations?utm_source=github&utm_medium=guide&utm_campaign=ccdv-f) built on the exact domain weights | Paid |
-| 5. Prove it hands-on | [21 auto-graded build-and-submit projects](https://preporato.com/certificates/claude-certified-developer-foundations?utm_source=github&utm_medium=guide&utm_campaign=ccdv-f): API integration, agents, tools, extraction pipelines | Paid |
+| 3. First calibration | [30 practice questions with explanations](./practice-questions.md) in this repo, also as a timed [practice test](https://preporato.github.io/claude-certification-guide/#ccdv-f) | Free |
+| 4. Full calibration | [Six full-length 53-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-developer-foundations) on Preporato, built on the exact domain weights; the page has free sample questions to try first | Paid |
+| 5. Prove it hands-on | [21 auto-graded build-and-submit projects](https://preporato.com/certificates/claude-certified-developer-foundations): API integration, agents, tools, extraction pipelines | Paid |
 
 Steps 1-3 cost nothing and tell you honestly where you stand. Steps 4-5 are how you close the gap they reveal.
 
@@ -659,16 +664,16 @@ client.messages.create(
 
 ## 4-week study plan
 
-- **Week 1: official baseline.** Join the [Claude Partner Network](https://claude.com/partners) (free), complete the Partner Academy developer courses, read the exam guide, and map yourself against all eight domains.
+- **Week 1: official baseline.** Check that your employer is in the [Claude Partner Network](https://claude.com/partners) (registration needs your company email), complete the Partner Academy developer courses, read the exam guide, and map yourself against all eight domains.
 - **Weeks 2-3: build against the API.** Work through [docs.anthropic.com](https://docs.anthropic.com) with code open: streaming, prompt caching verified via `cache_read_input_tokens`, a batch job, an Agent SDK loop with one hook, one MCP integration, and a structured-output pipeline with defensive parsing. Domain 1 is won in an editor, and this guide's Part I is the reading companion. The [hands-on projects](https://preporato.com/certificates/claude-certified-developer-foundations) (paid) cover the same builds with automatic rubric grading.
-- **Week 4: calibrate.** Start with the [20 free questions](https://preporato.com/free/claude-certified-developer-foundations/questions?utm_source=github&utm_medium=guide&utm_campaign=ccdv-f) to see the format, then take [full-length timed practice tests](https://preporato.com/certificates/claude-certified-developer-foundations?utm_source=github&utm_medium=guide&utm_campaign=ccdv-f). With 53 questions, a weak 10% domain decides the outcome, so drill per-domain results, re-read the matching Part II notes, and review the trap table plus the [cheat sheet](https://preporato.com/blog/claude-certified-developer-foundations-cheat-sheet-2026) the night before.
+- **Week 4: calibrate.** Start with the [30 practice questions](./practice-questions.md) in this repo to see the format, then take [full-length timed practice tests](https://preporato.com/certificates/claude-certified-developer-foundations). With 53 questions, a weak 10% domain decides the outcome, so drill per-domain results, re-read the matching Part II notes, and review the trap table plus the [cheat sheet](https://preporato.com/blog/claude-certified-developer-foundations-cheat-sheet-2026) the night before.
 
 Expanded version: [4-week CCDV-F study plan](https://preporato.com/blog/ccdv-f-study-plan-4-week-preparation-2026).
 
 ## Pre-exam checklist
 
 - [ ] I can pick a model tier from volume, difficulty, latency, and cost, and know when routing beats one model
-- [ ] I check `stop_reason` before parsing and can name all four values
+- [ ] I check `stop_reason` before parsing and know what every value means
 - [ ] I know streaming's two problems and when it is required
 - [ ] I can explain caching as a prefix match, place checkpoints stable-first, and name the classic breakers
 - [ ] I verify caching with `cache_read_input_tokens` rather than assuming
@@ -705,11 +710,12 @@ Expanded version: [4-week CCDV-F study plan](https://preporato.com/blog/ccdv-f-s
 **Free articles (preporato.com):**
 - [CCDV-F complete guide](https://preporato.com/blog/claude-certified-developer-foundations-complete-guide-2026) · [Cheat sheet](https://preporato.com/blog/claude-certified-developer-foundations-cheat-sheet-2026) · [Domains breakdown](https://preporato.com/blog/ccdv-f-exam-domains-complete-breakdown-2026) · [How to pass first attempt](https://preporato.com/blog/how-to-pass-ccdv-f-first-attempt-2026) · [CCDV-F vs CCA-F](https://preporato.com/blog/ccdv-f-vs-cca-f-which-claude-certification-2026)
 
-**Practice ([preporato.com/certificates/claude-certified-developer-foundations](https://preporato.com/certificates/claude-certified-developer-foundations)):**
-- [20 free practice questions](https://preporato.com/free/claude-certified-developer-foundations/questions?utm_source=github&utm_medium=guide&utm_campaign=ccdv-f) in the real exam format
-- (Paid) [Six full-length 53-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-developer-foundations?utm_source=github&utm_medium=guide&utm_campaign=ccdv-f) built on the exact domain weights
-- (Paid) [21 hands-on projects](https://preporato.com/certificates/claude-certified-developer-foundations?utm_source=github&utm_medium=guide&utm_campaign=ccdv-f): build-and-submit work (API integration, agents, tools, extraction pipelines) graded automatically against a rubric
+**Practice:**
+- [30 practice questions with explanations](./practice-questions.md) in this repo, also as a timed [practice test](https://preporato.github.io/claude-certification-guide/#ccdv-f) (free)
+- [The CCDV-F page on Preporato](https://preporato.com/certificates/claude-certified-developer-foundations): free sample questions to start, then the full tests below
+- (Paid) [Six full-length 53-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-developer-foundations) built on the exact domain weights
+- (Paid) [21 hands-on projects](https://preporato.com/certificates/claude-certified-developer-foundations): build-and-submit work (API integration, agents, tools, extraction pipelines) graded automatically against a rubric
 
 ---
 
-*Not affiliated with Anthropic. Exam details reflect the program as of August 2026; the Partner Academy is authoritative. Found an error? [Open an issue](https://github.com/preporato/claude-certification-guide/issues).*
+*Not affiliated with Anthropic. Exam details reflect the program as of October 2026; the Partner Academy is authoritative. Found an error? [Open an issue](https://github.com/preporato/claude-certification-guide/issues).*

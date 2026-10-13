@@ -1,0 +1,41 @@
+name: I passed!
+description: Add yourself to PASSED.md.
+title: "[Passed] "
+labels: ["passed"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Congratulations! Fill this in and we'll add you to [PASSED.md](https://github.com/preporato/claude-certification-guide/blob/main/PASSED.md).
+        Please keep exam questions out of your tip; they're covered by Anthropic's candidate agreement.
+  - type: input
+    id: name
+    attributes:
+      label: Name or GitHub handle to show
+    validations:
+      required: true
+  - type: dropdown
+    id: exam
+    attributes:
+      label: Exam
+      options:
+        - CCAO-F (Associate - Foundations)
+        - CCDV-F (Developer - Foundations)
+        - CCA-F (Architect - Foundations)
+        - CCAR-P (Architect - Professional)
+    validations:
+      required: true
+  - type: input
+    id: month
+    attributes:
+      label: Month passed
+      placeholder: "October 2026"
+    validations:
+      required: true
+  - type: textarea
+    id: tip
+    attributes:
+      label: One tip for the next person
+      description: One or two sentences.
+    validations:
+      required: true

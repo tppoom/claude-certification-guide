@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Claude certification practice test: CCAO-F, CCDV-F, CCA-F, CCAR-P</title>
+<meta name="description" content="Practice questions for the four Anthropic Claude certifications, with explanations and a score for every exam domain. From the open-source Claude Certification Guide.">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Nunito:wght@700;800;900&display=swap">
+<style>
+:root {
+  --paper: #F4F4F4; --card: #FFFFFF; --ink: #1A1D1F; --graphite: #33383F; --slate: #676767; --line: #E3E3E3; --line-strong: #C9C9C9;
+  --blue: #2A85FF; --blue-deep: #0066F5; --blue-tint: #E8F3FF;
+  --cta: #2C2C2C; --cta-hover: #000000; --cta-text: #FFFFFF;
+  --ok: #2F7A3A; --ok-line: #83BF6E; --ok-tint: #EAFAE4;
+  --bad: #B42318; --bad-line: #FF6A55; --bad-tint: #FFECE8;
+  --flag: #FF6A55; --glow: #CC785C;
+  --round: Nunito, ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
+  --sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #101010; --card: #191919; --ink: #F1F1F1; --graphite: #D9D9D9; --slate: #A3A3A3; --line: #2C2C2E; --line-strong: #444448;
+    --blue-tint: #0F2440; --cta: #F1F1F1; --cta-hover: #FFFFFF; --cta-text: #101010;
+    --ok: #7DD27F; --ok-tint: #11291A; --bad: #FF8A7A; --bad-tint: #36160F;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.55 var(--sans); }
+a { color: var(--blue-deep); }
+@media (prefers-color-scheme: dark) { a { color: #6FB0FF; } }
+code { font-family: var(--mono); font-size: .86em; background: color-mix(in srgb, var(--ink) 7%, transparent); padding: .08em .35em; border-radius: 5px; overflow-wrap: anywhere; }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; max-width: 980px; margin: 0 auto; padding: 16px 20px; }
+.brand { font: 800 16px/1.2 var(--round); color: var(--ink); text-decoration: none; letter-spacing: -.005em; }
+.top-link { font: 600 14px/1.2 var(--sans); color: var(--graphite); text-decoration: none; white-space: nowrap; }
+.top-link:hover, .brand:hover { color: var(--blue-deep); }
+@media (max-width: 480px) { .top-link .long { display: none; } }
+main { max-width: 980px; margin: 0 auto; padding: 8px 20px 48px; }
+.narrow { max-width: 760px; margin: 0 auto; }
+footer { max-width: 980px; margin: 0 auto; padding: 24px 20px 40px; color: var(--slate); font-size: 13px; border-top: 1px solid var(--line); }
+footer a { color: inherit; }
+
+h1 { font: 900 clamp(28px, 5vw, 40px)/1.12 var(--round); letter-spacing: -.012em; margin: 24px 0 12px; }
+.lead { font-size: 18px; color: var(--graphite); max-width: 680px; margin: 0 0 28px; }
+.note { color: var(--slate); font-size: 14px; margin: 28px 0 0; }
+
+.grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+@media (min-width: 680px) { .grid { grid-template-columns: 1fr 1fr; } }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; }
+.cover { position: relative; aspect-ratio: 16 / 6.4; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; background:
+  radial-gradient(60% 85% at 50% 100%, color-mix(in srgb, var(--glow) 38%, transparent), transparent 72%),
+  radial-gradient(circle at 1px 1px, rgba(255,255,255,.07) 1px, transparent 1.6px) 0 0 / 14px 14px,
+  linear-gradient(#17171A, #0B0B0C); }
+.cover b { font: 900 clamp(34px, 6vw, 46px)/1 var(--round); letter-spacing: -.01em; }
+.cover span { margin-top: 10px; font: 600 11px/1.3 var(--mono); letter-spacing: .22em; text-transform: uppercase; color: #A3CFFF; }
+.card-body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.card h2 { font: 700 17px/1.35 var(--sans); margin: 0; }
+.meta { margin: 0; color: var(--slate); font-size: 14px; }
+.best { margin: 2px 0 0; font: 700 13px/1.4 var(--round); color: var(--ok); }
+.row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 12px; }
+
+.btn { appearance: none; border: 0; border-radius: 11px; min-height: 46px; padding: 0 18px; font: 600 15px/1 var(--sans); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; transition: background-color .15s, border-color .15s, color .15s; }
+.btn-dark { background: var(--cta); color: var(--cta-text); }
+.btn-dark:hover { background: var(--cta-hover); }
+.btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line-strong); }
+.btn-ghost:hover { border-color: var(--graphite); }
+.btn[disabled] { opacity: .4; cursor: not-allowed; }
+.btn-grow { flex: 1 1 160px; }
+
+.qhead { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 12px 0 10px; font: 700 14px/1.2 var(--round); color: var(--graphite); }
+.qhead .mode { color: var(--slate); font-weight: 700; }
+.timer { font: 600 15px/1 var(--mono); padding: 7px 10px; border-radius: 8px; background: var(--card); border: 1px solid var(--line); }
+.timer.low { color: var(--bad); border-color: var(--bad-line); }
+.bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.bar > i { display: block; height: 100%; background: var(--blue); border-radius: 3px; }
+.scenario { margin: 22px 0 0; background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--glow); border-radius: 12px; padding: 14px 16px; }
+.scenario summary { cursor: pointer; font: 800 14px/1.35 var(--round); }
+.scenario p { margin: 8px 0 0; color: var(--graphite); font-size: 15px; }
+.qlabel { margin: 26px 0 6px; font: 700 13px/1.4 var(--round); color: var(--slate); }
+.qlabel b { color: var(--ink); }
+.stem { font-size: 18px; line-height: 1.55; margin: 0 0 6px; font-weight: 500; }
+pre { background: #0B0B0C; color: #E9E9E9; font: 500 13px/1.55 var(--mono); padding: 14px 16px; border-radius: 12px; overflow: auto; margin: 14px 0 6px; }
+.hint { font: 700 13px/1.4 var(--round); color: var(--blue-deep); margin: 10px 0 0; }
+@media (prefers-color-scheme: dark) { .hint { color: #6FB0FF; } }
+.opts { border: 0; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; }
+.opt { position: relative; display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: start; padding: 13px 15px; background: var(--card); border: 1.5px solid var(--line); border-radius: 13px; cursor: pointer; transition: border-color .12s, background-color .12s; }
+.opt:hover { border-color: var(--line-strong); }
+.opt input { position: absolute; opacity: 0; pointer-events: none; }
+.opt:focus-within { outline: 3px solid var(--blue); outline-offset: 2px; }
+.let { width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid var(--line-strong); display: grid; place-items: center; font: 800 14px/1 var(--round); color: var(--graphite); }
+.multi .let { border-radius: 8px; }
+.txt { padding-top: 4px; }
+.opt.sel { border-color: var(--blue); background: var(--blue-tint); }
+.opt.sel .let { background: var(--blue); border-color: var(--blue); color: #fff; }
+.opt.right { border-color: var(--ok-line); background: var(--ok-tint); }
+.opt.right .let { background: var(--ok-line); border-color: var(--ok-line); color: #10240F; }
+.opt.wrong { border-color: var(--bad-line); background: var(--bad-tint); }
+.opt.wrong .let { background: var(--bad-line); border-color: var(--bad-line); color: #fff; }
+.opt.locked { cursor: default; }
+.feedback { margin: 18px 0 0; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+.feedback h3 { margin: 0 0 6px; font: 800 16px/1.3 var(--round); }
+.feedback h3.ok { color: var(--ok); }
+.feedback h3.bad { color: var(--bad); }
+.feedback p { margin: 0; color: var(--graphite); }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 0; }
+.nav { margin: 26px 0 0; padding: 16px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; }
+.nav p { margin: 0 0 10px; font: 700 13px/1.4 var(--round); color: var(--slate); }
+.dots { display: grid; grid-template-columns: repeat(auto-fill, minmax(38px, 1fr)); gap: 6px; }
+.dot { position: relative; height: 38px; border-radius: 9px; border: 1.5px solid var(--line-strong); background: transparent; color: var(--graphite); font: 700 13px/1 var(--round); cursor: pointer; }
+.dot.done { background: var(--graphite); border-color: var(--graphite); color: var(--card); }
+.dot.cur { border-color: var(--blue); box-shadow: 0 0 0 2px var(--blue) inset; }
+.dot.flagged::after { content: ""; position: absolute; top: 4px; right: 4px; width: 7px; height: 7px; border-radius: 50%; background: var(--flag); }
+
+.score { font: 900 clamp(44px, 9vw, 64px)/1 var(--round); letter-spacing: -.02em; margin: 18px 0 4px; }
+.score small { font-size: .42em; color: var(--slate); font-weight: 800; margin-left: 6px; letter-spacing: 0; }
+.sub { color: var(--graphite); margin: 0 0 4px; }
+.fine { color: var(--slate); font-size: 14px; margin: 0; }
+.panel { margin: 24px 0 0; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px 18px 8px; }
+.panel h2 { font: 800 17px/1.3 var(--round); margin: 0 0 12px; }
+.drow { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+.drow:first-of-type { border-top: 0; }
+.dname { font-weight: 600; font-size: 15px; }
+.dnum { font: 700 14px/1.4 var(--round); color: var(--graphite); text-align: right; }
+.drow .bar { grid-column: 1 / -1; height: 8px; }
+.drow .bar > i.good { background: var(--ok-line); }
+.drow .bar > i.weak { background: var(--bad-line); }
+.dmeta { grid-column: 1 / -1; font-size: 13px; color: var(--slate); }
+.cta { margin: 24px 0 0; border-radius: 18px; overflow: hidden; color: #fff; padding: 24px 22px; background:
+  radial-gradient(70% 120% at 85% 110%, color-mix(in srgb, var(--glow) 42%, transparent), transparent 70%),
+  radial-gradient(circle at 1px 1px, rgba(255,255,255,.07) 1px, transparent 1.6px) 0 0 / 14px 14px,
+  linear-gradient(#17171A, #0B0B0C); }
+.cta h2 { font: 900 22px/1.2 var(--round); margin: 0 0 8px; }
+.cta p { margin: 0 0 16px; color: #D6D6D6; max-width: 560px; }
+.cta .btn { background: #fff; color: #101010; }
+.cta .btn:hover { background: #EDEDED; }
+.review { margin: 24px 0 0; }
+.review-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.review-head h2 { font: 800 17px/1.3 var(--round); margin: 0; }
+.toggle { font-size: 14px; color: var(--graphite); display: inline-flex; gap: 8px; align-items: center; cursor: pointer; }
+.item { margin: 10px 0 0; background: var(--card); border: 1px solid var(--line); border-radius: 13px; }
+.item summary { list-style: none; cursor: pointer; padding: 13px 15px; display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; }
+.item summary::-webkit-details-marker { display: none; }
+.mark { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font: 900 13px/1 var(--round); }
+.mark.ok { background: var(--ok-tint); color: var(--ok); }
+.mark.bad { background: var(--bad-tint); color: var(--bad); }
+.item .q { font-size: 15px; }
+.item .body { padding: 0 15px 15px 51px; }
+.item .opts { margin-top: 4px; }
+.item .opt { cursor: default; padding: 10px 12px; }
+.item .exp { margin: 12px 0 0; color: var(--graphite); }
+.yours { font: 700 13px/1.4 var(--round); color: var(--slate); margin: 0 0 8px; }
+@media (max-width: 520px) {
+  .item .body { padding-left: 15px; }
+  .stem { font-size: 17px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="./">Claude Certification Guide</a>
+  <a class="top-link" id="top-link" href="https://github.com/preporato/claude-certification-guide">GitHub</a>
+</header>
+<main id="app" aria-live="polite"></main>
+<footer>
+  Questions from the open-source <a href="https://github.com/preporato/claude-certification-guide">Claude Certification Guide</a> (MIT license), written for practice and not taken from any exam.
+  Maintained by <a href="https://preporato.com">Preporato</a>. Not affiliated with Anthropic; Claude is a trademark of Anthropic, PBC.
+</footer>
+<script id="banks" type="application/json">/*__BANKS__*/[]</script>
+<script>
+(function () {
+  "use strict";
+  var REPO = "https://github.com/preporato/claude-certification-guide";
+  var BANKS = JSON.parse(document.getElementById("banks").textContent);
+  var BY_ID = {};
+  BANKS.forEach(function (b) { BY_ID[b.id] = b; });
+  var app = document.getElementById("app");
+  var topLink = document.getElementById("top-link");
+  var S = null;        // the running session
+  var timerId = null;
+
+  // ---------- helpers ----------
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function rich(s) { return esc(s).replace(/`([^`]+)`/g, "<code>$1</code>"); }
+  function same(a, b) { return a.length === b.length && a.slice().sort().join() === b.slice().sort().join(); }
+  function words(n) { return ["zero", "one", "two", "three", "four", "five"][n] || String(n); }
+  function joinLetters(l) { return l.length === 2 ? l.join(" and ") : l.join(", "); }
+  function roleLine(b) {
+    var parts = b.name.replace("Claude Certified ", "").split(" - ");
+    return parts.join(" · ");
+  }
+  function clock(ms) {
+    var s = Math.max(0, Math.round(ms / 1000));
+    var m = Math.floor(s / 60);
+    return (m < 10 ? "0" : "") + m + ":" + (s % 60 < 10 ? "0" : "") + (s % 60);
+  }
+  function getBest(id) {
+    try { return JSON.parse(localStorage.getItem("ccg:v1:best:" + id) || "null"); } catch (e) { return null; }
+  }
+  function saveBest(id, correct, total) {
+    try {
+      var best = getBest(id);
+      if (!best || correct > best.correct) {
+        localStorage.setItem("ccg:v1:best:" + id, JSON.stringify({ correct: correct, total: total, at: Date.now() }));
+      }
+    } catch (e) { /* storage unavailable */ }
+  }
+  function setTop(b) {
+    if (b) {
+      topLink.href = b.certPage;
+      topLink.innerHTML = "Full " + esc(b.code) + '<span class="long"> practice</span> tests ↗';
+    } else {
+      topLink.href = REPO;
+      topLink.textContent = "GitHub ↗";
+    }
+  }
+  function stopTimer() { if (timerId) { clearInterval(timerId); timerId = null; } }
+  function top() { window.scrollTo(0, 0); }
+
+  // ---------- home ----------
+  function viewHome() {
+    stopTimer();
+    S = null;
+    setTop(null);
+    document.title = "Claude certification practice test: CCAO-F, CCDV-F, CCA-F, CCAR-P";
+    app.innerHTML =
+      '<h1>Practice for your Claude certification</h1>' +
+      '<p class="lead">30 questions for each of Anthropic’s four certification exams, written in the exam’s style, with an explanation for every answer. ' +
+      'Practice at your own pace, or take a timed run and get a score for every domain.</p>' +
+      '<div class="grid">' + BANKS.map(card).join("") + '</div>' +
+      '<p class="note">Your results link each weak domain to its notes in the <a href="' + REPO + '">study guides</a>. Best scores are saved in this browser only.</p>';
+  }
+  function card(b) {
+    var best = getBest(b.id);
+    return '<article class="card">' +
+      '<div class="cover" aria-hidden="true"><b>' + esc(b.code) + '</b><span>' + esc(roleLine(b)) + '</span></div>' +
+      '<div class="card-body">' +
+        '<h2>' + esc(b.name) + '</h2>' +
+        '<p class="meta">' + b.questions.length + ' questions · ' + b.domains.length + ' domains · timed run ' + b.minutes + ' minutes</p>' +
+        (best ? '<p class="best">Your best: ' + best.correct + ' of ' + best.total + '</p>' : '') +
+        '<div class="row">' +
+          '<button class="btn btn-dark btn-grow" data-start="' + b.id + '" data-mode="timed">Timed test</button>' +
+          '<button class="btn btn-ghost btn-grow" data-start="' + b.id + '" data-mode="practice">Practice</button>' +
+        '</div>' +
+      '</div></article>';
+  }
+
+  // ---------- exam intro (deep links such as #cca-f) ----------
+  function viewIntro(b) {
+    stopTimer();
+    S = null;
+    setTop(b);
+    document.title = b.code + " practice test · Claude Certification Guide";
+    var best = getBest(b.id);
+    var multi = b.questions.filter(function (q) { return q.answer.length > 1; }).length;
+    app.innerHTML = '<div class="narrow">' +
+      '<div class="card" style="margin-top:16px"><div class="cover" aria-hidden="true"><b>' + esc(b.code) + '</b><span>' + esc(roleLine(b)) + '</span></div></div>' +
+      '<h1>' + esc(b.code) + ' practice test</h1>' +
+      '<p class="lead">' + b.questions.length + ' questions for ' + esc(b.name) + ', spread across the exam’s ' + b.domains.length + ' domains by their official weights. ' +
+      multi + ' of them ask for more than one answer, as the exam does; those count only when every choice is right.</p>' +
+      (best ? '<p class="best">Your best so far: ' + best.correct + ' of ' + best.total + '</p>' : '') +
+      '<div class="row">' +
+        '<button class="btn btn-dark btn-grow" data-start="' + b.id + '" data-mode="timed">Timed test (' + b.minutes + ' minutes)</button>' +
+        '<button class="btn btn-ghost btn-grow" data-start="' + b.id + '" data-mode="practice">Practice with explanations</button>' +
+      '</div>' +
+      '<p class="note">The real exam has ' + b.exam.questions + ' questions in ' + b.exam.minutes + ' minutes, so the timed run keeps the same pace of two minutes a question. ' +
+      '<a href="./">All four exams</a></p>' +
+    '</div>';
+  }
+
+  // ---------- quiz ----------
+  function start(id, mode, subset) {
+    var b = BY_ID[id];
+    if (!b) return viewHome();
+    stopTimer();
+    var idx = subset || b.questions.map(function (_, i) { return i; });
+    S = {
+      b: b, mode: mode, idx: idx, i: 0, ans: {}, checked: {}, flag: {}, retry: !!subset,
+      started: Date.now(), done: false,
+      deadline: mode === "timed" ? Date.now() + Math.round(b.minutes * 60000 * idx.length / b.questions.length) : null
+    };
+    setTop(b);
+    document.title = b.code + " " + (mode === "timed" ? "timed test" : "practice") + " · Claude Certification Guide";
+    if (S.deadline) {
+      timerId = setInterval(function () {
+        var left = S.deadline - Date.now();
+        var el = document.getElementById("timer");
+        if (el) {
+          el.textContent = clock(left);
+          el.classList.toggle("low", left < 5 * 60000);
+        }
+        if (left <= 0) finish();
+      }, 1000);
+    }
+    viewQuiz();
+    top();
+  }
+
+  function current() { return S.b.questions[S.idx[S.i]]; }
+
+  function viewQuiz() {
+    var b = S.b, qi = S.idx[S.i], q = b.questions[qi], n = S.idx.length;
+    var multi = q.answer.length > 1;
+    var chosen = S.ans[qi] || [];
+    var checked = S.mode === "practice" && S.checked[qi];
+    var scenario = null;
+    if (q.scenario) b.scenarios.forEach(function (s) { if (s.id === q.scenario) scenario = s; });
+    var domain = null;
+    b.domains.forEach(function (d) { if (d.id === q.domain) domain = d; });
+    var answeredCount = Object.keys(S.ans).filter(function (k) { return S.ans[k].length; }).length;
+
+    var html = '<div class="narrow">' +
+      '<div class="qhead"><span>' + esc(b.code) + ' <span class="mode">· ' + (S.mode === "timed" ? "Timed test" : (S.retry ? "Retry" : "Practice")) + '</span></span>' +
+      (S.deadline ? '<span class="timer" id="timer" role="timer" aria-label="Time left">' + clock(S.deadline - Date.now()) + '</span>'
+                  : '<span>' + (S.i + 1) + ' / ' + n + '</span>') +
+      '</div>' +
+      '<div class="bar" aria-hidden="true"><i style="width:' + Math.round(100 * (S.mode === "timed" ? answeredCount : S.i + (checked ? 1 : 0)) / n) + '%"></i></div>';
+
+    if (scenario) {
+      html += '<details class="scenario" open><summary>Scenario: ' + esc(scenario.title) + '</summary><p>' + rich(scenario.text) + '</p></details>';
+    }
+    html += '<p class="qlabel"><b>Question ' + (S.i + 1) + ' of ' + n + '</b> · ' + esc(domain ? domain.name : "") + '</p>' +
+      '<p class="stem" id="stem">' + rich(q.stem) + '</p>';
+    if (q.code) html += '<pre><code>' + esc(q.code.text) + '</code></pre>';
+    if (multi && !checked) html += '<p class="hint" id="hint">Choose ' + words(q.answer.length) + '.</p>';
+
+    html += '<fieldset class="opts' + (multi ? ' multi' : '') + '" aria-labelledby="stem"><legend class="sr-only">Answer options</legend>';
+    q.options.forEach(function (o) {
+      var isChosen = chosen.indexOf(o.letter) >= 0;
+      var cls = "opt";
+      if (checked) {
+        cls += " locked";
+        if (q.answer.indexOf(o.letter) >= 0) cls += " right";
+        else if (isChosen) cls += " wrong";
+      } else if (isChosen) cls += " sel";
+      html += '<label class="' + cls + '"><input type="' + (multi ? "checkbox" : "radio") + '" name="opt" value="' + o.letter + '"' +
+        (isChosen ? " checked" : "") + (checked ? " disabled" : "") + '><span class="let" aria-hidden="true">' + o.letter + '</span>' +
+        '<span class="txt"><span class="sr-only">' + o.letter + '. </span>' + rich(o.text) + '</span></label>';
+    });
+    html += '</fieldset>';
+
+    if (checked) {
+      var ok = same(chosen, q.answer);
+      html += '<div class="feedback" role="status"><h3 class="' + (ok ? "ok" : "bad") + '">' +
+        (ok ? "Correct" : "Not quite. The answer is " + joinLetters(q.answer) + ".") + '</h3>' +
+        '<p>' + rich(q.explanation) + '</p></div>';
+    }
+
+    html += '<div class="actions">';
+    if (S.mode === "practice") {
+      if (!checked) {
+        html += '<button class="btn btn-dark btn-grow" data-act="check"' + (chosen.length === q.answer.length ? "" : " disabled") + '>Check answer</button>';
+      } else {
+        html += '<button class="btn btn-dark btn-grow" data-act="next">' + (S.i + 1 < n ? "Next question" : "See results") + '</button>';
+      }
+      html += '<button class="btn btn-ghost" data-act="quit">End practice</button>';
+    } else {
+      html += '<button class="btn btn-ghost" data-act="prev"' + (S.i === 0 ? " disabled" : "") + '>Back</button>' +
+        '<button class="btn btn-ghost" data-act="flag" aria-pressed="' + (S.flag[qi] ? "true" : "false") + '">' + (S.flag[qi] ? "Unflag" : "Flag for review") + '</button>' +
+        (S.i + 1 < n ? '<button class="btn btn-dark btn-grow" data-act="next">Next</button>'
+                     : '<button class="btn btn-dark btn-grow" data-act="finish">Finish test</button>');
+    }
+    html += '</div>';
+
+    if (S.mode === "timed") {
+      html += '<nav class="nav" aria-label="Questions"><p>' + answeredCount + ' of ' + n + ' answered' +
+        (Object.keys(S.flag).filter(function (k) { return S.flag[k]; }).length ? ' · flagged questions have a dot' : '') + '</p><div class="dots">';
+      S.idx.forEach(function (qIndex, pos) {
+        var cls = "dot";
+        if ((S.ans[qIndex] || []).length) cls += " done";
+        if (pos === S.i) cls += " cur";
+        if (S.flag[qIndex]) cls += " flagged";
+        html += '<button class="' + cls + '" data-go="' + pos + '" aria-label="Question ' + (pos + 1) + '"' + (pos === S.i ? ' aria-current="step"' : '') + '>' + (pos + 1) + '</button>';
+      });
+      html += '</div>' + (S.i + 1 < n ? '<div class="actions"><button class="btn btn-ghost btn-grow" data-act="finish">Finish test</button></div>' : '') + '</nav>';
+    }
+    html += '</div>';
+    app.innerHTML = html;
+  }
+
+  function choose(letter) {
+    var qi = S.idx[S.i], q = current();
+    if (S.mode === "practice" && S.checked[qi]) return;
+    var chosen = (S.ans[qi] || []).slice();
+    var multi = q.answer.length > 1;
+    if (!multi) chosen = [letter];
+    else {
+      var at = chosen.indexOf(letter);
+      if (at >= 0) chosen.splice(at, 1);
+      else {
+        chosen.push(letter);
+        if (chosen.length > q.answer.length) chosen.shift(); // keep the most recent picks
+      }
+    }
+    S.ans[qi] = chosen;
+    var focusLetter = letter;
+    viewQuiz();
+    var input = app.querySelector('input[value="' + focusLetter + '"]');
+    if (input) input.focus({ preventScroll: true });
+  }
+
+  function act(name) {
+    var n = S.idx.length, qi = S.idx[S.i], q = current();
+    if (name === "check") {
+      if ((S.ans[qi] || []).length !== q.answer.length) return;
+      S.checked[qi] = true;
+      viewQuiz();
+      var fb = app.querySelector(".feedback");
+      if (fb) fb.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    } else if (name === "next") {
+      if (S.i + 1 < n) { S.i++; viewQuiz(); top(); } else finish();
+    } else if (name === "prev") {
+      if (S.i > 0) { S.i--; viewQuiz(); top(); }
+    } else if (name === "flag") {
+      S.flag[qi] = !S.flag[qi]; viewQuiz();
+    } else if (name === "finish") {
+      var unanswered = S.idx.filter(function (k) { return !(S.ans[k] || []).length; }).length;
+      if (unanswered && !window.confirm(unanswered + " question" + (unanswered === 1 ? " is" : "s are") + " unanswered. Finish anyway?")) return;
+      finish();
+    } else if (name === "quit") {
+      finish();
+    }
+  }
+
+  // ---------- results ----------
+  function finish() {
+    if (!S || S.done) return;
+    stopTimer();
+    S.done = true;
+    S.ended = Date.now();
+    viewResults(true);
+    top();
+  }
+
+  function viewResults(showMissedOnly) {
+    var b = S.b;
+    var practiceSeen = S.mode === "practice" ? S.idx.filter(function (k) { return S.checked[k]; }) : S.idx;
+    var pool = S.mode === "practice" ? practiceSeen : S.idx;
+    var total = pool.length;
+    var correct = 0, missed = [];
+    var per = {};
+    b.domains.forEach(function (d) { per[d.id] = { right: 0, total: 0 }; });
+    pool.forEach(function (k) {
+      var q = b.questions[k];
+      var ok = same(S.ans[k] || [], q.answer);
+      per[q.domain].total++;
+      if (ok) { correct++; per[q.domain].right++; } else missed.push(k);
+    });
+    if (!S.retry && total === b.questions.length) saveBest(b.id, correct, total);
+    var pct = total ? Math.round(100 * correct / total) : 0;
+    var minutes = Math.max(1, Math.round((S.ended - S.started) / 60000));
+
+    var html = '<div class="narrow">' +
+      '<p class="qhead"><span>' + esc(b.code) + ' <span class="mode">· ' + (S.mode === "timed" ? "Timed test" : (S.retry ? "Retry" : "Practice")) + ' results</span></span></p>';
+    if (!total) {
+      html += '<h1>No answers yet</h1><p class="lead">Answer at least one question to see a score.</p>' +
+        '<div class="actions"><button class="btn btn-dark" data-start="' + b.id + '" data-mode="' + S.mode + '">Start again</button>' +
+        '<a class="btn btn-ghost" href="./">All exams</a></div></div>';
+      app.innerHTML = html;
+      return;
+    }
+    html += '<p class="score">' + correct + ' / ' + total + '<small>' + pct + '%</small></p>' +
+      '<p class="sub">' + (S.mode === "timed" ? "Finished in " + minutes + " minute" + (minutes === 1 ? "" : "s") + "." : "Practice run, " + total + " question" + (total === 1 ? "" : "s") + " checked.") + '</p>' +
+      '<p class="fine">The real exam reports a scaled score from 100 to 1000 and passes at 720. Use this percentage to find your weak domains.</p>';
+
+    html += '<section class="panel"><h2>By domain</h2>';
+    b.domains.forEach(function (d) {
+      var t = per[d.id];
+      if (!t.total) return;
+      var r = t.right / t.total;
+      html += '<div class="drow"><span class="dname">' + esc(d.name) + '</span><span class="dnum">' + t.right + ' of ' + t.total + '</span>' +
+        '<div class="bar" aria-hidden="true"><i class="' + (r >= 0.7 ? "good" : "weak") + '" style="width:' + Math.max(4, Math.round(100 * r)) + '%"></i></div>' +
+        '<span class="dmeta">' + d.weight + '% of the exam' + (r < 0.7 ? ' · <a href="' + esc(d.guide) + '">Review this domain in the guide</a>' : '') + '</span></div>';
+    });
+    html += '</section>';
+
+    html += '<section class="cta"><h2>Ready for full length?</h2>' +
+      '<p>The ' + esc(b.code) + ' page on Preporato has free sample questions and six full-length timed practice tests (paid) in the exam’s format, with a score for every domain.</p>' +
+      '<a class="btn" href="' + esc(b.certPage) + '">Open the ' + esc(b.code) + ' practice tests ↗</a></section>';
+
+    html += '<div class="actions">' +
+      (missed.length ? '<button class="btn btn-dark btn-grow" data-act="retry">Retry the ' + missed.length + ' you missed</button>' : '') +
+      '<button class="btn btn-ghost btn-grow" data-start="' + b.id + '" data-mode="' + (S.mode === "timed" ? "timed" : "practice") + '">Start over</button>' +
+      '<a class="btn btn-ghost btn-grow" href="./">All exams</a></div>';
+
+    var only = showMissedOnly && missed.length > 0;
+    html += '<section class="review"><div class="review-head"><h2>Review</h2>' +
+      (missed.length ? '<label class="toggle"><input type="checkbox" id="only-missed"' + (only ? " checked" : "") + '> Only the ones I missed</label>' : '') +
+      '</div>';
+    pool.forEach(function (k) {
+      var q = b.questions[k];
+      var yours = S.ans[k] || [];
+      var ok = same(yours, q.answer);
+      if (only && ok) return;
+      var pos = S.idx.indexOf(k) + 1;
+      html += '<details class="item"><summary><span class="mark ' + (ok ? "ok" : "bad") + '" aria-label="' + (ok ? "Correct" : "Incorrect") + '">' + (ok ? "✓" : "✗") + '</span>' +
+        '<span class="q">' + pos + '. ' + rich(q.stem) + '</span></summary><div class="body">' +
+        '<p class="yours">Your answer: ' + (yours.length ? joinLetters(yours.slice().sort()) : "none") + ' · Correct: ' + joinLetters(q.answer) + '</p>' +
+        '<div class="opts">';
+      q.options.forEach(function (o) {
+        var cls = "opt locked";
+        if (q.answer.indexOf(o.letter) >= 0) cls += " right";
+        else if (yours.indexOf(o.letter) >= 0) cls += " wrong";
+        html += '<div class="' + cls + '"><span class="let" aria-hidden="true">' + o.letter + '</span><span class="txt"><span class="sr-only">' + o.letter + '. </span>' + rich(o.text) + '</span></div>';
+      });
+      html += '</div><p class="exp">' + rich(q.explanation) + '</p></div></details>';
+    });
+    html += '</section></div>';
+    app.innerHTML = html;
+    S.missed = missed;
+  }
+
+  // ---------- events ----------
+  app.addEventListener("change", function (e) {
+    var t = e.target;
+    if (t.name === "opt" && S && !S.done) choose(t.value);
+    if (t.id === "only-missed" && S) viewResults(t.checked);
+  });
+  app.addEventListener("click", function (e) {
+    var el = e.target.closest("[data-start],[data-act],[data-go]");
+    if (!el) return;
+    if (el.hasAttribute("data-start")) {
+      start(el.getAttribute("data-start"), el.getAttribute("data-mode"));
+    } else if (el.hasAttribute("data-go")) {
+      S.i = Number(el.getAttribute("data-go")); viewQuiz(); top();
+    } else {
+      var a = el.getAttribute("data-act");
+      if (a === "retry") start(S.b.id, "practice", S.missed.slice());
+      else act(a);
+    }
+  });
+  document.addEventListener("keydown", function (e) {
+    if (!S || S.done || e.metaKey || e.ctrlKey || e.altKey) return;
+    var tag = (e.target.tagName || "").toLowerCase();
+    if (tag === "textarea") return;
+    var k = e.key.toLowerCase();
+    var q = current();
+    var map = { a: 0, b: 1, c: 2, d: 3, e: 4, "1": 0, "2": 1, "3": 2, "4": 3, "5": 4 };
+    if (k in map && q.options[map[k]]) { e.preventDefault(); choose(q.options[map[k]].letter); return; }
+    if (k === "enter" && tag !== "button" && tag !== "a") {
+      e.preventDefault();
+      var qi = S.idx[S.i];
+      if (S.mode === "practice") act(S.checked[qi] ? "next" : "check");
+      else act(S.i + 1 < S.idx.length ? "next" : "finish");
+    }
+  });
+  window.addEventListener("beforeunload", function (e) {
+    if (S && !S.done && Object.keys(S.ans).length) { e.preventDefault(); e.returnValue = ""; }
+  });
+  function route() {
+    var id = (location.hash || "").replace(/^#\/?/, "").split("/")[0];
+    if (S && !S.done && Object.keys(S.ans).length && !window.confirm("Leave this test? Your answers will be lost.")) return;
+    if (id && BY_ID[id]) viewIntro(BY_ID[id]); else viewHome();
+    top();
+  }
+  window.addEventListener("hashchange", route);
+  route();
+})();
+</script>
+</body>
+</html>

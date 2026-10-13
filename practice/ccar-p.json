@@ -1,0 +1,484 @@
+{
+  "id": "ccar-p",
+  "code": "CCAR-P",
+  "name": "Claude Certified Architect - Professional",
+  "cert_page": "https://preporato.com/certificates/claude-certified-architect-professional",
+  "exam": {
+    "questions": 63,
+    "minutes": 120
+  },
+  "minutes": 60,
+  "domains": [
+    {
+      "id": "d1",
+      "name": "Solution Design & Architecture",
+      "weight": 17
+    },
+    {
+      "id": "d2",
+      "name": "Claude Models, Prompting & Context Engineering",
+      "weight": 13
+    },
+    {
+      "id": "d3",
+      "name": "Integration",
+      "weight": 19
+    },
+    {
+      "id": "d4",
+      "name": "Evaluation, Testing & Optimization",
+      "weight": 16
+    },
+    {
+      "id": "d5",
+      "name": "Governance, Safety & Risk Management",
+      "weight": 14
+    },
+    {
+      "id": "d6",
+      "name": "Stakeholder Communication & Lifecycle Management",
+      "weight": 14
+    },
+    {
+      "id": "d7",
+      "name": "Developer Productivity & Operational Enablement",
+      "weight": 7
+    }
+  ],
+  "scenarios": [],
+  "questions": [
+    {
+      "domain": "d1",
+      "stem": "A support team wants answers to product questions grounded in a 300-page manual. Questions are single-turn, and the manual is updated monthly. What is the simplest sufficient architecture?",
+      "options": {
+        "a": "An augmented LLM: retrieval over the manual feeding a single model call that cites the passages it used",
+        "b": "A multi-agent research system with a planner and three specialists",
+        "c": "An autonomous agent that browses the manual page by page",
+        "d": "A model fine-tuned on the manual every month"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "One well-scoped, grounded call meets the requirement, so retrieval plus a single call is the simplest sufficient pattern ({a}). {b} and {c} add autonomy the task doesn't need, with the cost and latency to match. Monthly fine-tuning ({d}) is heavy, slower to update than re-indexing, and gives no citations."
+    },
+    {
+      "domain": "d1",
+      "stem": "Which architecture proposal for an invoice-processing assistant is complete?",
+      "options": {
+        "a": "Email intake and OCR; extraction with schema validation; posting to the ERP with an exceptions queue; per-field accuracy evals, user corrections and monitoring fed back into prompt and model decisions",
+        "b": "Email intake and OCR; extraction with the most capable model; posting to the ERP",
+        "c": "Extraction with schema validation; posting to the ERP; a dashboard of monthly volume",
+        "d": "Email intake; a multi-agent extraction team; posting to the ERP; a launch announcement"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "A complete architecture has input, processing, output and a feedback loop that turns evals, user corrections and monitoring into design changes ({a}). {b} has no feedback loop. {c} has no input stage, and a volume dashboard measures activity without feeding quality back. {d} adds complexity and still has no feedback loop."
+    },
+    {
+      "domain": "d1",
+      "stem": "Two designs meet the accuracy target. Design 1 uses the top tier: p95 latency 6 seconds, $0.09 per request. Design 2 routes between the fast and balanced tiers: p95 latency 2 seconds, $0.02 per request. The client's stated constraint is a 3-second p95 SLA at 2 million requests a month. Which design, and why?",
+      "options": {
+        "a": "Design 2, because it meets the latency SLA and the cost pillar at the same accuracy",
+        "b": "Design 1, for quality headroom",
+        "c": "Run both in production indefinitely",
+        "d": "Postpone the decision until a newer model is released"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "When both options meet accuracy, the stated business constraint decides, and only Design 2 meets the 3-second SLA, at about $40,000 a month against $180,000 ({a}). {b} breaks the SLA. {c} doubles cost and complexity for no reason. {d} ignores a decision the data already supports."
+    },
+    {
+      "domain": "d1",
+      "stem": "A due-diligence system must analyze each target company's financials, legal filings and press coverage. The three analyses are independent, and each needs different tools and sources. Which design fits?",
+      "options": {
+        "a": "An orchestrator with three scoped subagents running in parallel, followed by a synthesis step",
+        "b": "One agent holding all the tools for all three analyses",
+        "c": "One agent doing the three analyses in sequence",
+        "d": "Three separate systems whose reports nobody combines"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Independent subtasks with different tool needs are what justifies decomposition: each subagent gets a narrow toolset and its own context, and the orchestrator merges the results ({a}). {b} is capability bloat. {c} gives up parallelism and mixes three contexts. {d} skips the synthesis the client actually needs."
+    },
+    {
+      "domain": "d1",
+      "stem": "A global retailer's policy assistant covers 14 regions. Each region's policies differ and are owned by different teams. Answers mix rules from different regions. What is the best design change?",
+      "options": {
+        "a": "Partition by data domain: tag documents with their region and filter retrieval by the user's region before semantic search",
+        "b": "Fourteen agents that negotiate with each other on every question",
+        "c": "Put all 14 regions' policies in every request",
+        "d": "Ask users to mention their region and change nothing else"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "The data has a clean partition, so filtering on region metadata keeps other regions' rules out of the context ({a}). {b} adds coordination machinery to a retrieval problem. {c} is context stuffing. {d} leaves the mixed retrieval in place."
+    },
+    {
+      "domain": "d2",
+      "stem": "Which TWO workloads benefit most from prompt caching? (Select TWO)",
+      "options": {
+        "a": "An agent loop that resends the same 12,000-token system prompt and tool definitions on every turn",
+        "b": "An endpoint where many users ask questions about the same 50-page policy within minutes of each other",
+        "c": "A weekly job that sends one unique 3,000-token prompt",
+        "d": "Requests whose first line is the current timestamp",
+        "e": "Single requests shorter than the minimum cacheable length"
+      },
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "Caching pays off when a long, stable prefix repeats within the cache lifetime ({a}, {b}). A weekly unique prompt ({c}) never repeats in time. A timestamp at the start ({d}) breaks the prefix on every request. Prompts under the minimum length ({e}) are never cached."
+    },
+    {
+      "domain": "d2",
+      "stem": "An eligibility step must apply six interacting rules. Accuracy is the priority, and the latency budget is generous. Which prompting approach fits?",
+      "options": {
+        "a": "Have the model reason through the rules step by step (or enable thinking) before deciding, with each rule stated as an explicit criterion, then validate the decision",
+        "b": "A zero-shot prompt kept as short as possible",
+        "c": "Few-shot examples alone, with no stated rules",
+        "d": "A lower temperature"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Multi-step logic benefits from explicit reasoning before the answer, and the generous latency budget covers its cost ({a}). Zero-shot ({b}) suits simple, unambiguous tasks. Examples ({c}) teach format and edge cases, and six interacting rules still need to be stated. Temperature ({d}) adds no reasoning."
+    },
+    {
+      "domain": "d2",
+      "stem": "An enterprise assistant's system prompt has grown to 60,000 tokens of procedures for 40 business processes, and most requests need one or two of them. Latency and cost are high, and instruction-following has slipped. What is the best restructuring?",
+      "options": {
+        "a": "Keep the system prompt to the core role and rules, and package each procedure as a Skill or retrievable module that loads only when relevant",
+        "b": "Mark the most important procedures in capitals",
+        "c": "Move to a model with a larger context window",
+        "d": "Build 40 separate assistants and make users choose"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Loading procedures on demand keeps the context small and focused, which improves attention, cost and latency together ({a}). Emphasis ({b}) doesn't shrink the prompt. A bigger window ({c}) holds more of the same dilution. {d} moves the routing problem onto users."
+    },
+    {
+      "domain": "d2",
+      "stem": "Downstream systems consume the assistant's JSON, and occasional schema violations cause failed transactions. Which change addresses this at the source, and what still needs checking?",
+      "options": {
+        "a": "Structured outputs with the integration schema, which guarantees schema-valid JSON, plus semantic validation of the values and handling of the refusal and `max_tokens` stop reasons",
+        "b": "A retry loop and nothing else",
+        "c": "A stronger instruction to follow the schema",
+        "d": "A regex that repairs broken JSON"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Constrained decoding removes schema violations at the source, and semantic checks plus stop-reason handling cover what it doesn't guarantee ({a}). Retries ({b}) and instructions ({c}) reduce failures without eliminating them. Regex repair ({d}) guesses at intent and can corrupt data quietly."
+    },
+    {
+      "domain": "d3",
+      "stem": "A procurement agent must get quotes from a supplier's own AI agent, which runs on the supplier's systems with its own tools, policies and reasoning. Which integration mechanism fits?",
+      "options": {
+        "a": "Agent-to-agent delegation over a defined protocol, with explicit request and response contracts, authentication, and failure isolation",
+        "b": "An MCP server that gives your agent direct access to the supplier's database",
+        "c": "A direct API call to Claude with the supplier's price list pasted into the prompt",
+        "d": "A shared system prompt that both companies edit"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Two autonomous systems with separate owners, tools and policies call for delegation between agents, with contracts and isolation so either side can fail independently ({a}). {b} bypasses the supplier's agent and policies and assumes access you won't get. {c} works only if you already have current prices, which is what you're asking for. {d} merges two organizations' control into one prompt."
+    },
+    {
+      "domain": "d3",
+      "stem": "One internal app sends support tickets to Claude for tagging. One team owns it, and no reuse is planned. A platform engineer proposes building an MCP server first. What is the right assessment?",
+      "options": {
+        "a": "Use a direct API integration now; MCP adds a protocol layer and maintenance without a reuse need, so revisit it if other surfaces need the capability",
+        "b": "Build the MCP server, since every integration should use MCP",
+        "c": "Use agent-to-agent delegation",
+        "d": "Fine-tune a tagging model instead"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "MCP pays off when one capability serves many clients or surfaces, and one app with one owner is the direct-API case ({a}). {b} adds maintenance for a benefit that doesn't exist yet. {c} adds autonomous-system machinery to a single call. {d} skips a simpler option that works."
+    },
+    {
+      "domain": "d3",
+      "stem": "Which TWO observations are signs of capability bloat in a production agent? (Select TWO)",
+      "options": {
+        "a": "It exposes 45 tools, and invocation logs show only 9 ever used",
+        "b": "Two tools have overlapping descriptions, and both plausibly handle 'find a customer'",
+        "c": "Each subagent's tools are scoped to its responsibility",
+        "d": "The reporting agent uses read-only credentials",
+        "e": "Tool descriptions state when not to use each tool"
+      },
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "Unused tools that ship with every request ({a}) and overlapping tools that blur selection ({b}) are classic signs of bloat. Scoped toolsets ({c}), read-only credentials for a read-only job ({d}) and boundary statements in descriptions ({e}) are the cure."
+    },
+    {
+      "domain": "d3",
+      "stem": "An agent connects to six MCP servers exposing 300 tools, and every request front-loads all of their definitions. Tool selection is poor and costs are high. What is the best fix?",
+      "options": {
+        "a": "Progressive discovery: load tool definitions on demand (for example with tool search and deferred loading), and give each agent only the servers its responsibility needs",
+        "b": "Move to a model with a larger context window",
+        "c": "Shorten every tool description to one line",
+        "d": "Add more examples to the system prompt"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Loading tools as the agent narrows in cuts tokens and improves selection accuracy, and scoping servers per responsibility removes tools that never belonged ({a}). A bigger window ({b}) holds the same noise. One-line descriptions ({c}) make selection worse. Examples ({d}) add tokens without reducing the tool count."
+    },
+    {
+      "domain": "d3",
+      "stem": "A company assistant answers questions over the document store using a service account that can read every folder, including HR and legal. A contractor asked about salaries and got an answer. What is the root fix?",
+      "options": {
+        "a": "Run retrieval and tools with the calling user's identity and permissions, and attribute every access to that user in the logs",
+        "b": "Add a system-prompt rule: 'Never discuss salaries'",
+        "c": "Remove HR documents from the index",
+        "d": "Filter out responses that contain the word 'salary'"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "The shared over-privileged account erased per-user authorization and made every access unattributable, so the fix is acting as the caller ({a}). {b} is a probabilistic patch, {c} breaks legitimate HR use, and {d} is easy to get around and blocks legitimate answers."
+    },
+    {
+      "domain": "d3",
+      "stem": "Engineers search an internal knowledge base with exact error codes such as 'E-4031.' Semantic search returns conceptually similar documents about other errors. What is the best fix?",
+      "options": {
+        "a": "Hybrid search: keyword matching for exact identifiers combined with semantic search, then re-ranking",
+        "b": "A larger embedding model",
+        "c": "Retrieve more chunks per query",
+        "d": "Fine-tune the generation model on error codes"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Exact identifiers such as error codes and SKUs need keyword matching, which hybrid search adds alongside semantic retrieval ({a}). Better embeddings ({b}) still treat codes as fuzzy meaning. More chunks ({c}) add noise. The generation model ({d}) can't fix documents that were never retrieved."
+    },
+    {
+      "domain": "d4",
+      "stem": "A contract-extraction service has three complaints: wrong values, slow responses at peak hours, and a rising monthly bill. Which THREE metrics should the monitoring plan track? (Select THREE)",
+      "options": {
+        "a": "Field-level accuracy against a labeled dataset",
+        "b": "p95 and p99 latency",
+        "c": "Cost per document and tokens per task",
+        "d": "Number of prompt revisions per month",
+        "e": "Average response length"
+      },
+      "answer": [
+        "a",
+        "b",
+        "c"
+      ],
+      "explanation": "Each complaint maps to a metric: wrong values to accuracy ({a}), slowness to tail latency ({b}), and the bill to cost per unit of work ({c}). Prompt revision counts ({d}) and response length ({e}) measure activity, and neither shows whether the complaints are fixed."
+    },
+    {
+      "domain": "d4",
+      "stem": "A team tuned its prompt against the same 200 examples it uses to report accuracy. Testing shows 98%, and production shows 84%. What went wrong, and what is the fix?",
+      "options": {
+        "a": "The eval set leaked into prompt development and inflated the score; tune on a separate development set and report on a held-out set that mirrors production",
+        "b": "Production traffic is low quality; filter it",
+        "c": "The model is too small; upgrade the tier",
+        "d": "200 examples is too few; add 20 more of the same kind"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Tuning against the test set overfits to it, so the score stops predicting production ({a}). {b} blames the data the system has to handle. {c} changes the model without fixing the measurement. {d} keeps the same leak with a slightly bigger set."
+    },
+    {
+      "domain": "d4",
+      "stem": "A team wants to ship a new prompt, new retrieval settings and a tier change together, because 'it felt better in 15 spot checks.' What is the correct approach?",
+      "options": {
+        "a": "Test one variable at a time with a success metric and sample size set in advance, then ship each change only on a significant result",
+        "b": "Ship all three, since the spot checks were positive",
+        "c": "Ask the stakeholders which version they prefer",
+        "d": "Run 15 more spot checks"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "A clean experiment changes one variable and decides on a metric chosen in advance ({a}). With three changes at once ({b}), a win or a loss can't be attributed to anything. Preference ({c}) and more spot checks ({d}) are still the feels-better method."
+    },
+    {
+      "domain": "d4",
+      "stem": "Traces show the correct policy passages are retrieved, yet answers still state the wrong refund window. Where is the failure, and what is the first fix?",
+      "options": {
+        "a": "Generation is poorly grounded: tighten the instructions to answer only from the retrieved passages and cite them, and evaluate faithfulness",
+        "b": "Retrieval failure: re-chunk and re-embed the corpus",
+        "c": "The index is stale: rebuild it",
+        "d": "Raise the number of retrieved passages"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "When the right documents arrive and the answer is still wrong, the failure sits in generation and grounding ({a}). {b} and {c} fix retrieval, which the traces show is working. {d} adds noise to a context that already contains the answer."
+    },
+    {
+      "domain": "d4",
+      "stem": "Answers about leave policies leave out exceptions. Traces show the retrieved chunks contain the rule sentence, while the exception sits in the next paragraph, which isn't retrieved. What is the best fix?",
+      "options": {
+        "a": "Re-chunk along the document's structure (whole sections) with some overlap, so rules and their exceptions stay together",
+        "b": "Retrieve 30 chunks instead of 5",
+        "c": "Move to a more capable model",
+        "d": "Tell the model to remember that policies have exceptions"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Chunks smaller than the unit of meaning split rules from their qualifiers, so structure-aware chunking fixes the retrieval unit ({a}). More chunks ({b}) might catch the exception along with plenty of noise. No model ({c}) can use a paragraph it never receives, and an instruction ({d}) can't supply the missing text."
+    },
+    {
+      "domain": "d5",
+      "stem": "An agent reads inbound customer emails and can issue refunds. Which TWO controls are deterministic, as opposed to prompt-based? (Select TWO)",
+      "options": {
+        "a": "Tool permissions that cap a refund at $100 per call and send larger amounts for human approval",
+        "b": "An output filter that blocks any reply containing a full account number",
+        "c": "A system-prompt rule: 'Never issue large refunds'",
+        "d": "A persona instruction: 'You are a careful agent'",
+        "e": "Few-shot examples of the agent declining suspicious requests"
+      },
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "Permission limits ({a}) and output filtering ({b}) are enforced in code, whatever the model decides. {c}, {d} and {e} shape behavior probabilistically, and a cleverly written email can talk the model past them."
+    },
+    {
+      "domain": "d5",
+      "stem": "A moderation pipeline handles 500,000 low-risk comments a day and occasionally receives legal threats. Which human-in-the-loop design fits?",
+      "options": {
+        "a": "Automate routine decisions with sampled QA, and route legal threats and cases below system-set thresholds to human reviewers",
+        "b": "Have a human review every comment",
+        "c": "Remove humans entirely",
+        "d": "Let the model escalate whenever its self-reported confidence is low"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Humans go where the risk is high, and sampling covers the routine volume ({a}). Reviewing everything ({b}) destroys the efficiency case. {c} leaves legal threats unhandled. Self-reported confidence ({d}) is poorly calibrated, so the thresholds have to be set by the system."
+    },
+    {
+      "domain": "d5",
+      "stem": "A US telehealth company with patients in the US and Germany plans to use Claude to summarize clinical notes. Which TWO frameworks apply? (Select TWO)",
+      "options": {
+        "a": "HIPAA, for US patients' health information",
+        "b": "GDPR, for the personal data of patients in the EU",
+        "c": "FedRAMP",
+        "d": "Only HIPAA, since the company is based in the US",
+        "e": "None, since Claude is a third-party service"
+      },
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "The framework follows the data type and the jurisdiction: US health data brings HIPAA ({a}), and processing EU residents' personal data brings GDPR wherever the company is based ({b}). FedRAMP ({c}) covers cloud services for US federal agencies. {d} ignores the German patients, and {e} confuses using a vendor with being exempt."
+    },
+    {
+      "domain": "d5",
+      "stem": "Your observability stack stores full prompts and responses, including customer personal data, in a log platform that 300 engineers can read. What is the risk, and what is the fix?",
+      "options": {
+        "a": "Data leakage through logs: redact personal data before logging, restrict access to the people who need it, and set a retention limit",
+        "b": "No risk, because the logs are internal",
+        "c": "Encrypt the stored logs and leave access as it is",
+        "d": "Ask the model to leave personal data out of its responses"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Logs and traces are a leakage channel, so the fix minimizes what's stored and who can see it ({a}). Internal access ({b}) still exposes customer data to hundreds of people. Encryption with unchanged access ({c}) protects the storage while every reader still sees the data. {d} leaves the personal data in the prompts, and the model can't be relied on to keep it out of responses."
+    },
+    {
+      "domain": "d6",
+      "stem": "A vice president asks you to 'make customer support better with AI.' What should you produce first?",
+      "options": {
+        "a": "Discovery outputs: a measurable success criterion, a constraint inventory, a data and access map, a stakeholder map with decision owners, and a baseline of the current process",
+        "b": "A working prototype to show next week",
+        "c": "A comparison of model benchmark scores",
+        "d": "A signed vendor contract"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Professional engagements start with discovery, because every later design choice depends on what success means and which constraints apply ({a}). A prototype ({b}) built without discovery answers a question nobody has defined. Benchmarks ({c}) and contracts ({d}) come after the requirements are known."
+    },
+    {
+      "domain": "d6",
+      "stem": "Stakeholders ask for a guarantee that the assistant 'never gives a wrong answer.' What is the appropriate response?",
+      "options": {
+        "a": "Commit to measured targets, such as at least 96% accuracy per slice on a held-out set with an error budget, escalation paths and a remediation plan, and explain that LLM outputs have a measurable error rate",
+        "b": "Promise 100% accuracy to secure approval",
+        "c": "Refuse to set any accuracy target",
+        "d": "Commit only to 99.9% uptime"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Probabilistic systems get SLAs built on measured rates, error budgets and remediation ({a}). {b} sets up a broken promise. {c} leaves stakeholders nothing to hold the system to. Uptime ({d}) says nothing about answer quality."
+    },
+    {
+      "domain": "d6",
+      "stem": "Which statement best communicates a model-tier recommendation to business stakeholders?",
+      "options": {
+        "a": "'The balanced tier resolves 91% of tickets at $0.02 each, and the top tier resolves 93% at $0.08. At a million tickets a month, the extra two points cost about $60,000 a month, so we recommend the balanced tier with escalation for complex tickets.'",
+        "b": "'The top tier scores higher on industry benchmarks.'",
+        "c": "'The balanced tier is fine.'",
+        "d": "'We chose the newest model available.'"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Architect-level communication puts the trade-off in business terms: outcome, cost, and the recommendation that follows from them ({a}). {b} is engineering language with no business meaning. {c} gives no basis for the decision, and {d} offers novelty as a reason."
+    },
+    {
+      "domain": "d6",
+      "stem": "Which TWO artifacts belong in the handoff to the team that will operate the system? (Select TWO)",
+      "options": {
+        "a": "Runbooks covering escalation paths and known failure modes",
+        "b": "Eval baselines and an inventory of prompts and their versions",
+        "c": "The architect's personal working notes",
+        "d": "The kickoff slide deck",
+        "e": "A raw export of the project chat channel"
+      },
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "Operators need to know how to respond to problems ({a}) and what normal looks like, along with what is deployed ({b}). Personal notes ({c}), kickoff slides ({d}) and raw chat ({e}) aren't operational documentation."
+    },
+    {
+      "domain": "d7",
+      "stem": "Claude Code runs in your CI pipeline, and the team agrees it must never run git push or curl anywhere the repository is used. Where should this restriction live?",
+      "options": {
+        "a": "Deny rules in the committed project settings, such as `Bash(git push *)` and `Bash(curl *)`, which the client enforces",
+        "b": "Each developer's `~/.claude/settings.json`",
+        "c": "A `CLAUDE.md` instruction",
+        "d": "A wiki page"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Permission rules in version-controlled project settings apply everywhere the repository runs, CI included, and the client enforces them ({a}). User settings ({b}) don't reach CI or other developers. `CLAUDE.md` ({c}) is guidance the model weighs. A wiki ({d}) is invisible to the tooling."
+    },
+    {
+      "domain": "d7",
+      "stem": "A platform team built a code-review subagent and a release-notes skill that every repository in the company should use, in the same version. What is the best way to distribute them?",
+      "options": {
+        "a": "Package them as a plugin (or deploy them through managed settings), so every developer gets the same versioned definitions",
+        "b": "Post the prompt text in a chat channel for developers to copy",
+        "c": "Ask each developer to copy the files into `~/.claude/`",
+        "d": "Paste both into every repository's `CLAUDE.md`"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Plugins bundle skills and subagents for distribution, and managed settings can push them to the whole organization, which keeps one maintained version ({a}). Copy-and-paste distribution ({b}, {c}) drifts as soon as the originals change. `CLAUDE.md` ({d}) holds always-on instructions and can't define a subagent or an on-demand skill."
+    }
+  ]
+}

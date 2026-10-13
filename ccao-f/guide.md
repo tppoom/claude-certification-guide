@@ -2,7 +2,7 @@
 
 A full preparation guide for Anthropic's non-technical certification. Part I teaches the material by topic. Part II re-indexes it by exam domain for revision. Part III covers trap answers, worked questions, and a final checklist.
 
-Maintained by [preporato.com](https://preporato.com). Facts verified against the official exam guide and program pages as of August 2026.
+Maintained by [preporato.com](https://preporato.com). Facts checked against the official exam guide and Anthropic's program pages in October 2026.
 
 ---
 
@@ -44,12 +44,14 @@ Do not mistake non-technical for easy. The single largest domain is **evaluating
 | | |
 |---|---|
 | Questions | 60, all scored |
-| Duration | 120 minutes |
+| Duration | 120 minutes to answer, about 135 minutes of seat time |
 | Passing score | 720 on a 100-1000 scaled score |
 | Question style | Single-answer plus multiple-response (~a quarter of items), **no partial credit** |
 | Delivery | Pearson VUE, test center or online proctored |
 | Price | $99 per attempt, the most accessible entry in the program |
-| Registration | Anthropic Partner Academy (free Claude Partner Network membership); passing earns a Credly badge |
+| Registration | Anthropic Partner Academy, open to people who work at Claude Partner Network organizations (sign in with a company email); passing earns a Credly badge |
+| Languages | English or Japanese |
+| Retakes | Full fee for every attempt; waits of 14, 30 and 90 days after the first, second and third failed attempts; at most 4 attempts in any 12 months |
 | Validity | 1 year; free non-proctored renewal before expiration, full proctored retake after a lapse |
 | Scope | The claude.ai product only. Programming and API topics are deliberately excluded |
 
@@ -300,14 +302,14 @@ The optimization rule tying the domain together: **change one variable at a time
 
 ## The preparation ladder
 
-Four layers, in order. Each builds on the previous, and the free layers take you surprisingly far.
+Four layers, in order. Each builds on the previous, and the free layers take you surprisingly far. Anthropic retired its official practice exam when the exams moved to Pearson VUE; the sample questions in the official exam guide are what remains.
 
 | Step | Resource | Cost |
 |------|----------|------|
 | 1. Learn the vocabulary | [Anthropic Partner Academy courses](https://claude.com/partners), the official exam guide, and the [Anthropic Academy courses](https://www.anthropic.com/learn) mapped in Resources | Free |
 | 2. Go to the source | The claude.ai Help Center, the primary source for this exam | Free |
-| 3. First calibration | [20 free CCAO-F practice questions](https://preporato.com/free/claude-certified-associate-foundations/questions?utm_source=github&utm_medium=guide&utm_campaign=ccao-f) in the real exam format | Free |
-| 4. Full calibration | [Six full-length 60-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-associate-foundations?utm_source=github&utm_medium=guide&utm_campaign=ccao-f) built on the exact domain weights | Paid |
+| 3. First calibration | [30 practice questions with explanations](./practice-questions.md) in this repo, also as a timed [practice test](https://preporato.github.io/claude-certification-guide/#ccao-f) | Free |
+| 4. Full calibration | [Six full-length 60-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-associate-foundations) on Preporato, built on the exact domain weights; the page has free sample questions to try first | Paid |
 
 Steps 1-3 cost nothing and tell you honestly where you stand. Step 4 is how you close the gap they reveal.
 
@@ -425,9 +427,9 @@ Ten fresh questions in the exam's style. (Written for this guide; timed full-len
 
 ## 3-week study plan
 
-- **Week 1: official baseline.** Join the [Claude Partner Network](https://claude.com/partners) (free), complete the Partner Academy associate courses, read the exam guide, and map yourself against the seven domains.
+- **Week 1: official baseline.** Check that your employer is in the [Claude Partner Network](https://claude.com/partners) (registration needs your company email), complete the Partner Academy associate courses, read the exam guide, and map yourself against the seven domains.
 - **Week 2: deliberate product practice.** Work through the claude.ai Help Center systematically, and use every feature the blueprint names on your own real work: build a Project with instructions and knowledge, produce Artifacts, run research mode, connect a live source, and compare the three models on one task. Practice the judgment side deliberately: run the validation sequence on a real output, and apply the governance matrix to your own team's data.
-- **Week 3: calibrate.** Start with the [20 free questions](https://preporato.com/free/claude-certified-associate-foundations/questions?utm_source=github&utm_medium=guide&utm_campaign=ccao-f) to see the format, then take [full-length timed practice tests](https://preporato.com/certificates/claude-certified-associate-foundations?utm_source=github&utm_medium=guide&utm_campaign=ccao-f), with per-domain review and a final pass on the two judgment domains (evaluation and governance), which catch feature-focused candidates. The night before: Part III here plus the [cheat sheet](https://preporato.com/blog/claude-certified-associate-foundations-cheat-sheet-2026).
+- **Week 3: calibrate.** Start with the [30 practice questions](./practice-questions.md) in this repo to see the format, then take [full-length timed practice tests](https://preporato.com/certificates/claude-certified-associate-foundations), with per-domain review and a final pass on the two judgment domains (evaluation and governance), which catch feature-focused candidates. The night before: Part III here plus the [cheat sheet](https://preporato.com/blog/claude-certified-associate-foundations-cheat-sheet-2026).
 
 Expanded version: [3-week CCAO-F study plan](https://preporato.com/blog/ccao-f-study-plan-3-week-preparation-2026).
 
@@ -465,10 +467,11 @@ Expanded version: [3-week CCAO-F study plan](https://preporato.com/blog/ccao-f-s
 **Free articles (preporato.com):**
 - [CCAO-F complete guide](https://preporato.com/blog/claude-certified-associate-foundations-complete-guide-2026) · [Cheat sheet](https://preporato.com/blog/claude-certified-associate-foundations-cheat-sheet-2026) · [Domains breakdown](https://preporato.com/blog/ccao-f-exam-domains-complete-breakdown-2026) · [How to pass first attempt](https://preporato.com/blog/how-to-pass-ccao-f-first-attempt-2026) · [CCAO-F vs CCDV-F](https://preporato.com/blog/ccao-f-vs-ccdv-f-which-claude-certification-2026)
 
-**Practice ([preporato.com/certificates/claude-certified-associate-foundations](https://preporato.com/certificates/claude-certified-associate-foundations)):**
-- [20 free practice questions](https://preporato.com/free/claude-certified-associate-foundations/questions?utm_source=github&utm_medium=guide&utm_campaign=ccao-f) in the real exam format
-- (Paid) [Six full-length 60-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-associate-foundations?utm_source=github&utm_medium=guide&utm_campaign=ccao-f) built on the exact domain weights
+**Practice:**
+- [30 practice questions with explanations](./practice-questions.md) in this repo, also as a timed [practice test](https://preporato.github.io/claude-certification-guide/#ccao-f) (free)
+- [The CCAO-F page on Preporato](https://preporato.com/certificates/claude-certified-associate-foundations): free sample questions to start, then the full tests below
+- (Paid) [Six full-length 60-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-associate-foundations) built on the exact domain weights
 
 ---
 
-*Not affiliated with Anthropic. Exam details reflect the program as of August 2026; the Partner Academy is authoritative. Found an error? [Open an issue](https://github.com/preporato/claude-certification-guide/issues).*
+*Not affiliated with Anthropic. Exam details reflect the program as of October 2026; the Partner Academy is authoritative. Found an error? [Open an issue](https://github.com/preporato/claude-certification-guide/issues).*

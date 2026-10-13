@@ -2,9 +2,11 @@
 
 > **[📖 The Complete CCAR-P Study Guide](./guide.md)**: the full preparation guide with 8 chapters, per-domain exam notes, worked questions, the nine trap answers, and exam-day strategy. This page is the summary; the guide is the study material.
 >
-> **Jump straight in:** [20 free questions](https://preporato.com/free/claude-certified-architect-professional/questions?utm_source=github&utm_medium=readme&utm_campaign=ccar-p) · [Practice tests](https://preporato.com/certificates/claude-certified-architect-professional?utm_source=github&utm_medium=readme&utm_campaign=ccar-p#practice-tests) · [Flashcards](https://preporato.com/certificates/claude-certified-architect-professional?utm_source=github&utm_medium=readme&utm_campaign=ccar-p#flashcards) · [Hands-on projects](https://preporato.com/certificates/claude-certified-architect-professional?utm_source=github&utm_medium=readme&utm_campaign=ccar-p#projects)
+> **Practice:** [30 practice questions](./practice-questions.md) · [Timed practice test](https://preporato.github.io/claude-certification-guide/#ccar-p) · [Full CCAR-P practice tests on Preporato](https://preporato.com/certificates/claude-certified-architect-professional)
 >
-> **At a glance:** 8 chapters · 7 code examples · 12 worked questions · ~6,900 words
+> **Download:** [PDF](../downloads/ccar-p-study-guide.pdf) · [EPUB](../downloads/ccar-p-study-guide.epub), with the practice questions included
+>
+> **At a glance:** 8 chapters · 7 code examples · 12 worked questions · 30 practice questions · ~7,100 words
 
 The top tier of the Anthropic certification program and its only Professional-level credential. CCAR-P certifies the person accountable for a Claude solution across its whole life: translating a vague business request into an architecture, selecting integration mechanisms, designing evaluation and governance into the system from day one, managing stakeholder expectations, and enabling the teams who build and operate the result.
 
@@ -14,9 +16,11 @@ The top tier of the Anthropic certification program and its only Professional-le
 |---|---|
 | Price | $175 per attempt (the most expensive in the program) |
 | Questions | 63 (all scored, the longest exam in the program) |
-| Duration | 120 minutes |
+| Duration | 120 minutes to answer, about 135 minutes of seat time |
 | Passing score | 720 on a 100-1000 scaled score |
 | Delivery | Pearson VUE, test center or online proctored |
+| Languages | English or Japanese |
+| Who can register | People who work at Claude Partner Network organizations, with a company email |
 | Validity | 1 year, free renewal assessment before expiration |
 | Prerequisites | None formally; CCA-F is optional but most candidates benefit from the Foundations vocabulary first |
 | Recommended experience | 3+ years systems architecture or platform engineering, 6+ months delivering production Claude or LLM solutions |
@@ -45,7 +49,7 @@ The scenario questions demand judgment that is hard to cram. This is deliberate:
 
 ## Study path (~6 weeks part-time)
 
-1. **Weeks 1-2: official baseline plus gap map.** Join the [Claude Partner Network](https://claude.com/partners) (free), complete the Partner Academy architect courses, read the exam guide, and honestly map your experience against all seven domains. Most candidates find their gap is in governance or stakeholder work rather than technology.
+1. **Weeks 1-2: official baseline plus gap map.** Check that your employer is in the [Claude Partner Network](https://claude.com/partners) (registration needs your company email), complete the Partner Academy architect courses, read the exam guide, and honestly map your experience against all seven domains. Most candidates find their gap is in governance or stakeholder work rather than technology.
 2. **Weeks 3-4: deepen the enterprise domains.** Work through [docs.anthropic.com](https://docs.anthropic.com) on integration patterns, evaluation design, and guardrails, and study how compliance regimes map onto LLM systems. If you have never run discovery or written an architecture decision record for a real stakeholder, practice on a hypothetical engagement end to end.
 3. **Weeks 5-6: calibrate.** Full-length, timed 63-question practice tests. Use the per-domain breakdown ruthlessly; with seven domains, a comfortable overall average can hide a failing stakeholder or governance score.
 
@@ -55,6 +59,7 @@ The scenario questions demand judgment that is hard to cram. This is deliberate:
 - Ignoring the two "soft" domains. Stakeholder communication plus lifecycle management is 14%, roughly nine questions, and they are the most commonly failed.
 - Skipping evaluation design. Sixteen percent of the exam expects you to design eval datasets, metrics, and testing strategy into a solution from the start.
 - Letting the credential lapse: renewal is free before the 12-month mark and a full-price proctored retake after it.
+- Booking a retake on impulse: every attempt costs the full fee, and the wait grows from 14 to 30 to 90 days after each failed attempt.
 
 ## Resources
 
@@ -68,7 +73,8 @@ The scenario questions demand judgment that is hard to cram. This is deliberate:
 - [CCA-F vs CCAR-P: which to take](https://preporato.com/blog/cca-f-vs-ccar-p-which-claude-certification-2026)
 - [Exam domains: complete breakdown](https://preporato.com/blog/ccar-p-exam-domains-complete-breakdown-2026)
 
-**Practice ([preporato.com/certificates/claude-certified-architect-professional](https://preporato.com/certificates/claude-certified-architect-professional)):**
-- [20 free practice questions](https://preporato.com/free/claude-certified-architect-professional/questions?utm_source=github&utm_medium=readme&utm_campaign=ccar-p) in the real exam format
-- (Paid) [Six full-length 63-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-architect-professional?utm_source=github&utm_medium=readme&utm_campaign=ccar-p) built on the exact domain weights
-- (Paid) [18 hands-on projects](https://preporato.com/certificates/claude-certified-architect-professional?utm_source=github&utm_medium=readme&utm_campaign=ccar-p): build-and-submit work at the architecture level graded automatically against a rubric
+**Practice:**
+- [30 practice questions with explanations](./practice-questions.md) in this repo, also as a timed [practice test](https://preporato.github.io/claude-certification-guide/#ccar-p) (free)
+- [The CCAR-P page on Preporato](https://preporato.com/certificates/claude-certified-architect-professional): free sample questions to start, then the full tests below
+- (Paid) [Six full-length 63-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-architect-professional) built on the exact domain weights
+- (Paid) [18 hands-on projects](https://preporato.com/certificates/claude-certified-architect-professional): build-and-submit work at the architecture level graded automatically against a rubric

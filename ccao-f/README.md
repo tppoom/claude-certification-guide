@@ -4,9 +4,11 @@ The one Claude certification that requires no code, no API knowledge, and no eng
 
 > **[📖 The Complete CCAO-F Study Guide](./guide.md)**: the full preparation guide with 7 chapters, per-domain exam notes, worked questions, trap answers, and exam-day strategy. This page is the summary; the guide is the study material.
 >
-> **Jump straight in:** [20 free questions](https://preporato.com/free/claude-certified-associate-foundations/questions?utm_source=github&utm_medium=readme&utm_campaign=ccao-f) · [Practice tests](https://preporato.com/certificates/claude-certified-associate-foundations?utm_source=github&utm_medium=readme&utm_campaign=ccao-f#practice-tests) · [Flashcards](https://preporato.com/certificates/claude-certified-associate-foundations?utm_source=github&utm_medium=readme&utm_campaign=ccao-f#flashcards)
+> **Practice:** [30 practice questions](./practice-questions.md) · [Timed practice test](https://preporato.github.io/claude-certification-guide/#ccao-f) · [Full CCAO-F practice tests on Preporato](https://preporato.com/certificates/claude-certified-associate-foundations)
 >
-> **At a glance:** 7 chapters · worked text scenarios (non-technical exam, no code) · 10 worked questions · ~5,100 words
+> **Download:** [PDF](../downloads/ccao-f-study-guide.pdf) · [EPUB](../downloads/ccao-f-study-guide.epub), with the practice questions included
+>
+> **At a glance:** 7 chapters · worked text scenarios (non-technical exam, no code) · 10 worked questions · 30 practice questions · ~5,300 words
 
 ## Quick facts
 
@@ -14,9 +16,11 @@ The one Claude certification that requires no code, no API knowledge, and no eng
 |---|---|
 | Price | $99 per attempt (the most accessible entry point in the program) |
 | Questions | 60 (all scored) |
-| Duration | 120 minutes |
+| Duration | 120 minutes to answer, about 135 minutes of seat time |
 | Passing score | 720 on a 100-1000 scaled score |
 | Delivery | Pearson VUE, test center or online proctored |
+| Languages | English or Japanese |
+| Who can register | People who work at Claude Partner Network organizations, with a company email |
 | Validity | 1 year, free renewal assessment before expiration |
 | Recommended experience | Regular hands-on professional use of Claude, structured problem-solving, a practical grasp of AI limitations |
 
@@ -47,7 +51,7 @@ CCAO-F fits professionals in operations, marketing, project management, educatio
 
 ## Study path (~3 weeks part-time)
 
-1. **Week 1: official baseline.** Join the [Claude Partner Network](https://claude.com/partners) (free), complete the Partner Academy associate courses, and read the exam guide.
+1. **Week 1: official baseline.** Check that your employer is in the [Claude Partner Network](https://claude.com/partners) (registration needs your company email), complete the Partner Academy associate courses, and read the exam guide.
 2. **Week 2: deliberate product practice.** Work through the claude.ai Help Center systematically, and use every feature the blueprint names on your own real work: build a Project with knowledge sources, produce Artifacts, run research mode, connect a data source, and compare model tiers on the same task.
 3. **Week 3: calibrate.** Full-length timed practice tests, per-domain review, and a final pass over governance and evaluation scenarios, which trip up candidates who prepared only on features.
 
@@ -56,6 +60,7 @@ CCAO-F fits professionals in operations, marketing, project management, educatio
 - Treating it as a features quiz. The two judgment domains (output evaluation, governance and responsible use) are 36% of the exam.
 - Preparing on the developer platform. The exam covers claude.ai the product; API knowledge earns nothing here.
 - Letting the credential lapse: renewal is free before the 12-month mark and a full-price proctored retake after it.
+- Booking a retake on impulse: every attempt costs the full fee, and the wait grows from 14 to 30 to 90 days after each failed attempt.
 
 ## Resources
 
@@ -68,6 +73,7 @@ CCAO-F fits professionals in operations, marketing, project management, educatio
 - [3-week study plan](https://preporato.com/blog/ccao-f-study-plan-3-week-preparation-2026)
 - [CCAO-F vs CCDV-F: which to take](https://preporato.com/blog/ccao-f-vs-ccdv-f-which-claude-certification-2026)
 
-**Practice ([preporato.com/certificates/claude-certified-associate-foundations](https://preporato.com/certificates/claude-certified-associate-foundations)):**
-- [20 free practice questions](https://preporato.com/free/claude-certified-associate-foundations/questions?utm_source=github&utm_medium=readme&utm_campaign=ccao-f) in the real exam format
-- (Paid) [Six full-length 60-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-associate-foundations?utm_source=github&utm_medium=readme&utm_campaign=ccao-f) built on the exact domain weights
+**Practice:**
+- [30 practice questions with explanations](./practice-questions.md) in this repo, also as a timed [practice test](https://preporato.github.io/claude-certification-guide/#ccao-f) (free)
+- [The CCAO-F page on Preporato](https://preporato.com/certificates/claude-certified-associate-foundations): free sample questions to start, then the full tests below
+- (Paid) [Six full-length 60-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-associate-foundations) built on the exact domain weights

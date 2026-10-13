@@ -6,9 +6,11 @@ Where [CCDV-F](../ccdv-f/) certifies platform mechanics, CCA-F certifies the ass
 
 > **[📖 The Complete CCA-F Study Guide](./guide.md)**: the full preparation guide with 8 technology chapters, per-domain exam notes, worked questions, anti-patterns, and exam-day strategy. This page is the summary; the guide is the study material.
 >
-> **Jump straight in:** [20 free questions](https://preporato.com/free/claude-certified-architect/questions?utm_source=github&utm_medium=readme&utm_campaign=cca-f) · [Practice tests](https://preporato.com/certificates/claude-certified-architect?utm_source=github&utm_medium=readme&utm_campaign=cca-f#practice-tests) · [Flashcards](https://preporato.com/certificates/claude-certified-architect?utm_source=github&utm_medium=readme&utm_campaign=cca-f#flashcards) · [Hands-on projects](https://preporato.com/certificates/claude-certified-architect?utm_source=github&utm_medium=readme&utm_campaign=cca-f#projects)
+> **Practice:** [30 practice questions](./practice-questions.md) · [Timed practice test](https://preporato.github.io/claude-certification-guide/#cca-f) · [Full CCA-F practice tests on Preporato](https://preporato.com/certificates/claude-certified-architect)
 >
-> **At a glance:** 8 chapters · 17 code examples · 12 worked questions · ~9,200 words
+> **Download:** [PDF](../downloads/cca-f-study-guide.pdf) · [EPUB](../downloads/cca-f-study-guide.epub), with the practice questions included
+>
+> **At a glance:** 8 chapters · 17 code examples · 12 worked questions · 30 practice questions · ~9,600 words
 
 ## Quick facts
 
@@ -16,9 +18,11 @@ Where [CCDV-F](../ccdv-f/) certifies platform mechanics, CCA-F certifies the ass
 |---|---|
 | Price | $125 per attempt |
 | Questions | 60 (all scored) |
-| Duration | 120 minutes |
+| Duration | 120 minutes to answer, about 135 minutes of seat time |
 | Passing score | 720 on a 100-1000 scaled score |
 | Delivery | Pearson VUE, test center or online proctored |
+| Languages | English or Japanese |
+| Who can register | People who work at Claude Partner Network organizations, with a company email |
 | Validity | 1 year, free renewal assessment before expiration |
 | Recommended experience | Hands-on experience building Claude or agent systems |
 
@@ -45,7 +49,7 @@ This rewards candidates who can hold a whole architecture in their head. Practic
 
 ## Study path (~30 days part-time)
 
-1. **Week 1: official baseline.** Join the [Claude Partner Network](https://claude.com/partners) (free), complete the Partner Academy architect-track courses, and read the official exam guide for the domain list.
+1. **Week 1: official baseline.** Check that your employer is in the [Claude Partner Network](https://claude.com/partners) (registration needs your company email), complete the Partner Academy architect-track courses, and read the official exam guide for the domain list.
 2. **Weeks 2-3: build.** Work through [docs.anthropic.com](https://docs.anthropic.com) on agents, tool use, and MCP while building something real: an agent with tools, an MCP server, a Claude Code workflow with subagents and hooks. The exam writes questions from production judgment, and building is how you acquire it.
 3. **Week 4: calibrate.** Take full-length, timed practice tests in the scenario-anchored format, review the per-domain breakdown, and spend the remaining days on your weakest two domains.
 
@@ -54,6 +58,7 @@ This rewards candidates who can hold a whole architecture in their head. Practic
 - Underestimating the Claude Code domain. Engineers who build agents through the API alone routinely lose most of a fifth of the exam here.
 - Preparing with definitions instead of systems. The scenario format punishes memorization-first preparation.
 - Letting the credential lapse after passing: the renewal assessment is free before the 12-month mark, and a full-price proctored retake after it.
+- Booking a retake on impulse: every attempt costs the full fee, and the wait grows from 14 to 30 to 90 days after each failed attempt.
 
 ## Resources
 
@@ -66,7 +71,8 @@ This rewards candidates who can hold a whole architecture in their head. Practic
 - [30-day study plan](https://preporato.com/blog/cca-f-study-plan-30-day-preparation)
 - [CCA-F vs CCAR-P: which to take](https://preporato.com/blog/cca-f-vs-ccar-p-which-claude-certification-2026)
 
-**Practice ([preporato.com/certificates/claude-certified-architect](https://preporato.com/certificates/claude-certified-architect)):**
-- [20 free practice questions](https://preporato.com/free/claude-certified-architect/questions?utm_source=github&utm_medium=readme&utm_campaign=cca-f) in the real exam format
-- (Paid) [Six full-length scenario-format practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-architect?utm_source=github&utm_medium=readme&utm_campaign=cca-f) built on the exact domain weights
-- (Paid) [11 hands-on projects](https://preporato.com/certificates/claude-certified-architect?utm_source=github&utm_medium=readme&utm_campaign=cca-f): build-and-submit work (agentic loops, hub-and-spoke systems, MCP servers, extraction pipelines) graded automatically against a rubric
+**Practice:**
+- [30 practice questions with explanations](./practice-questions.md) in this repo, also as a timed [practice test](https://preporato.github.io/claude-certification-guide/#cca-f) (free)
+- [The CCA-F page on Preporato](https://preporato.com/certificates/claude-certified-architect): free sample questions to start, then the full tests below
+- (Paid) [Six full-length scenario-format practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-architect) built on the exact domain weights
+- (Paid) [11 hands-on projects](https://preporato.com/certificates/claude-certified-architect): build-and-submit work (agentic loops, hub-and-spoke systems, MCP servers, extraction pipelines) graded automatically against a rubric

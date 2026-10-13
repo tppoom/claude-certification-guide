@@ -2,7 +2,7 @@
 
 A full preparation guide for Anthropic's Professional-tier exam. Part I teaches the material by topic. Part II re-indexes it by exam domain for revision. Part III covers trap answers, worked questions, and a final checklist.
 
-Maintained by [preporato.com](https://preporato.com). Facts verified against the official exam guide and program pages as of August 2026.
+Maintained by [preporato.com](https://preporato.com). Facts checked against the official exam guide and Anthropic's program pages in October 2026.
 
 ---
 
@@ -45,12 +45,14 @@ The exam reads like an enterprise engagement. Where the Foundations tier ([CCA-F
 | | |
 |---|---|
 | Questions | 63, all scored, the longest exam in the program |
-| Duration | 120 minutes |
+| Duration | 120 minutes to answer, about 135 minutes of seat time |
 | Passing score | 720 on a 100-1000 scaled score |
 | Question style | Single-answer plus multiple-response ("Select TWO/THREE", ~a quarter of items). **No partial credit**: every selected option must be defensible |
 | Delivery | Pearson VUE, test center or online proctored |
 | Price | $175 per attempt |
-| Registration | Anthropic Partner Academy (free Claude Partner Network membership required) |
+| Registration | Anthropic Partner Academy, open to people who work at Claude Partner Network organizations (sign in with a company email) |
+| Languages | English or Japanese |
+| Retakes | Full fee for every attempt; waits of 14, 30 and 90 days after the first, second and third failed attempts; at most 4 attempts in any 12 months |
 | Validity | 1 year; free non-proctored renewal before expiration, full proctored retake after a lapse |
 
 ### Exam domains
@@ -488,15 +490,15 @@ The division of labor mirrors the guardrail principle from Chapter 6: **managed 
 
 ## The preparation ladder
 
-Five layers, in order. Each builds on the previous, and the free layers take you surprisingly far.
+Five layers, in order. Each builds on the previous, and the free layers take you surprisingly far. Anthropic retired its official practice exam when the exams moved to Pearson VUE; the sample questions in the official exam guide are what remains.
 
 | Step | Resource | Cost |
 |------|----------|------|
 | 1. Learn the vocabulary | [Anthropic Partner Academy courses](https://claude.com/partners), the official exam guide, and the [Anthropic Academy courses](https://www.anthropic.com/learn) mapped in Resources | Free |
 | 2. Go to the source | [docs.anthropic.com](https://docs.anthropic.com): integration, agents, evaluation, guardrails | Free |
-| 3. First calibration | [20 free CCAR-P practice questions](https://preporato.com/free/claude-certified-architect-professional/questions?utm_source=github&utm_medium=guide&utm_campaign=ccar-p) in the real exam format | Free |
-| 4. Full calibration | [Six full-length 63-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-architect-professional?utm_source=github&utm_medium=guide&utm_campaign=ccar-p) built on the exact domain weights | Paid |
-| 5. Prove it hands-on | [18 auto-graded build-and-submit projects](https://preporato.com/certificates/claude-certified-architect-professional?utm_source=github&utm_medium=guide&utm_campaign=ccar-p) at the architecture level | Paid |
+| 3. First calibration | [30 practice questions with explanations](./practice-questions.md) in this repo, also as a timed [practice test](https://preporato.github.io/claude-certification-guide/#ccar-p) | Free |
+| 4. Full calibration | [Six full-length 63-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-architect-professional) on Preporato, built on the exact domain weights; the page has free sample questions to try first | Paid |
+| 5. Prove it hands-on | [18 auto-graded build-and-submit projects](https://preporato.com/certificates/claude-certified-architect-professional) at the architecture level | Paid |
 
 Steps 1-3 cost nothing and tell you honestly where you stand. Steps 4-5 are how you close the gap they reveal.
 
@@ -637,9 +639,9 @@ Twelve fresh questions in the exam's style. (Written for this guide; timed full-
 
 ## 6-week study plan
 
-- **Weeks 1-2: baseline and gap map.** Join the [Claude Partner Network](https://claude.com/partners) (free), complete the Partner Academy architect courses, read the official exam guide, and map your experience against all seven domains honestly. Most candidates' gap is governance or stakeholder work, and this guide's Chapters 6-7 exist for exactly that.
+- **Weeks 1-2: baseline and gap map.** Check that your employer is in the [Claude Partner Network](https://claude.com/partners) (registration needs your company email), complete the Partner Academy architect courses, read the official exam guide, and map your experience against all seven domains honestly. Most candidates' gap is governance or stakeholder work, and this guide's Chapters 6-7 exist for exactly that.
 - **Weeks 3-4: the enterprise domains.** Work through [docs.anthropic.com](https://docs.anthropic.com) on integration and evaluation while practicing the judgment tables here (pattern selection, failure diagnosis, framework matching). If you have never run discovery or written an ADR, do both on a hypothetical engagement end to end. The [hands-on projects](https://preporato.com/certificates/claude-certified-architect-professional) (paid) cover this ground with automatic rubric grading if you want the builds checked.
-- **Weeks 5-6: calibrate.** Start with the [20 free questions](https://preporato.com/free/claude-certified-architect-professional/questions?utm_source=github&utm_medium=guide&utm_campaign=ccar-p) to see the format, then take [full-length, timed, 63-question practice tests](https://preporato.com/certificates/claude-certified-architect-professional?utm_source=github&utm_medium=guide&utm_campaign=ccar-p). With seven domains, a comfortable average can hide a failing stakeholder or governance score, so read the per-domain breakdown ruthlessly and drill the weak two. Final week: this guide's Part III daily, the [cheat sheet](https://preporato.com/blog/claude-certified-architect-professional-cheat-sheet-2026) the night before.
+- **Weeks 5-6: calibrate.** Start with the [30 practice questions](./practice-questions.md) in this repo to see the format, then take [full-length, timed, 63-question practice tests](https://preporato.com/certificates/claude-certified-architect-professional). With seven domains, a comfortable average can hide a failing stakeholder or governance score, so read the per-domain breakdown ruthlessly and drill the weak two. Final week: this guide's Part III daily, the [cheat sheet](https://preporato.com/blog/claude-certified-architect-professional-cheat-sheet-2026) the night before.
 
 Expanded week-by-week version: [6-week CCAR-P study plan](https://preporato.com/blog/ccar-p-study-plan-6-week-preparation-2026).
 
@@ -683,11 +685,12 @@ Expanded week-by-week version: [6-week CCAR-P study plan](https://preporato.com/
 - [CCAR-P complete guide](https://preporato.com/blog/claude-certified-architect-professional-complete-guide-2026) · [Cheat sheet](https://preporato.com/blog/claude-certified-architect-professional-cheat-sheet-2026) · [Domains breakdown](https://preporato.com/blog/ccar-p-exam-domains-complete-breakdown-2026) · [Exam format](https://preporato.com/blog/ccar-p-exam-format-structure-what-to-expect-2026) · [How to pass first attempt](https://preporato.com/blog/how-to-pass-ccar-p-first-attempt-2026)
 - Topic guides: [enterprise deployment (Bedrock/Vertex/Foundry)](https://preporato.com/blog/ccar-p-enterprise-deployment-bedrock-vertex-foundry-guide) · [governance, guardrails & HITL](https://preporato.com/blog/ccar-p-governance-guardrails-hitl-compliance-guide) · [cost & latency optimization](https://preporato.com/blog/ccar-p-cost-latency-optimization-prompt-caching-guide) · [evaluation strategy](https://preporato.com/blog/ccar-p-evaluation-strategy-eval-datasets-metrics-guide) · [practice questions with explanations](https://preporato.com/blog/ccar-p-practice-questions-with-explanations-2026)
 
-**Practice ([preporato.com/certificates/claude-certified-architect-professional](https://preporato.com/certificates/claude-certified-architect-professional)):**
-- [20 free practice questions](https://preporato.com/free/claude-certified-architect-professional/questions?utm_source=github&utm_medium=guide&utm_campaign=ccar-p) in the real exam format
-- (Paid) [Six full-length 63-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-architect-professional?utm_source=github&utm_medium=guide&utm_campaign=ccar-p) built on the exact domain weights
-- (Paid) [18 hands-on projects](https://preporato.com/certificates/claude-certified-architect-professional?utm_source=github&utm_medium=guide&utm_campaign=ccar-p): build-and-submit work at the architecture level graded automatically against a rubric
+**Practice:**
+- [30 practice questions with explanations](./practice-questions.md) in this repo, also as a timed [practice test](https://preporato.github.io/claude-certification-guide/#ccar-p) (free)
+- [The CCAR-P page on Preporato](https://preporato.com/certificates/claude-certified-architect-professional): free sample questions to start, then the full tests below
+- (Paid) [Six full-length 63-question practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-architect-professional) built on the exact domain weights
+- (Paid) [18 hands-on projects](https://preporato.com/certificates/claude-certified-architect-professional): build-and-submit work at the architecture level graded automatically against a rubric
 
 ---
 
-*Not affiliated with Anthropic. Exam details reflect the program as of August 2026; the Partner Academy is authoritative. Found an error? [Open an issue](https://github.com/preporato/claude-certification-guide/issues).*
+*Not affiliated with Anthropic. Exam details reflect the program as of October 2026; the Partner Academy is authoritative. Found an error? [Open an issue](https://github.com/preporato/claude-certification-guide/issues).*

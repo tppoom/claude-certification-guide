@@ -2,7 +2,7 @@
 
 A full preparation guide for Anthropic's CCA-F exam. Part I teaches the technology the exam draws from, organized by topic. Part II re-indexes the same material by exam domain for revision. Part III covers exam strategy, worked questions, and a pre-exam checklist.
 
-Maintained by [preporato.com](https://preporato.com). Facts verified against the official exam guide and program pages as of August 2026.
+Maintained by [preporato.com](https://preporato.com). Facts checked against the official exam guide and Anthropic's program pages in October 2026.
 
 ---
 
@@ -52,13 +52,15 @@ The exam is written from production judgment. Questions describe running systems
 | | |
 |---|---|
 | Questions | 60 multiple-choice, all scored |
-| Duration | 120 minutes |
+| Duration | 120 minutes to answer, about 135 minutes of seat time |
 | Passing score | 720 on a 100-1000 scaled score |
 | Question style | Single-answer plus multiple-response ("Select TWO/THREE", roughly a quarter of questions) |
 | Structure | Scenario-anchored: 4 of 6 production scenarios per sitting, plus standalone questions |
 | Delivery | Pearson VUE, test center or online proctored. No Claude, no docs, no browser during the exam |
 | Price | $125 per attempt |
-| Registration | Anthropic Partner Academy (requires free Claude Partner Network membership) |
+| Registration | Anthropic Partner Academy, open to people who work at Claude Partner Network organizations (sign in with a company email) |
+| Languages | English or Japanese |
+| Retakes | Full fee for every attempt; waits of 14, 30 and 90 days after the first, second and third failed attempts; at most 4 attempts in any 12 months |
 | Validity | 1 year; free non-proctored renewal assessment before expiration, full-price proctored retake after it lapses |
 
 ### Exam domains
@@ -99,6 +101,8 @@ Each response carries a `stop_reason` that tells your code what Claude intends:
 - `"end_turn"`: Claude considers the task complete. Terminate the loop.
 - `"tool_use"`: Claude wants a tool executed. Run it, append the result, continue the loop.
 - `"max_tokens"`: the response was truncated by the output limit. Handle explicitly; treating truncation as completion silently corrupts results.
+
+The API has a few more values worth knowing: `"refusal"` (Claude declined), `"stop_sequence"` (one of your stop sequences was hit), `"pause_turn"` (a server-side tool loop such as web search paused; send the response back as-is to let Claude continue) and `"model_context_window_exceeded"` (the response filled the context window). Branch on them explicitly instead of treating every unknown value as completion.
 
 The canonical agentic loop:
 
@@ -222,7 +226,9 @@ Notice what the description carries: purpose, the boundary against the neighbori
 | `"any"` | Claude MUST call some tool | You need tool use but the choice can vary |
 | `{"type": "tool", "name": "extract_data"}` | Claude MUST call that specific tool | Forcing structured extraction through a schema |
 
-Exam pattern: "How do you ensure Claude always returns structured JSON?" The answer is `tool_choice` forcing a named tool with a JSON schema. A system-prompt instruction to "always respond in JSON" is the trap option.
+Exam pattern: "How do you ensure Claude always returns structured JSON?" The answer is a schema-enforced mechanism: a tool defined with the JSON schema and forced through `tool_choice`, or structured outputs (the schema in `output_config.format`, or `strict: true` on the tool), which guarantee schema-valid JSON through constrained decoding. A system-prompt instruction to "always respond in JSON" is the trap option.
+
+Current API note: some of the newest models reject forced tool use (`any` or a named `tool`) with a 400 error, and Anthropic points to structured outputs or `auto` plus strict tools instead. The exam's principle stays the same: format guarantees come from a mechanism, never from an instruction.
 
 ### 2.4 Syntax errors versus semantic errors
 
@@ -546,10 +552,11 @@ Investigate incrementally: Grep/Glob to locate, Read the relevant region, then E
 
 - `-p` / `--print`: non-interactive mode; without it the pipeline hangs waiting for input. The essential flag.
 - `--output-format json`: machine-parseable output.
-- `--allowedTools Read,Grep,Glob`: restrict tools in automation (least privilege).
+- `--tools "Read,Grep,Glob"`: limit the run to those built-in tools (least privilege in automation).
+- `--allowedTools` is a different flag: it pre-approves tools so they run without a permission prompt, and `--disallowedTools` removes or denies specific tools. A CI job that needs both restriction and no prompts uses `--tools` for the first and `--allowedTools` for the second.
 
 ```bash
-claude -p "Review this PR for security issues" --output-format json --allowedTools Read,Grep,Glob
+claude -p "Review this PR for security issues" --output-format json --tools "Read,Grep,Glob"
 ```
 
 Two principles ride along: include prior findings in the prompt so repeated reviews report only new issues, and separate generation from review. A model reviewing code it just wrote, in the same session, retains the reasoning that produced it and is biased toward approving it. Independent review sessions fix this.
@@ -581,7 +588,7 @@ Two named patterns extend chaining and both show up in scenario questions:
 
 ### 6.5 Schema design for structured output
 
-Force extraction through `tool_choice` plus a JSON schema, and design the schema for the real world:
+Force extraction through a schema (structured outputs, or a tool defined with the schema and forced with `tool_choice` on models that allow forcing), and design the schema for the real world:
 
 - **Nullable fields** for data that may not exist in the source.
 - **`"unclear"` enum values** for genuinely ambiguous fields.
@@ -751,7 +758,7 @@ Revision-oriented summaries. Each domain lists what you must know (facts) and wh
 
 ## Domain 3: Claude Code Configuration & Workflows (20%)
 
-**Know:** the CLAUDE.md hierarchy and which levels are version controlled; the team-standards-in-user-config trap; `.claude/rules/` path scoping; skill frontmatter (`context: fork`, `allowed-tools`, `argument-hint`); hook events and their `settings.json` syntax; Plan Mode criteria; headless flags (`-p`, `--output-format json`, `--allowedTools`).
+**Know:** the CLAUDE.md hierarchy and which levels are version controlled; the team-standards-in-user-config trap; `.claude/rules/` path scoping; skill frontmatter (`context: fork`, `allowed-tools`, `argument-hint`); hook events and their `settings.json` syntax; Plan Mode criteria; headless flags (`-p`, `--output-format json`, `--tools` to restrict, `--allowedTools` to pre-approve).
 
 **Be able to:** place a rule at the correct hierarchy level; convert a "Claude must always/never" requirement into the right hook; scope a skill's tools to least privilege; decide Plan Mode vs direct execution from the change's shape; wire a CI review that stays non-interactive and reports only new findings.
 
@@ -779,15 +786,15 @@ Revision-oriented summaries. Each domain lists what you must know (facts) and wh
 
 ## The preparation ladder
 
-Five layers, in order. Each builds on the previous, and the free layers take you surprisingly far.
+Five layers, in order. Each builds on the previous, and the free layers take you surprisingly far. Anthropic retired its official practice exam when the exams moved to Pearson VUE; the sample questions in the official exam guide are what remains.
 
 | Step | Resource | Cost |
 |------|----------|------|
 | 1. Learn the vocabulary | [Anthropic Partner Academy courses](https://claude.com/partners), the official exam guide, and the [Anthropic Academy courses](https://www.anthropic.com/learn) mapped in Resources | Free |
 | 2. Go to the source | [docs.anthropic.com](https://docs.anthropic.com): agents, tool use, MCP, Claude Code | Free |
-| 3. First calibration | [20 free CCA-F practice questions](https://preporato.com/free/claude-certified-architect/questions?utm_source=github&utm_medium=guide&utm_campaign=cca-f) in the real exam format | Free |
-| 4. Full calibration | [Six full-length scenario-format practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-architect?utm_source=github&utm_medium=guide&utm_campaign=cca-f) built on the exact domain weights | Paid |
-| 5. Prove it hands-on | [11 auto-graded build-and-submit projects](https://preporato.com/certificates/claude-certified-architect?utm_source=github&utm_medium=guide&utm_campaign=cca-f): agentic loops, hub-and-spoke systems, MCP servers, extraction pipelines | Paid |
+| 3. First calibration | [30 practice questions with explanations](./practice-questions.md) in this repo, also as a timed [practice test](https://preporato.github.io/claude-certification-guide/#cca-f) | Free |
+| 4. Full calibration | [Six full-length scenario-format practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-architect) on Preporato, built on the exact domain weights; the page has free sample questions to try first | Paid |
+| 5. Prove it hands-on | [11 auto-graded build-and-submit projects](https://preporato.com/certificates/claude-certified-architect): agentic loops, hub-and-spoke systems, MCP servers, extraction pipelines | Paid |
 
 Steps 1-3 cost nothing and tell you honestly where you stand. Steps 4-5 are how you close the gap they reveal.
 
@@ -813,7 +820,7 @@ Five mental models for evaluating answer choices:
 | Bigger context = better attention | Lost-in-the-middle persists | Focused passes, key facts up front |
 | Silent empty results on failure | Forecloses recovery | Structured error context with partials |
 | All tools on one agent | Selection degrades from ~18 tools | 4-5 scoped tools, split into subagents |
-| Prompt-only JSON formatting | Probabilistic, malformed output possible | tool_use schema plus validation retry |
+| Prompt-only JSON formatting | Probabilistic, malformed output possible | Schema-enforced output (structured outputs or a schema-defined tool) plus validation of the values |
 
 ## Critical distinctions
 
@@ -861,16 +868,16 @@ Twelve fresh questions in the exam's style, with reasoning. (These are written f
 - C) In a programmatic gate that checks the refund amount before the refund tool executes
 - D) In the tool description for the refund tool
 
-**Answer: C.** "Whenever" means compliance, and compliance is enforced by mechanism (a preToolUse-style gate). A and B are probabilistic; D improves selection but cannot enforce a threshold.
+**Answer: C.** "Whenever" means compliance, and compliance is enforced by mechanism (a check in code before the refund tool runs, the same idea as a `PreToolUse` hook). A and B are probabilistic; D improves selection but cannot enforce a threshold.
 
 **Q3.** Claude must return valid JSON matching a strict schema for every extraction. Which combination guarantees the format?
 
 - A) A system prompt with the schema pasted in and an instruction to follow it exactly
-- B) `tool_choice` forcing a named extraction tool defined with the JSON schema, plus validation and a retry loop
+- B) Schema-enforced output (structured outputs, or an extraction tool defined with the JSON schema and forced on models that allow it), plus validation of the values
 - C) Few-shot examples of correctly formatted output
 - D) Lowering temperature to 0
 
-**Answer: B.** Forced tool use with a schema eliminates syntax errors, and validation-retry catches residual failures. A and C are probabilistic; D reduces variance without guaranteeing structure.
+**Answer: B.** Schema enforcement eliminates syntax errors, and validation catches what a schema can't, such as wrong values. A and C are probabilistic; D reduces variance without guaranteeing structure.
 
 **Q4.** A document-extraction pipeline keeps failing validation on the `revenue` field for a minority of documents. Investigation shows those documents genuinely contain no revenue figure. The fix?
 
@@ -894,7 +901,7 @@ Twelve fresh questions in the exam's style, with reasoning. (These are written f
 
 - A) `~/.claude/CLAUDE.md`
 - B) The project's committed `.claude/CLAUDE.md`
-- C) A preCommit hook in the project's committed settings
+- C) A `PreToolUse` hook in the project's committed settings that runs the tests whenever Claude runs `git commit`
 - D) A note in the repository README
 - E) A few-shot example in each developer's personal config
 
@@ -956,9 +963,9 @@ Twelve fresh questions in the exam's style, with reasoning. (These are written f
 
 ## 30-day study plan
 
-- **Days 1-7: official baseline.** Join the [Claude Partner Network](https://claude.com/partners) (free), complete the Partner Academy architect courses, read the official exam guide, and map your experience against the five domains.
+- **Days 1-7: official baseline.** Check that your employer is in the [Claude Partner Network](https://claude.com/partners) (registration needs your company email), complete the Partner Academy architect courses, read the official exam guide, and map your experience against the five domains.
 - **Days 8-21: build.** Work through [docs.anthropic.com](https://docs.anthropic.com) with a project open: an agent with tools and a real loop, an MCP server, a Claude Code setup with CLAUDE.md hierarchy, one hook, one skill, and a headless CI invocation. Part I of this guide is your reading companion; the exam rewards people who have hit these failure modes personally. If you want these builds checked, the [hands-on projects](https://preporato.com/certificates/claude-certified-architect) (paid) cover the same ground with automatic rubric grading.
-- **Days 22-30: calibrate.** Start with the [20 free questions](https://preporato.com/free/claude-certified-architect/questions?utm_source=github&utm_medium=guide&utm_campaign=cca-f) to see the format, then take [full-length, timed, scenario-format practice tests](https://preporato.com/certificates/claude-certified-architect?utm_source=github&utm_medium=guide&utm_campaign=cca-f). Review per-domain results, re-read the matching Part II notes, and spend the final days on your two weakest domains. The night before, review Part III's tables and the [cheat sheet](https://preporato.com/blog/claude-certified-architect-cheat-sheet-2026).
+- **Days 22-30: calibrate.** Start with the [30 practice questions](./practice-questions.md) in this repo to see the format, then take [full-length, timed, scenario-format practice tests](https://preporato.com/certificates/claude-certified-architect). Review per-domain results, re-read the matching Part II notes, and spend the final days on your two weakest domains. The night before, review Part III's tables and the [cheat sheet](https://preporato.com/blog/claude-certified-architect-cheat-sheet-2026).
 
 The expanded week-by-week version: [30-day CCA-F study plan](https://preporato.com/blog/cca-f-study-plan-30-day-preparation).
 
@@ -978,7 +985,7 @@ You are ready when every line is true:
 - [ ] I can distinguish MCP tools, resources, and prompts
 - [ ] I know hook events and why hooks beat CLAUDE.md for guarantees
 - [ ] I know `context: fork`, `allowed-tools`, and path-scoped rules
-- [ ] I know the headless flags: `-p`, `--output-format json`, `--allowedTools`
+- [ ] I know the headless flags: `-p`, `--output-format json`, `--tools` (restrict) and `--allowedTools` (pre-approve)
 - [ ] I can rewrite vague prompt guidance into explicit, testable criteria
 - [ ] I know few-shot teaches format and reasoning but cannot enforce ordering
 - [ ] I know schemas fix syntax errors, review catches semantic errors
@@ -1008,11 +1015,12 @@ You are ready when every line is true:
 - [CCA-F complete guide](https://preporato.com/blog/claude-certified-architect-complete-guide-2026) · [Cheat sheet](https://preporato.com/blog/claude-certified-architect-cheat-sheet-2026) · [Domains breakdown](https://preporato.com/blog/cca-f-exam-domains-complete-breakdown-2026) · [Exam format](https://preporato.com/blog/cca-f-exam-format-structure-what-to-expect) · [How to pass first attempt](https://preporato.com/blog/how-to-pass-cca-f-first-attempt-2026) · [Hardest topics by attempt data](https://preporato.com/blog/hardest-cca-f-exam-topics-practice-attempt-data-2026)
 - Technical guides: [hooks](https://preporato.com/blog/claude-code-hooks-explained-cca-f-guide) · [subagent orchestration](https://preporato.com/blog/claude-code-subagents-orchestration-patterns-cca-f) · [MCP tool design](https://preporato.com/blog/mcp-tool-design-best-practices-cca-f) · [MCP architecture](https://preporato.com/blog/model-context-protocol-mcp-architecture-guide-2026) · [structured output](https://preporato.com/blog/structured-output-prompt-engineering-claude-cca-f) · [CLAUDE.md context management](https://preporato.com/blog/claude-md-context-management-best-practices-2026) · [permissions precedence](https://preporato.com/blog/claude-code-permissions-settings-precedence-guide)
 
-**Practice ([preporato.com/certificates/claude-certified-architect](https://preporato.com/certificates/claude-certified-architect)):**
-- [20 free practice questions](https://preporato.com/free/claude-certified-architect/questions?utm_source=github&utm_medium=guide&utm_campaign=cca-f) in the real exam format
-- (Paid) [Six full-length scenario-format practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-architect?utm_source=github&utm_medium=guide&utm_campaign=cca-f) built on the exact domain weights
-- (Paid) [11 hands-on projects](https://preporato.com/certificates/claude-certified-architect?utm_source=github&utm_medium=guide&utm_campaign=cca-f): build-and-submit work (agentic loops, hub-and-spoke systems, MCP servers, extraction pipelines) graded automatically against a rubric
+**Practice:**
+- [30 practice questions with explanations](./practice-questions.md) in this repo, also as a timed [practice test](https://preporato.github.io/claude-certification-guide/#cca-f) (free)
+- [The CCA-F page on Preporato](https://preporato.com/certificates/claude-certified-architect): free sample questions to start, then the full tests below
+- (Paid) [Six full-length scenario-format practice tests and a 500-card flashcard deck](https://preporato.com/certificates/claude-certified-architect) built on the exact domain weights
+- (Paid) [11 hands-on projects](https://preporato.com/certificates/claude-certified-architect): build-and-submit work (agentic loops, hub-and-spoke systems, MCP servers, extraction pipelines) graded automatically against a rubric
 
 ---
 
-*Not affiliated with Anthropic. Exam details reflect the program as of August 2026; the Partner Academy is authoritative. Found an error? [Open an issue](https://github.com/preporato/claude-certification-guide/issues).*
+*Not affiliated with Anthropic. Exam details reflect the program as of October 2026; the Partner Academy is authoritative. Found an error? [Open an issue](https://github.com/preporato/claude-certification-guide/issues).*

@@ -1,0 +1,41 @@
+name: Outdated or wrong fact
+description: Something in a guide or a practice question is wrong or out of date.
+title: "[Fix] "
+labels: ["content-fix"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping keep this accurate. Exam facts change, and fixes from people who just sat an exam are the most valuable kind.
+        Please don't paste real exam questions; they're covered by Anthropic's candidate agreement.
+  - type: dropdown
+    id: exam
+    attributes:
+      label: Which exam?
+      options:
+        - CCAO-F (Associate - Foundations)
+        - CCDV-F (Developer - Foundations)
+        - CCA-F (Architect - Foundations)
+        - CCAR-P (Architect - Professional)
+        - All exams / root README
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Where is it?
+      description: File and section, or the practice question number.
+      placeholder: "cca-f/guide.md, Chapter 5.4 Hooks"
+    validations:
+      required: true
+  - type: textarea
+    id: wrong
+    attributes:
+      label: What does it say now, and what's correct?
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source
+      description: A link to Anthropic's docs or program pages, if you have one.

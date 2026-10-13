@@ -1,0 +1,498 @@
+{
+  "id": "cca-f",
+  "code": "CCA-F",
+  "name": "Claude Certified Architect - Foundations",
+  "cert_page": "https://preporato.com/certificates/claude-certified-architect",
+  "exam": {
+    "questions": 60,
+    "minutes": 120
+  },
+  "minutes": 60,
+  "domains": [
+    {
+      "id": "d1",
+      "name": "Agentic Architecture & Orchestration",
+      "weight": 27
+    },
+    {
+      "id": "d2",
+      "name": "Tool Design & MCP Integration",
+      "weight": 18
+    },
+    {
+      "id": "d3",
+      "name": "Claude Code Configuration & Workflows",
+      "weight": 20
+    },
+    {
+      "id": "d4",
+      "name": "Prompt Engineering & Structured Output",
+      "weight": 20
+    },
+    {
+      "id": "d5",
+      "name": "Context Management & Reliability",
+      "weight": 15
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "support",
+      "title": "Customer Support Escalation System",
+      "text": "A retailer's support system uses a coordinator agent that receives each customer conversation and delegates to three subagents: an order-lookup agent with read-only order tools, a refund agent that can issue refunds, and a policy agent that searches the returns-policy knowledge base. Company policy: refunds above $250 need a human's approval, and customers can come back to an open conversation within 7 days."
+    },
+    {
+      "id": "audit",
+      "title": "Multi-Repository Security Audit",
+      "text": "A security team runs a nightly audit across 40 repositories. A coordinator spawns one scanner subagent per repository. Each scanner has `Read`, `Grep` and `Glob` plus a dependency-check tool. The coordinator merges the findings into one report for the morning stand-up and opens tickets for new critical issues."
+    }
+  ],
+  "questions": [
+    {
+      "domain": "d1",
+      "scenario": "support",
+      "stem": "The refund agent needs the order total, the purchase date and the customer's stated reason to decide eligibility. What should the coordinator include when it delegates the task?",
+      "options": {
+        "a": "The specific facts the refund agent needs, written into the delegation prompt: order id, total, purchase date and the customer's stated reason",
+        "b": "Nothing extra, because subagents can read the coordinator's conversation history",
+        "c": "The full raw transcript plus every prior tool output, so the refund agent misses nothing",
+        "d": "An instruction for the refund agent to ask the customer to repeat the details"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Subagents in a hub-and-spoke design start with their own context window and see only what the coordinator passes to them, so {a} is the working design: the minimum necessary context, stated explicitly. {b} assumes an inheritance that doesn't exist. {c} spends tokens and attention on material the decision doesn't need, which is where lost-in-the-middle errors start. {d} makes the customer pay for a gap the coordinator could close with facts it already has."
+    },
+    {
+      "domain": "d5",
+      "scenario": "support",
+      "stem": "Which TWO events should trigger a handoff to a human agent? (Select TWO)",
+      "options": {
+        "a": "The customer asks to speak to a person",
+        "b": "The customer requests a $400 refund for an order the policy covers",
+        "c": "The customer writes in capital letters and says they are furious about a covered $90 refund",
+        "d": "The model reports a confidence score of 0.62 on its eligibility decision",
+        "e": "Answering the customer's question takes three tool calls"
+      },
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "An explicit request for a human ({a}) is a standing escalation trigger, and the $400 refund ({b}) crosses the $250 approval threshold, which makes the handoff mandatory under policy. Sentiment alone ({c}) is no trigger when the request sits inside clear policy; the agent can resolve it while acknowledging the frustration. Self-reported confidence ({d}) is poorly calibrated and makes an unreliable trigger. Task complexity ({e}) is the agent's job."
+    },
+    {
+      "domain": "d2",
+      "scenario": "support",
+      "stem": "The policy agent's knowledge-base search sometimes fails because the search service times out, and sometimes finds nothing because no policy covers the case. Both situations currently return an empty list. How should the tool respond instead?",
+      "options": {
+        "a": "Return a structured error for the timeout (error type, retryable: true, what was attempted) and a successful empty result for the no-match case",
+        "b": "Keep returning an empty list in both cases and let the agent retry",
+        "c": "Raise an exception in both cases so the coordinator ends the conversation",
+        "d": "Return the closest-matching policy in both cases so the agent always has something to cite"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "{a} separates a transient failure from a valid empty result, and the two need different recovery: retry the search, or tell the customer no policy applies. With {b}, the agent can't tell an outage from a real answer and may report that no policy covers the case during an outage. {c} ends conversations over a recoverable timeout. {d} invents relevance, which leads the agent to cite a policy that doesn't apply."
+    },
+    {
+      "domain": "d1",
+      "scenario": "support",
+      "stem": "A customer returns four days later to continue a conversation about a pending refund. Separately, a supervisor wants to test a different resolution on a copy of that conversation without changing what the customer sees. Which pairing fits?",
+      "options": {
+        "a": "Resume the customer's session so the full history is restored, and fork a separate copy for the supervisor",
+        "b": "Fork the session for the customer and resume it for the supervisor",
+        "c": "Resume the same session for both",
+        "d": "Start fresh sessions for both and paste the last assistant message into each system prompt"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Resuming continues a session with its history intact, which is what the returning customer needs. Forking creates an independent branch from the same history, and changes in the fork never flow back, which is what the supervisor needs. {a} matches both. {b} swaps the two. {c} lets the supervisor's experiment change the customer's conversation. {d} throws away most of the context and relies on one message to carry it."
+    },
+    {
+      "domain": "d1",
+      "scenario": "audit",
+      "stem": "Which execution pattern fits the scanning stage and the report stage?",
+      "options": {
+        "a": "Fan out the 40 scans in parallel, because they are independent, then run one merge step that builds the report from normalized results",
+        "b": "Scan sequentially so each scanner can learn from the previous one's findings, then write the report in parallel sections",
+        "c": "Use one agent that scans all 40 repositories in a single context so it can spot cross-repository patterns",
+        "d": "Run several report writers in parallel and concatenate their outputs"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Independent work runs in parallel and dependent work runs in sequence, so the hybrid in {a} matches the data dependencies: the scans don't need each other, and the report needs all of them. {b} serializes independent work and slows the audit for no gain. {c} pushes 40 repositories into one context, which degrades attention and turns one failure into a total failure. {d} produces a report with no single view of the findings, which is what the merge step exists for."
+    },
+    {
+      "domain": "d5",
+      "scenario": "audit",
+      "stem": "Last night the audit crashed at repository 27. The rerun started again from repository 1 and opened duplicate tickets for findings already reported. Which TWO changes fix this? (Select TWO)",
+      "options": {
+        "a": "Checkpoint progress to a manifest file (completed repositories, pending repositories, results so far) and resume from it after a crash",
+        "b": "Make ticket creation idempotent, for example keyed by repository and finding id, so a replay can't create duplicates",
+        "c": "Give the scanners larger context windows so they remember the previous run",
+        "d": "Ask the coordinator at startup which repositories it already finished",
+        "e": "Run the audit weekly instead of nightly"
+      },
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "A manifest ({a}) lets the restarted coordinator continue from repository 27, and idempotent side effects ({b}) make any replayed step harmless; together they turn a crash into a delay. Context windows ({c}) don't survive a process crash, and the coordinator has no memory of the previous run to ask about ({d}), because the API is stateless. Running less often ({e}) leaves the failure in place."
+    },
+    {
+      "domain": "d2",
+      "scenario": "audit",
+      "stem": "An engineer proposes giving every scanner the full tool set, including `Write`, `Bash` and the ticketing tool, 'in case they need it.' What is the best response?",
+      "options": {
+        "a": "Keep each scanner on the read-only tools its job needs, and let only the coordinator open tickets from the merged findings",
+        "b": "Accept the proposal, because more tools make the scanners more capable",
+        "c": "Give the scanners every tool and add a system-prompt rule forbidding writes",
+        "d": "Replace the scanner tools with Bash alone, since Bash can do everything the other tools do"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Least privilege scopes each agent to what its responsibility requires. {a} also keeps tool selection accurate and stops a misbehaving scanner from changing code or opening tickets. {b} widens the blast radius and adds selection noise for capabilities nobody uses. {c} relies on a probabilistic instruction to restrain a capability that should never be there. {d} hands the scanners the broadest tool of all."
+    },
+    {
+      "domain": "d5",
+      "scenario": "audit",
+      "stem": "The morning report said 'No critical issues found across all repositories.' The team later learns that six scanners hit their token budgets and skipped their largest files. What should the report format have required?",
+      "options": {
+        "a": "A coverage annotation from every scanner (files reviewed, files skipped with reasons, coverage counts) carried into the merged report",
+        "b": "A confidence score from each scanner",
+        "c": "A longer narrative summary from each scanner",
+        "d": "Nothing; the scanners needed a more capable model"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Without explicit coverage, 'no issues found' can't be told apart from 'no issues found in the part that ran.' {a} makes the gap visible so the skipped files can be queued for a focused pass. Self-reported confidence ({b}) is poorly calibrated and says nothing about what was skipped. A longer summary ({c}) adds words without the counts. A stronger model ({d}) can still hit a budget, and the report would still hide it."
+    },
+    {
+      "domain": "d1",
+      "stem": "After the first tool call, every follow-up request in your agent loop fails with a 400 error. Here is how the loop builds the next request. What is wrong?",
+      "code": {
+        "lang": "python",
+        "text": "response = client.messages.create(model=MODEL, max_tokens=1024,\n                                  tools=tools, messages=messages)\nif response.stop_reason == \"tool_use\":\n    call = next(b for b in response.content if b.type == \"tool_use\")\n    result = run_tool(call.name, call.input)\n    messages.append({\"role\": \"user\", \"content\": [{\n        \"type\": \"tool_result\",\n        \"tool_use_id\": call.id,\n        \"content\": result,\n    }]})"
+      },
+      "options": {
+        "a": "The assistant turn containing the `tool_use` block is never appended, so the `tool_result` refers to a call the next request doesn't contain",
+        "b": "`tool_result` blocks belong in the system prompt",
+        "c": "`max_tokens` is too low for a tool loop",
+        "d": "The loop should set `tool_choice` to `any` after the first call"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "The API is stateless, so each request must carry the whole exchange: the assistant message with the `tool_use` block comes first, then the user message with the matching `tool_result` ({a}). Without it, the `tool_use_id` points at nothing. {b} misplaces tool results, which go in a user turn. {c} and {d} change settings that have nothing to do with a malformed history."
+    },
+    {
+      "domain": "d1",
+      "stem": "Your research agent uses the server-side web search tool. Some responses come back with `stop_reason` `pause_turn`, and the loop treats them as finished, returning half-done research. What is the correct handling?",
+      "options": {
+        "a": "Send a follow-up request with the paused assistant response appended as-is, so Claude can continue the server-side work",
+        "b": "Treat `pause_turn` the same as `end_turn`",
+        "c": "Run the web search locally and return a `tool_result` for it",
+        "d": "Raise `max_tokens` and send the original request again"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "`pause_turn` means a server-side tool loop reached its iteration limit mid-task. The documented handling is {a}: return the response as the latest assistant turn, and Claude picks up where it stopped. {b} is the bug in the question. {c} treats a server tool like a client tool; there is no `tool_use` for your code to answer. {d} restarts the work and pays for it twice."
+    },
+    {
+      "domain": "d1",
+      "stem": "A team answers one-line FAQ questions from a two-page policy with a six-subagent pipeline: retriever, reader, drafter, tone checker, fact checker and formatter. Answers take 25 seconds and cost far more than expected. What is the best change?",
+      "options": {
+        "a": "Collapse it to a single model call with the policy in context, plus a lightweight validation step if needed",
+        "b": "Run the six subagents in parallel under a coordinator",
+        "c": "Move every subagent to the most capable model to cut retries",
+        "d": "Cache each subagent's output"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "This is over-decomposition: the task is small, single-domain and fits in one context, so the subagents add orchestration cost without any isolation benefit, and {a} removes the overhead. Parallelizing ({b}) doesn't fit a chain where each step needs the previous step's output. {c} raises the cost of a design that shouldn't exist. {d} helps only with repeated identical questions and leaves the latency of the chain in place."
+    },
+    {
+      "domain": "d1",
+      "stem": "A payments service's error rate spiked. The cause could be in code, configuration, infrastructure or a third-party API, and what to check next depends on what each check finds. How should the coordinator decompose the investigation?",
+      "options": {
+        "a": "Dynamic decomposition: plan the next subtasks from each finding, with a token budget and iteration cap enforced in code as safety nets",
+        "b": "A fixed pipeline that runs the four checks in a set order",
+        "c": "Run every conceivable check in parallel with no coordinator",
+        "d": "One prompt asking Claude for the root cause"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Open-ended investigations, where the next step depends on what you just learned, call for dynamic decomposition. Because that pattern costs more and can wander, {a} pairs it with limits enforced outside the model. A fixed pipeline ({b}) suits workflows that are known in advance. {c} wastes effort and leaves nobody to connect the findings. {d} asks for an answer without giving the model any way to gather evidence."
+    },
+    {
+      "domain": "d1",
+      "stem": "Long research tasks sometimes use ten times the expected tokens. Which TWO belong in a reliable token-budget design? (Select TWO)",
+      "options": {
+        "a": "Track cumulative input and output tokens from each response's usage field inside the loop",
+        "b": "Stop the loop in code when the budget is reached, with a wrap-up instruction injected at about 80% of the budget",
+        "c": "A system-prompt instruction asking Claude to stay under 50,000 tokens",
+        "d": "Asking Claude each turn how many tokens it has used so far",
+        "e": "Setting `max_tokens` to 50 on every call"
+      },
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "Budgets are enforced from outside the model: measure from the usage field ({a}) and act on the measurement with a soft warning and a hard stop ({b}). An instruction ({c}) and the model's own estimate ({d}) are probabilistic and unmeasured. A tiny `max_tokens` ({e}) truncates every response, so turns end at the cap before they finish."
+    },
+    {
+      "domain": "d2",
+      "stem": "A team's MCP server should (1) let Claude create Jira tickets, (2) expose the team's API schema files so a user can attach them as context, and (3) provide a reusable 'triage this incident' template with the team's severity rubric. Which MCP primitives fit, in that order?",
+      "options": {
+        "a": "Tool, resource, prompt",
+        "b": "Tool, tool, tool",
+        "c": "Resource, tool, prompt",
+        "d": "Prompt, resource, tool"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Creating a ticket is an action, so it's a tool. Schema files are read-only data for the client to browse and attach, so they're a resource. The packaged triage template is a prompt. {a} matches action, data and know-how in that order. {b} turns data and a template into callable functions. {c} and {d} put the action in the wrong primitive."
+    },
+    {
+      "domain": "d2",
+      "stem": "Every developer on a team should get the same internal MCP server in Claude Code, and the server needs an API token. Which TWO choices are correct? (Select TWO)",
+      "options": {
+        "a": "Define the server in the project's `.mcp.json` and commit it to the repository",
+        "b": "Reference the token in `.mcp.json` as `${INTERNAL_API_TOKEN}` and have each developer set that environment variable",
+        "c": "Paste the raw token into `.mcp.json` so setup is a single step",
+        "d": "Have each developer add the server with local scope by following a wiki page",
+        "e": "Put the token in `CLAUDE.md` so Claude can pass it to the server"
+      },
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "Project scope ({a}) is the configuration that reaches the whole team through version control, and environment variable expansion ({b}) keeps the secret out of the repository. {c} commits a credential. {d} relies on every developer repeating a manual step, and local scope never propagates. {e} puts a secret into the model's context, where it can leak through outputs or logs."
+    },
+    {
+      "domain": "d2",
+      "stem": "When users ask to change their email address, Claude often calls `get_customer` instead of `update_customer`, then tells the user the change is done. Both tools exist. What is the first fix?",
+      "options": {
+        "a": "Rewrite both descriptions: what each tool does, when to use it, and when to use the other one instead, with `get_customer` described as read-only",
+        "b": "Rename `get_customer` to `fetch_customer`",
+        "c": "Add a system-prompt line telling Claude to use `update_customer` for updates",
+        "d": "Remove `get_customer` from the agent"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Claude selects tools mainly from their descriptions, so overlapping or vague descriptions are the first thing to fix ({a}), and the boundary statements ('to change a record, use `update_customer`') are what resolve this confusion. A rename ({b}) changes little while the descriptions stay vague. A system-prompt patch ({c}) is weaker than fixing the routing signal itself. Removing the read tool ({d}) breaks every legitimate lookup."
+    },
+    {
+      "domain": "d3",
+      "stem": "Your team wants every file Claude edits to be formatted with Prettier immediately after each edit, for everyone working in the repository. Which configuration does that?",
+      "options": {
+        "a": "A `PostToolUse` hook in the committed `.claude/settings.json`, matching `Edit|Write`, that runs Prettier on the edited file",
+        "b": "A `PreToolUse` hook on `Edit` that runs Prettier",
+        "c": "A `CLAUDE.md` line: 'Run Prettier after every edit'",
+        "d": "A hook in each developer's `~/.claude/settings.json`"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Formatting has to run after the file changes, which is `PostToolUse`, and the committed project settings file shares the hook with the whole team, so {a} covers both requirements. {b} runs before the edit exists. {c} is guidance Claude may skip, while a hook runs every time. {d} works only for developers who set it up themselves."
+    },
+    {
+      "domain": "d3",
+      "stem": "A team requires that Claude never ends its work while the test suite is failing. Which hook enforces this?",
+      "options": {
+        "a": "A `Stop` hook that runs the tests and exits with code 2, printing the failures to stderr, when any test fails",
+        "b": "A `SessionEnd` hook that runs the tests",
+        "c": "A `UserPromptSubmit` hook that runs the tests before each prompt",
+        "d": "A `PostToolUse` hook that runs the tests after every file read"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Exit code 2 from a `Stop` hook prevents Claude from stopping and feeds the stderr text back, so Claude keeps working on the failures ({a}). `SessionEnd` ({b}) fires as the session closes and can't block anything. {c} tests before the work happens. {d} runs constantly at the wrong moment and can't stop Claude from finishing."
+    },
+    {
+      "domain": "d3",
+      "stem": "A `PostToolUse` hook on `Write` scans each file Claude writes. It finds an API key in a file Claude just wrote and exits with code 2. What happens?",
+      "options": {
+        "a": "The file has already been written; Claude receives the hook's stderr message and can act on it, for example by removing the key",
+        "b": "The write is cancelled and the file is never created",
+        "c": "Claude Code shuts down the session",
+        "d": "Nothing happens, because exit code 2 is ignored for `PostToolUse`"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "`PostToolUse` fires after the tool has run, so it can't undo the write; exit code 2 shows its stderr to Claude ({a}). To stop the write itself, the check belongs in a `PreToolUse` hook, where exit code 2 blocks the call, which is the behavior {b} describes. {c} and {d} describe behaviors that don't exist."
+    },
+    {
+      "domain": "d3",
+      "stem": "A developer asks Claude Code to migrate 40 files from a callback-based API client to async/await. The change touches shared types, and there are two reasonable migration strategies. What is the best way to start?",
+      "options": {
+        "a": "Plan Mode: let Claude explore the codebase and propose a migration plan to review before any file changes",
+        "b": "Direct execution, file by file, fixing problems as they appear",
+        "c": "One prompt for the whole change, then review the final diff",
+        "d": "A `CLAUDE.md` rule saying 'use async/await'"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Multi-file, cross-cutting changes with more than one valid approach are Plan Mode's case ({a}): the strategy gets agreed before 40 files move. {b} and {c} commit to an approach before anyone has compared the options, and a wrong choice is expensive to unwind. {d} states a preference without planning the migration."
+    },
+    {
+      "domain": "d3",
+      "stem": "A team's dependency-audit skill prints thousands of lines of output, and teammates complain it floods the main conversation. Which frontmatter change fixes this?",
+      "options": {
+        "a": "`context: fork`, so the skill runs in an isolated subagent and returns its result",
+        "b": "`disable-model-invocation: true`",
+        "c": "`allowed-tools: Read`",
+        "d": "`model: haiku`"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "`context: fork` ({a}) runs the skill in its own subagent context, so the verbose work stays out of the main conversation. {b} only stops Claude from invoking the skill automatically; the output still floods the conversation whenever someone runs it. {c} changes which tools are pre-approved and {d} changes the model, and neither moves the output."
+    },
+    {
+      "domain": "d3",
+      "stem": "In a monorepo, files under `services/payments/` follow strict rules (all amounts in integer cents, no floats). The rules confuse Claude when it works on the frontend. Which TWO placements load these rules only when Claude works in the payments code? (Select TWO)",
+      "options": {
+        "a": "A file in `.claude/rules/` with `paths: [\"services/payments/**\"]` in its frontmatter",
+        "b": "A `CLAUDE.md` file inside `services/payments/`",
+        "c": "A section titled 'Payments only' in the root `CLAUDE.md`",
+        "d": "Each developer's `~/.claude/CLAUDE.md`",
+        "e": "The project's `.mcp.json`"
+      },
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "A path-scoped rule ({a}) loads when Claude reads or edits a matching file, and a subdirectory `CLAUDE.md` ({b}) loads on demand when Claude works with files in that directory. The root `CLAUDE.md` ({c}) loads in every session, frontend work included. {d} is personal and reaches nobody else. {e} configures MCP servers and holds no instructions."
+    },
+    {
+      "domain": "d4",
+      "stem": "A code-review prompt says 'Be thorough but avoid nitpicks.' Reviews flag style issues inconsistently and miss SQL injection. Which rewrite fixes the cause?",
+      "options": {
+        "a": "'Report only these issues: SQL injection, XSS, authentication bypass and secrets in code. Report high or critical severity only. Do not comment on formatting or naming.'",
+        "b": "'Be extremely thorough and never miss anything.'",
+        "c": "'Be conservative with your comments.'",
+        "d": "'You are a world-class senior security engineer.'"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Vague instructions produce inconsistent behavior because the model has to guess the threshold. {a} names the categories, the severity floor and the exclusions, and anyone reading a review can check whether it followed them. {b} and {c} push the same vague guidance in two directions. A role line ({d}) without criteria leaves the same guesswork."
+    },
+    {
+      "domain": "d4",
+      "stem": "A classifier should flag support tickets that mention a physical safety risk. In testing it flags every ticket containing the word 'fire', including 'firewall rules reset after update.' What is the best few-shot improvement?",
+      "options": {
+        "a": "Two to four examples that include the firewall ticket labeled not-safety with a one-line reason, a genuine safety ticket, and an ambiguous case",
+        "b": "Twenty examples of genuine safety tickets",
+        "c": "An instruction: 'Don't be fooled by keywords.'",
+        "d": "A lower temperature"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Few-shot examples teach reasoning and edge cases best when they include something the model should leave alone, so the tricky negative in {a} is the example that matters. {b} piles on positives and teaches nothing about the false positives. {c} is vague guidance. Temperature ({d}) changes randomness and leaves the misunderstanding in place."
+    },
+    {
+      "domain": "d4",
+      "stem": "Your team plans to use structured outputs (a JSON schema in `output_config.format`) for invoice extraction. Which TWO statements about this feature are true? (Select TWO)",
+      "options": {
+        "a": "Constrained decoding makes the response valid JSON that matches the schema's structure and types",
+        "b": "A refusal or a `max_tokens` cutoff can still produce output that doesn't match the schema, so check `stop_reason`",
+        "c": "It guarantees the extracted values are correct for the source document",
+        "d": "It removes the need to validate business rules, such as totals matching line items",
+        "e": "It works only when `tool_choice` forces a specific tool"
+      },
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "Structured outputs guarantee format: valid, schema-compliant JSON ({a}), with the documented exceptions of refusals and truncation ({b}). Format says nothing about whether the values are right, so semantic checks such as totals and dates stay in your pipeline, which rules out {c} and {d}. {e} confuses the feature with forced tool use; structured outputs are requested through `output_config.format`."
+    },
+    {
+      "domain": "d4",
+      "stem": "An extraction fails validation because `invoice_date` came back as 2026-04-31, a date that doesn't exist. What should the retry request contain?",
+      "options": {
+        "a": "The original document, the failed output, and the specific error ('`invoice_date` 2026-04-31 is not a valid date'), with an instruction to correct only that field",
+        "b": "The original document again with no other changes",
+        "c": "The failed output and the words 'try again'",
+        "d": "The same request sent to a more capable model"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "A useful retry tells the model exactly what failed and gives it the source to fix it against ({a}). {b} repeats the conditions that produced the error. {c} removes the source the model needs to correct the date. {d} changes the model without telling it what went wrong."
+    },
+    {
+      "domain": "d4",
+      "stem": "A product team wants to move its live chat assistant to the Message Batches API to cut costs in half. What is the right assessment?",
+      "options": {
+        "a": "Reject it: batches carry no latency guarantee (most finish within an hour, some take up to 24), so a waiting user can't be served; cut costs with prompt caching or by routing routine messages to a cheaper tier",
+        "b": "Approve it: the same quality at half the price",
+        "c": "Approve it, provided the app polls for results every second",
+        "d": "Reject it, because batch requests can't include a system prompt"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "The batch discount comes with asynchronous processing and no latency guarantee, which rules it out for anyone waiting on an answer ({a}). {b} ignores the latency. Polling ({c}) doesn't speed up processing. {d} is false: batch requests take the same parameters as regular Messages requests."
+    },
+    {
+      "domain": "d4",
+      "stem": "One prompt asks Claude to extract 30 fields from a contract, normalize every currency, classify the risk clauses and write an executive summary. Results vary from run to run, and errors are hard to trace. What is the best restructuring?",
+      "options": {
+        "a": "A chain of focused prompts (extract, validate, normalize, classify, summarize), each with its own instructions and checks",
+        "b": "The same single prompt with each requirement marked IMPORTANT",
+        "c": "The same single prompt on a more capable model",
+        "d": "Ask for the executive summary first, then the fields"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Prompt chaining gives each stage one job and a validation point, so a failure shows up in the stage that caused it ({a}). Emphasis ({b}) doesn't reduce the number of jobs in one prompt. A stronger model ({c}) may help a little and leaves errors untraceable. Reordering ({d}) builds the summary on fields nobody has checked yet."
+    },
+    {
+      "domain": "d5",
+      "stem": "A knowledge-base Q&A agent receives 40 retrieved passages per question. The passage with the answer usually lands near the middle, and answers often miss it. Which TWO changes address this? (Select TWO)",
+      "options": {
+        "a": "Re-rank the passages and pass only the most relevant few",
+        "b": "Put the passages first and the question and instructions at the end of the prompt",
+        "c": "Switch to a model with a larger context window",
+        "d": "Retrieve 80 passages instead of 40",
+        "e": "Raise the temperature"
+      },
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "Attention is weakest in the middle of long contexts, so the fixes shrink the middle and move what matters to the edges: fewer, better passages ({a}), and long material first with the question last, which Anthropic's long-context guidance recommends ({b}). A bigger window ({c}) and more passages ({d}) make the middle longer. Temperature ({e}) affects randomness and does nothing for attention."
+    },
+    {
+      "domain": "d5",
+      "stem": "Two internal documents disagree about the warranty period: a 2024 policy says 12 months and a 2026 update says 24 months. What should the agent's answer do?",
+      "options": {
+        "a": "Give the answer with attribution: both values, their documents and dates, the newer one identified as likely current, and the conflict flagged for review",
+        "b": "State 24 months without mentioning the conflict, because the newer document wins",
+        "c": "Average the two and state 18 months",
+        "d": "Decline to answer until someone fixes the documents"
+      },
+      "answer": [
+        "a"
+      ],
+      "explanation": "Provenance keeps each claim tied to its source and surfaces conflicts instead of settling them silently ({a}). Silently picking one value ({b}) is the tested anti-pattern even when the choice happens to be right, because nobody learns that the documents disagree. {c} produces a number neither source supports. {d} withholds an answer the agent can give with a caveat."
+    }
+  ]
+}
