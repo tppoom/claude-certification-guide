@@ -4086,12 +4086,17 @@ def call_with_backoff(make_request, max_attempts=5):
                 <td><strong>ห้ามใช้ <code>print()</code> หรือ <code>console.log()</code> เขียนข้อความลง <code>stdout</code> ในโค้ดของ MCP Server เด็ดขาด!</strong> เพราะจะไปปนกับข้อมูล JSON-RPC จนพังทั้งหมด หากต้องการเขียน Log ต้องเขียนออกทาง <strong><code>stderr</code></strong> เท่านั้น!</td>
               </tr>
               <tr>
-                <td><strong>2. <code>http</code> (Streamable HTTP) / <code>sse</code></strong></td>
-                <td>เชื่อมต่อกับ Remote MCP Server ที่รันอยู่บนคลาวด์หรือเซิร์ฟเวอร์ภายนอกผ่าน HTTP POST และ Server-Sent Events</td>
-                <td><strong>Streamable HTTP (<code>--transport http</code>)</strong> คือมาตรฐานปัจจุบันที่แนะนำให้ใช้แทน <code>sse</code> แบบเก่า รองรับการส่ง Header ยืนยันตัวตน (เช่น OAuth / Bearer token)</td>
+                <td><strong>2. <code>http</code> (Streamable HTTP — มาตรฐานปัจจุบันสำหรับ Remote MCP)</strong></td>
+                <td>เชื่อมต่อกับ Remote MCP Server ผ่าน <strong>Endpoint เดียว (เช่น <code>/mcp</code>)</strong> โดยใช้ <code>HTTP POST</code> ปกติ หากเป็นงานสั้นเซิร์ฟเวอร์จะตอบกลับเป็น JSON ธรรมดา (<code>application/json</code>) ทันทีโดยไม่ต้องเปิดสายค้างไว้ แต่ถ้าเป็นงานยาวหรือต้องส่งข้อมูลต่อเนื่อง เซิร์ฟเวอร์สามารถอัปเกรดการตอบกลับของคำขอนั้นให้เป็นสตรีม SSE (<code>text/event-stream</code>) ได้ตามต้องการ</td>
+                <td><strong>เป็นตัวเลือกที่แนะนำ (Recommended) สำหรับ Remote MCP Server ในปัจจุบัน (<code>--transport http</code>)!</strong> เพราะทำงานแบบ Stateless ได้ รันบน Serverless (AWS Lambda / Cloud Run) และผ่าน Load Balancer ได้โดยไม่หลุดง่าย พร้อมรองรับ OAuth / Bearer token headers</td>
               </tr>
               <tr>
-                <td><strong>3. In-process SDK MCP Server</strong><br>(<code>create_sdk_mcp_server</code>)</td>
+                <td><strong>3. <code>sse</code> (Legacy HTTP+SSE — แบบเก่าที่ถูกแทนที่แล้ว)</strong></td>
+                <td>แบบเก่าต้องใช้ <strong>2 Endpoints แยกกัน</strong> คือต้องเปิดสาย <code>GET /sse</code> <strong>แช่ค้างไว้ตลอดเวลา</strong>เพื่อรอรับข้อมูลขาเข้า และเวลายิงคำสั่งต้องยิงแยกไปที่ <code>POST /messages</code> แล้วรอให้คำตอบอ้อมกลับมาออกทางท่อ <code>GET /sse</code></td>
+                <td><strong>Deprecated (ล้าสมัยแล้ว):</strong> มีข้อเสียคือต้องเปิดสายเชื่อมต่อค้างไว้ตลอดเวลา ทำให้เปลืองทรัพยากร พังง่ายเมื่อเน็ตกระตุกหรือติด Timeout ของ Firewall/Load Balancer และรันบนระบบ Serverless ได้ยาก (ใช้เฉพาะเมื่อต้องคุยกับเซิร์ฟเวอร์รุ่นเก่าที่ยังไม่อัปเกรดเป็น Streamable HTTP)</td>
+              </tr>
+              <tr>
+                <td><strong>4. In-process SDK MCP Server</strong><br>(<code>create_sdk_mcp_server</code>)</td>
                 <td>รันฟังก์ชัน Python/TS (ที่ติด <code>@tool</code>) อยู่ในโปรเซสเดียวกับแอป Agent SDK ของคุณโดยตรง</td>
                 <td>เร็วที่สุดเพราะไม่ต้องเปิด Subprocess แยก และไม่ต้องทำ IPC ข้ามโปรเซส โดยชื่อ Tool เมื่อนำไปใส่ใน <code>allowedTools</code> จะใช้รูปแบบ <strong><code>mcp__&lt;server_name&gt;__&lt;tool_name&gt;</code></strong></td>
               </tr>
