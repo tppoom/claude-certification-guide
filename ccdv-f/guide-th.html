@@ -5375,11 +5375,19 @@ ightarrow$ Default ของบัญชี) เพื่อให้ผู้�
 
           <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
             <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึก &amp; จุดที่ต้องระวังในห้องสอบ (Deep-Dive Explanation):</div>
-            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>จำเกณฑ์ตัวเลขการกระจายงาน (Subtasks Scaling) นี้ไว้ให้แม่น:</strong><br>
-<ul style="margin-top: 6px; margin-bottom: 6px;">
-  <li><strong>Turn-by-turn Subagent Delegation (ตัวเลือก B ที่คุณเลือก — ให้โมเดลหลักสั่งเรียก Subagent เองในแชท):</strong> เหมาะสำหรับการกระจายงานย่อยเพียง<strong>ไม่กี่งานต่อเทิร์น (A few delegated tasks per turn)</strong> เท่านั้น เพราะทุกคำสั่งเรียก (<code>tool_use</code>) และผลลัพธ์สรุปจาก Subagent แต่ละตัวจะต้องวิ่งกลับเข้าสู่ Context ของบทสนทนาหลัก หากสั่งพร้อมกัน <strong>200 repositories</strong> Context ของตัวหลักจะล้นทะลักและเกิดคอขวดจากการประสานงานทีละเทิร์นทันที!</li>
-  <li><strong>Workflow Tool (ตัวเลือก A — เฉลยที่ถูกต้อง):</strong> ออกแบบมาสำหรับการประสานงานระดับ <strong>หลายสิบไปจนถึงหลายร้อย Agents (Dozens to hundreds of agents เช่น 200 repositories)</strong> โดยย้ายตรรกะการควบคุมลูป การรันขนาน การทำ Retry และการรวบรวมผลออกไปไว้ในสคริปต์ที่ Runtime รันอยู่นอก Context ของบทสนทนาหลัก!</li>
-</ul></div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>คลายข้อสงสัย: "ก็ไหนบอกว่า Subagent แยก Context ไง? ทำไมสั่ง 200 ตัวในแชทถึงทำไม่ได้?"</strong><br>
+<ol style="margin-top: 6px; margin-bottom: 8px;">
+  <li><strong>ทำไมการสั่ง Subagent ปกติผ่านแชท (Turn-by-turn Subagent Delegation — ตัวเลือก D ✅ ส่วนตัวเลือก A ❌ ผิด!) ถึงรับมือ 200 งานไม่ไหว?</strong><br>
+    จริงอยู่ที่ตอน Subagent ค้นไฟล์ มันใช้ Context แยกของมันเอง <strong>แต่ตอนส่งผลสรุปกลับมา มันต้องส่งกลับมาเข้าสมองของ Agent แม่ (Main Conversation)!</strong>
+    <br>&bull; ลองคิดเลขง่ายๆ: ถ้า Agent แม่กดเรียก Subagent 200 ตัวในแชท แล้ว Subagent แต่ละตัวส่งผลสรุปสั้นๆ กลับมาแค่ตัวละ 500 tokens &rarr; <strong>$500 \times 200 = 100,000\text{ tokens}$ จะถูกเทโครมเดียวกลับเข้ามาใน Context ของ Agent แม่ทันที!</strong>
+    <br>&bull; ดังนั้น การให้ Agent แม่สั่งเรียก Subagent เองทีละเทิร์นในแชท จึงเหมาะกับงานย่อยแค่ <strong>ไม่กี่งานต่อเทิร์น (เช่น 2–5 งาน — ตัวเลือก D ✅)</strong> เท่านั้น!
+  </li>
+  <li><strong>แล้ว <code>Workflow</code> Tool (ตัวเลือก B ✅) คืออะไร? ทำไมถึงรับมือ 200 งานได้โดยไม่กิน Context ตัวแม่เลย?</strong><br>
+    เปรียบเหมือนกับ <strong>Programmatic Tool Calling สำหรับการคุมฝูง Agent</strong> ครับ!
+    <br>&bull; แทนที่ Agent แม่จะเป็นคนนั่งสั่งลูกน้อง 200 คนในแชทด้วยตัวเอง ตัว <strong><code>Workflow</code> tool</strong> จะให้รัน <strong>สคริปต์ควบคุมงาน (Orchestration Script) อยู่นอกสมองของ Agent แม่ (Outside the conversation context)</strong>
+    <br>&bull; ตัวสคริปต์ข้างนอกนี้จะเป็นคนวนลูปแตก Subagent 200 ตัว รอรับผลลัพธ์ 200 ก้อนมาบวกรวม/คัดกรองในตัวแปรของสคริปต์ให้เสร็จ แล้ว<strong>ส่งเฉพาะผลสรุปบรรทัดสุดท้ายก้อนเดียวกลับเข้าสมองของ Agent แม่!</strong> จึงประสานงานระดับหลักสิบถึงหลักร้อย Agents (Dozens to hundreds of agents) ได้อย่างเสถียร
+  </li>
+</ol></div>
           </div>
         </div>
     
