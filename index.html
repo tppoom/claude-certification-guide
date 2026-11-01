@@ -3999,17 +3999,54 @@ def call_with_backoff(make_request, max_attempts=5):
             ตรวจสอบคำตอบและ URL/คำสั่งขาออกอย่างต่อเนื่องตลอดอายุการใช้งานใน Production เพื่อป้องกันการรั่วไหลของข้อมูลสำคัญ (PII/Secrets)</li>
         </ol>
 
-        <h3>3.2 กลไก Sandboxing ใน Claude Code (Filesystem vs Network Isolation)</h3>
+        <h3>3.2 กลไก Sandboxing ใน Claude Code (Filesystem vs Network Isolation) — ทำงานอย่างไร และถ้าปิดจะเป็นอย่างไร?</h3>
+        <p>
+          ทุกครั้งที่ Claude รันคำสั่งผ่าน <code>Bash</code> tool ตัว Claude Code จะใช้กลไกระดับ OS Kernel (<code>seatbelt</code> บน macOS หรือ <code>bubblewrap</code> บน Linux/WSL2) สร้างกรงขังโปรเซสของคำสั่งนั้น (รวมถึงโปรเซสลูกหลานทุกตัวที่คำสั่งนั้นแตกออกมา) โดยแบ่งการควบคุมออกเป็น <strong>2 เสาหลักที่ต้องทำงานคู่กันเสมอ</strong>:
+        </p>
         <ul>
-          <li><strong>2 เสาหลักของ Sandbox ที่ต้องเปิดคู่กันเสมอ:</strong>
-            <ol>
-              <li><strong>Filesystem Isolation:</strong> จำกัดการเขียนไฟล์ (Write access) ให้ทำได้เฉพาะใน Working directory ปัจจุบัน (<code>cwd</code>) และโฟลเดอร์ย่อยเท่านั้น และสามารถตั้งค่าห้ามอ่านไฟล์ความลับ เช่น <code>~/.ssh</code> หรือ <code>~/.aws</code></li>
-              <li><strong>Network Isolation:</strong> บังคับให้การเชื่อมต่อเครือข่ายทั้งหมดของคำสั่งใน Sandbox ต้องวิ่งผ่าน Proxy ที่อนุญาตเฉพาะโดเมนในรายการที่กำหนด (Allowlisted domains) เพื่อป้องกันการแอบส่งโค้ดหรือคีย์ออกไปหาเซิร์ฟเวอร์ของผู้โจมตี</li>
-            </ol>
-            <em>(หากเปิดเฉพาะ Filesystem isolation แต่ไม่จำกัด Network เอเจนต์ที่โดนแฮ็กก็ยังอ่านไฟล์ในโปรเจกต์แล้วยิงออกไปข้างนอกได้อยู่ดี!)</em>
+          <li><strong>เสาที่ 1 — Filesystem Isolation (กั้นการอ่าน/เขียนไฟล์ในเครื่อง):</strong>
+            <ul>
+              <li><strong>การเขียน (Write):</strong> ค่าเริ่มต้นอนุญาตให้สร้าง แก้ไข หรือลบไฟล์ได้<strong>เฉพาะในโฟลเดอร์โปรเจกต์ปัจจุบัน (<code>cwd</code>) และโฟลเดอร์ย่อยเท่านั้น</strong> โปรเซสใน Sandbox ไม่สามารถออกไปแก้ไขไฟล์ระบบ (เช่น <code>/etc</code>, <code>/bin</code>) หรือแอบไปฝังโค้ดในไฟล์ <code>~/.bashrc</code> / <code>~/.zshrc</code> หรือแก้ไขโปรเจกต์อื่นในเครื่องได้ (หากจำเป็นต้องเขียนโฟลเดอร์อื่นเพิ่ม ต้องระบุใน <code>sandbox.filesystem.allowWrite</code>)</li>
+              <li><strong>การอ่าน (Read):</strong> ค่าเริ่มต้นยังอนุญาตให้อ่านไฟล์ระบบทั่วไปได้เพื่อให้ตัวแปลภาษาและเครื่องมือ (เช่น <code>node</code>, <code>python</code>, <code>git</code>) รันได้ตามปกติ แต่สามารถตั้งค่า <code>denyRead</code> เพื่อ<strong>บล็อกไม่ให้อ่านโฟลเดอร์ความลับ</strong> เช่น <code>~/.ssh</code>, <code>~/.aws</code>, <code>~/.kube</code> ได้</li>
+            </ul>
           </li>
+          <li><strong>เสาที่ 2 — Network Isolation (ตัดเน็ตในกรง แล้วบีบให้วิ่งผ่าน Proxy นอกกรง):</strong>
+            <ul>
+              <li>ในระดับ OS Kernel โปรเซสที่รันอยู่ใน Sandbox <strong>จะถูกตัดสิทธิ์การเปิด Socket ออกสู่อินเทอร์เน็ตโดยตรงทั้งหมด!</strong></li>
+              <li>การเชื่อมต่อเครือข่ายทุกเส้นจะถูกบังคับให้วิ่งผ่านท่อ Unix Domain Socket ออกมายัง <strong>Local Network Proxy ของ Claude Code (ซึ่งรันอยู่นอกกรง Sandbox)</strong></li>
+              <li>ตัว Proxy จะทำหน้าที่เป็นยามตรวจรายชื่อโดเมนปลายทางเทียบกับ <strong><code>allowedDomains</code></strong>: หากอยู่ในรายการที่อนุญาต (เช่น <code>github.com</code>, <code>registry.npmjs.org</code>) ก็ปล่อยผ่านทันที แต่ถ้าเป็นโดเมนแปลกปลอมที่ไม่เคยอนุญาต มันจะ<strong>ระงับการเชื่อมต่อไว้แล้วเด้งหน้าต่างถามผู้ใช้ก่อนเสมอ!</strong></li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="table-wrapper" style="margin-top: 12px; margin-bottom: 14px;">
+          <table>
+            <thead>
+              <tr>
+                <th>สถานการณ์ (ถ้าปิดส่วนใดส่วนหนึ่งจะเกิดอะไรขึ้น?)</th>
+                <th>ความเสี่ยงและผลกระทบที่เกิดขึ้นจริง (ทำไมข้อสอบถึงเน้นว่าต้องเปิดคู่กัน!)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. ถ้าปิด Network Isolation</strong><br>(เปิดแต่ Filesystem Isolation อย่างเดียว)</td>
+                <td><span class="badge badge-heaviest">❌ เสี่ยงข้อมูลรั่วไหล (Data Exfiltration)!</span><br>แม้สคริปต์ที่ติด Prompt Injection จะเขียนทำลายไฟล์นอกโปรเจกต์ไม่ได้ แต่มันยัง<strong>สามารถอ่านซอร์สโค้ดทั้งหมดของโปรเจกต์, อ่านไฟล์ <code>.env</code> ในโฟลเดอร์โปรเจกต์ หรืออ่าน Environment variables แล้วยิง <code>curl</code> / <code>POST</code> ส่งข้อมูลความลับทั้งหมดออกไปหาเซิร์ฟเวอร์ของแฮกเกอร์ได้โดยตรง</strong>เพราะไม่มี Proxy คอยดักตรวจโดเมนปลายทาง!</td>
+              </tr>
+              <tr>
+                <td><strong>2. ถ้าปิด Filesystem Isolation</strong><br>(เปิดแต่ Network Isolation อย่างเดียว)</td>
+                <td><span class="badge badge-heaviest">❌ เสี่ยงถูกยึดเครื่องถาวร (System Compromise / Persistence)!</span><br>แม้สคริปต์ร้ายจะยิงข้อมูลออกไปยังโดเมนแปลกปลอมในตอนนั้นไม่ได้ แต่มันสามารถ<strong>แอบไปแก้ไขไฟล์นอกโปรเจกต์ เช่น แอบฝังคำสั่งขโมยข้อมูลลงใน <code>~/.zshrc</code> หรือ <code>~/.bashrc</code> หรือ <code>.git/hooks/</code> ของโปรเจกต์อื่น</strong> แล้วพอนักพัฒนาเปิด Terminal ปกติขึ้นมาใช้งานเองในภายหลัง (ซึ่งอยู่นอก Sandbox ของ Claude) โค้ดที่ฝังไว้ก็จะทำงานและส่งข้อมูลออกเน็ตได้ทันที!</td>
+              </tr>
+              <tr>
+                <td><strong>3. ถ้าปิด Sandbox ทั้งหมด (<code>sandbox.enabled: false</code>)</strong></td>
+                <td><span class="badge badge-paid">⚠️ พึ่งพาได้แค่ด่านขออนุญาตก่อนรัน (Permission Prompts) เท่านั้น</span><br>1) <strong>ผู้ใช้ต้องคอยกด Approve คำสั่ง <code>Bash</code> ถี่ขึ้นมาก</strong> (เกิด Approval Fatigue จนกดรับโดยไม่อ่าน)<br>2) เมื่อคำสั่งใดได้รับอนุญาตให้รันไปแล้ว (หรืออยู่ในรายการ <code>allow</code> เช่น <code>Bash(npm test)</code>) โปรเซสนั้นและโปรเซสลูกทุกตัวจะได้สิทธิ์ระดับเดียวกับบัญชีผู้ใช้ของคุณเต็ม 100% ทั้งการเข้าถึงไฟล์ทั่วเครื่องและการต่ออินเทอร์เน็ตโดยไม่มีอะไรกั้นอีกเลย</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <ul>
           <li><strong>พารามิเตอร์ <code>dangerouslyDisableSandbox</code> vs <code>allowUnsandboxedCommands</code>:</strong>
-            โดยปกติ Bash tool อาจมีทางหนีไฟให้ส่ง <code>dangerouslyDisableSandbox: true</code> เพื่อขอรันนอก Sandbox (โดยจะเด้งถาม Permission ผู้ใช้) หากองค์กรต้องการ<strong>ปิดทางหนีไฟนี้แบบเด็ดขาด 100%</strong> ต้องตั้งค่า <strong><code>allowUnsandboxedCommands: false</code></strong> ในการตั้งค่า Sandbox!</li>
+            โดยปกติ Bash tool อาจมีทางหนีไฟให้โมเดลส่ง <code>dangerouslyDisableSandbox: true</code> เพื่อขอรันคำสั่งนอก Sandbox (โดยระบบจะบังคับเด้งถาม Permission ผู้ใช้เสมอ ไม่ยอม Auto-allow) หากองค์กรต้องการ<strong>ปิดทางหนีไฟนี้แบบเด็ดขาด 100%</strong> ต้องตั้งค่า <strong><code>allowUnsandboxedCommands: false</code></strong> ในการตั้งค่า Sandbox!</li>
         </ul>
 
         <h3>3.3 ลำดับความสำคัญของไฟล์ตั้งค่า <code>settings.json</code> 5 ระดับในองค์กร</h3>
