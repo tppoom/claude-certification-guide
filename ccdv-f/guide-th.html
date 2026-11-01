@@ -4097,8 +4097,17 @@ def call_with_backoff(make_request, max_attempts=5):
               <li><strong>ส่งเฉพาะคำตอบที่กรองแล้วเข้า Context หลัก:</strong> เมื่อโค้ด Python วนลูปบวกเลขและคัดกรองครบ 50 คนแล้วสั่ง <code>print(over_budget_list)</code> <strong>จะมีเพียงข้อความจาก <code>stdout</code> บรรทัดสุดท้าย (รายชื่อ 2 คนที่เกินงบ) เท่านั้นที่ถูกส่งกลับเข้าสู่ Context ของ Claude!</strong> ช่วยลดทั้งจำนวนรอบ (Latency) และประหยัด Token ได้มหาศาล</li>
             </ol>
           </li>
-          <li><strong>3. Strict Tool Use (<code>strict: true</code>):</strong>
-            การใส่ <code>strict: true</code> ในคำนิยามของ Tool จะเปิดใช้ <strong>Constrained Decoding</strong> บังคับให้พารามิเตอร์ <code>input</code> ที่โมเดลสร้างขึ้นตรงตามประเภทข้อมูลและฟิลด์บังคับใน <code>input_schema</code> แบบ 100% (โดยใน Schema ต้องกำหนด <code>additionalProperties: false</code> สำหรับทุก Object)</li>
+          <li><strong>3. Strict Tool Use (<code>strict: true</code>) — ทำไมถึงไม่เปิดเป็นค่าเริ่มต้นให้ทุก Tool และมีเคสไหนที่ใช้ <code>strict: true</code> ไม่ได้?</strong>
+            <p style="margin-top: 6px; margin-bottom: 6px;">
+              การใส่ <code>strict: true</code> ในคำนิยามของ Tool จะเปิดใช้ <strong>Constrained Decoding</strong> (คอมไพล์ JSON Schema เป็น Grammar ล็อกการสร้าง Token) เพื่อรับประกันว่าพารามิเตอร์ <code>input</code> ที่โมเดลสร้างขึ้นตรงตามประเภทข้อมูลและฟิลด์บังคับแบบ 100% แต่มี <strong>4 เหตุผลสำคัญที่เราไม่สามารถ (หรือไม่ควร) เปิด <code>strict: true</code> กับทุก Tool</strong>:
+            </p>
+            <ul style="margin-bottom: 10px;">
+              <li><strong>(ก) เคสที่พารามิเตอร์เป็น Dictionary ปลายเปิด (Dynamic / Free-form Keys):</strong> Constrained Decoding <strong>บังคับว่าทุก Object ต้องตั้ง <code>additionalProperties: false</code> และต้องระบุชื่อคีย์ล่วงหน้าทั้งหมด!</strong> ดังนั้นถ้า Tool ของคุณรับข้อมูลแบบอิสระ เช่น <code>update_user_metadata(custom_tags: dict)</code> หรือ <code>query_mongodb(filter: dict)</code> ที่ผู้ใช้จะส่งคีย์ชื่ออะไรเข้ามาก็ได้ คุณจะ<strong>ไม่สามารถเปิด <code>strict: true</code> ได้เลย</strong> (API จะโยน Error <code>400</code> ทันที)</li>
+              <li><strong>(ข) ข้อจำกัดของ JSON Schema บางฟีเจอร์:</strong> โหมด Strict ยังไม่รองรับคีย์เวิร์ดตรวจสอบขั้นสูงบางตัวของ JSON Schema (เช่น Recursive schema ที่ซ้อนกันลึกไม่จำกัด หรือเงื่อนไขซับซ้อนบางชนิด)</li>
+              <li><strong>(ค) โควตาจำนวน Strict Tools ต่อคำขอ และ Latency ตอนคอมไพล์ครั้งแรก:</strong> การคอมไพล์ Schema เป็น Grammar มีต้นทุนเวลาในการเรียกครั้งแรก (ก่อนถูกแคช 24 ชม.) และ API มีเพดานจำกัดจำนวน Strict Tools สูงสุดต่อ 1 คำขอ (เช่น สูงสุด 20 strict tools) หากคุณมี Tool 50 ตัว จึงควรเปิด <code>strict: true</code> เฉพาะกับ Tool ที่โครงสร้างพารามิเตอร์ซับซ้อนหรือเสี่ยงพังง่ายจริงๆ</li>
+              <li><strong>(ง) Tool พื้นฐานที่พารามิเตอร์เรียบง่ายมาก (เช่น <code>bash(command: str)</code>):</strong> มีแค่ฟิลด์ <code>string</code> เดียวซึ่งโมเดลส่งถูก 100% อยู่แล้ว จึงไม่จำเป็นต้องเปลืองโควตา Grammar compilation</li>
+            </ul>
+          </li>
           <li><strong>4. การตั้งค่า <code>tool_choice</code> และข้อจำกัดเมื่อเปิด Extended Thinking:</strong>
             <ul>
               <li><code>{"type": "auto"}</code> (ค่าเริ่มต้น): โมเดลตัดสินใจเองว่าจะตอบเป็นข้อความหรือเรียก Tool</li>
