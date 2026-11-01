@@ -1448,6 +1448,7 @@
         </ul>
         <li class="toc-item"><a href="#ccdv-f_part-v-mock-questions" class="toc-link" style="font-weight: 700; color: var(--accent);">📝 Part V (ชุดที่ 1): ข้อสอบ Mock 53 ข้อ (33/53)</a></li>
         <li class="toc-item"><a href="#ccdv-f_part-vi-mock-set-2" class="toc-link" style="font-weight: 700; color: var(--success);">🏆 Part VI (ชุดที่ 2): ข้อสอบ Practice 20 ข้อ (18/20)</a></li>
+        <li class="toc-item"><a href="#ccdv-f_part-vii-mock-set-3" class="toc-link" style="font-weight: 700; color: var(--accent);">📚 Part VII (ชุดที่ 3): ข้อสอบ Sample 10 ข้อ (Q1–Q10)</a></li>
       </ul>
     </aside>
 
@@ -3878,6 +3879,38 @@ def call_with_backoff(make_request, max_attempts=5):
           <li><strong>ต้องใช้ Idempotency Key เดิมซ้ำเมื่อทำการ Retry ขั้นตอนที่มีผลข้างเคียง (Side-effecting Operations):</strong>
             ก่อนเรียกสร้างบัญชีหรือตัดเงิน ต้องผูก <strong>Idempotency Key</strong> ที่กำหนดตายตัวประจำขั้นตอนของงานนั้น (เช่น <code>onboarding:{application_id}:create_account</code>) และบันทึกผลลัพธ์ไว้ หาก Worker ตัวแรกสร้างบัญชีสำเร็จแล้วแต่ตายก่อนบันทึก พอ Worker ตัวที่สองมารันซ้ำด้วย <strong>Idempotency Key ตัวเดิม</strong> ระบบปลายทางจะรู้ทันทีว่าเคยทำสำเร็จไปแล้วและส่งผลลัพธ์เดิมกลับมาโดย<strong>ไม่สร้างบัญชีซ้ำเป็นอันที่สอง!</strong> (ห้ามสุ่มสร้าง Operation ID ใหม่ทุกครั้งที่ Retry เด็ดขาด!)</li>
         </ol>
+        <h3>1.5 คัมภีร์เปรียบเทียบ: เมื่อไหร่ควรใช้ Managed Agent Runtime vs. เขียน Custom Agent Loop เอง (จาก <a href="#ccdv-f_mock3-q-1">Set 3 · Q1</a> และ <a href="#ccdv-f_mock3-q-5">Set 3 · Q5</a>)</h3>
+        <p>
+          ข้อสอบมักให้ <strong>Artifact Excerpt</strong> ที่ระบุขนาดทีมและข้อกำหนดด้าน Infrastructure แล้วถามว่าควรเลือกใช้ <strong>Anthropic-hosted Managed Runtime</strong> หรือสร้าง <strong>Custom Agent Loop</strong> เอง ให้ดูคีย์เวิร์ดตัดเกรดตามตารางนี้:
+        </p>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>หัวข้อเปรียบเทียบ</th>
+                <th>เลือก Anthropic-Hosted Managed Approach (<a href="#ccdv-f_mock3-q-1">Set 3 · Q1</a>)</th>
+                <th>เลือก Custom Agent Loop ที่เขียนควบคุมเอง (<a href="#ccdv-f_mock3-q-5">Set 3 · Q5</a>)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>ขนาดทีมและภาระการดูแลระบบ</strong></td>
+                <td>ทีมเล็ก (เช่น Backend 2 คน ไม่มีทีม Platform), ต้องการ <strong>Fastest path to production</strong> และ <strong>Minimal infrastructure maintenance</strong></td>
+                <td>มีทีม Platform เฉพาะทาง และระบุชัดเจนว่า <strong>Team accepts additional implementation responsibility</strong></td>
+              </tr>
+              <tr>
+                <td><strong>ระบบ Observability &amp; Event Log</strong></td>
+                <td>ระบุว่า <strong>Standard logs and monitoring are sufficient</strong></td>
+                <td>ระบุว่า <strong>Existing observability system is mandatory</strong> (ต้องส่งสถานะทีละขั้นเข้า Dashboard เดิม และเก็บ Handoff events ลง Event Log ของบริษัทเอง)</td>
+              </tr>
+              <tr>
+                <td><strong>การควบคุม Retry, Escalation &amp; Unit Testing</strong></td>
+                <td>ไม่ต้องการควบคุมโครงสร้างพื้นฐานหรือเขียนระบบ Orchestration เอง</td>
+                <td><strong>Retry policy differs by action type</strong> (เช่น จำกัดสูงสุด 2 ครั้งต่อ Action), ต้องหยุดส่งเข้า Internal review queue เมื่อเจอข้อมูลกำกวม และ <strong>Stopping/escalation rules ต้องเขียน Unit Test ทดสอบได้</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <!-- Booster Module 2: Domain 2 -->
@@ -4085,6 +4118,14 @@ def call_with_backoff(make_request, max_attempts=5):
           <li><strong>ระดับ 4: Shared Project Settings (<code>.claude/settings.json</code>)</strong> — ตั้งค่าร่วมกันของทีมใน Repository</li>
           <li><strong>ระดับ 5 (ต่ำสุด): User Settings (<code>~/.claude/settings.json</code>)</strong> — ค่าเริ่มต้นส่วนตัวของผู้ใช้คนนั้นในทุกโปรเจกต์</li>
         </ol>
+        <h3>3.4 การป้องกันข้อมูลรั่วไหลข้ามบริษัทในระบบ Multi-Tenant (Server-Side Tenant Isolation — จาก <a href="#ccdv-f_mock3-q-3">Set 3 · Q3</a>)</h3>
+        <p>
+          เมื่อสร้าง SaaS Agent ที่มีลูกค้าหลายบริษัท (Multiple tenants) ใช้งาน Backend ร่วมกัน และมี Tool เช่น <code>get_account_report(report_name)</code>:
+        </p>
+        <ul>
+          <li><strong>กฎเหล็ก: ห้ามให้โมเดล Claude เป็นผู้กรอกค่า <code>tenant_id</code> จากบทสนทนาเด็ดขาด!</strong> ต้อง <strong>ดึงค่า <code>tenant_id</code> ที่ฝั่ง Server จาก Authenticated Session ของผู้ใช้โดยตรง (Derive <code>tenant_id</code> server-side from the authenticated session)</strong> ก่อนรัน Tool เสมอ</li>
+          <li><strong>ตัวเลือกหลอกที่ห้ามเลือก:</strong> การสั่งให้ Claude เช็กชื่อบริษัทใน Prompt, การใส่ Content Filter กรองชื่อบริษัทอื่นหลังดึงรายงานเสร็จแล้ว หรือการให้ผู้ใช้พิมพ์รหัส Tenant ID ซ้ำ 2 รอบ ล้วนไม่สามารถใช้เป็น Authorization Boundary ที่ปลอดภัยได้</li>
+        </ul>
       </section>
 
       <!-- Booster Module 4: Domain 8 -->
@@ -7114,6 +7155,551 @@ ightarrow$ Default ของบัญชี) เพื่อให้ผู้�
         }
       </script>
 
+
+
+
+      <!-- =================================================================== -->
+      <!-- PART VII: OFFICIAL SAMPLE QUESTIONS SET 3 (10 QUESTIONS: Q1 - Q10)   -->
+      <!-- =================================================================== -->
+      <div class="part-banner" id="ccdv-f_part-vii-mock-set-3">
+        <span class="part-label">Part VII · Official Sample Questions Set 3 (Q1–Q10)</span>
+        <h2>📚 ชุดที่ 3: เฉลยเจาะลึกข้อสอบตัวอย่าง 10 ข้อ (Official Sample Questions Q1–Q10 · 2 ภาษา ครบทุกตัวเลือก A–D)</h2>
+        <p style="color: var(--text-secondary); margin-top: 6px;">
+          รวบรวมโจทย์ข้อสอบตัวอย่าง (Sample Questions ชุดที่ 3 จำนวน 10 ข้อ) ที่เน้นการอ่าน <strong>Artifact Excerpt</strong> เพื่อตัดสินใจเลือกสถาปัตยกรรม (Managed Runtime vs Custom Agent Loop, Explicit Tool Error, Server-Side Tenant Isolation, Cloud AI Gateway Migration, Reusable MCP Server, Grounded Legal RAG, Prompt Caching, Claude Code Team Setup และ Thinking Effort Optimization) พร้อมคำแปลภาษาไทยและเหตุผลวิเคราะห์ทุกตัวเลือก A–D
+        </p>
+      </div>
+
+      <section class="section-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; padding: 14px 18px; background: var(--bg-tertiary); border-radius: 10px; border: 1px solid var(--border);">
+          <div>
+            <strong style="font-size: 1.05rem;">📌 สารบัญด่วน ข้อสอบชุดที่ 3 (10 ข้อ):</strong>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;">
+              <a href="#ccdv-f_mock3-q-1" class="badge badge-weight">Q1 (Managed Runtime)</a>
+              <a href="#ccdv-f_mock3-q-2" class="badge badge-weight">Q2 (Explicit Tool Error)</a>
+              <a href="#ccdv-f_mock3-q-3" class="badge badge-weight">Q3 (Server-Side tenant_id)</a>
+              <a href="#ccdv-f_mock3-q-4" class="badge badge-weight">Q4 (Cloud AI Gateway)</a>
+              <a href="#ccdv-f_mock3-q-5" class="badge badge-weight">Q5 (Custom Agent Loop)</a>
+              <a href="#ccdv-f_mock3-q-6" class="badge badge-weight">Q6 (Reusable MCP Server)</a>
+              <a href="#ccdv-f_mock3-q-7" class="badge badge-weight">Q7 (Contract RAG Grounding)</a>
+              <a href="#ccdv-f_mock3-q-8" class="badge badge-weight">Q8 (Prompt Caching 80p)</a>
+              <a href="#ccdv-f_mock3-q-9" class="badge badge-weight">Q9 (Claude Code Team Setup)</a>
+              <a href="#ccdv-f_mock3-q-10" class="badge badge-weight">Q10 (Thinking Effort &amp; Latency)</a>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Set 3 Question 1 -->
+        <div class="question-card mock3-q-item" id="ccdv-f_mock3-q-1" style="border-left: 5px solid var(--accent); margin-bottom: 24px;">
+          <div class="q-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <span class="q-number" style="background: var(--accent);">📚 Official Sample Question · ข้อที่ 1</span>
+              <span class="badge badge-weight">Domain 1: Agents and Workflows</span>
+            </div>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Set 3 · Question 1 of 10</span>
+          </div>
+
+          <div style="background: var(--bg-tertiary); padding: 14px 18px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid var(--accent);">
+            <strong style="color: var(--accent); display: block; margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options A–D):</strong>
+            <p style="margin-bottom: 10px; font-family: 'Inter', sans-serif; font-size: 0.95rem;">A startup is shipping a customer research agent. The team has two backend engineers, no platform team, and wants to reduce operational burden. They do not require custom infrastructure control or specialized telemetry pipelines.<br><br>Artifact excerpt:<br>Deployment priorities:<br>• Fastest path to production operations<br>• Minimal infrastructure maintenance<br>• Standard logs and monitoring are sufficient<br>• No requirement to self-host orchestration components<br><br>Which deployment approach best fits these priorities?</p>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.9rem;">
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(46, 125, 50, 0.12); border-left: 3px solid var(--success); font-weight: 600;"><strong>A.</strong> Use an Anthropic-hosted managed approach for the agent runtime where available</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>B.</strong> Self-host the agent stack to maximize infrastructure customization</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>C.</strong> Build a custom orchestration service before validating the agent behavior</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>D.</strong> Use only local developer machines to avoid production deployment work</div>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-secondary); padding: 14px 18px; border-radius: 8px; margin-bottom: 14px; border: 1px solid var(--border);">
+            <strong style="color: var(--text-primary); display: block; margin-bottom: 6px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทยครบทุกข้อ (A–D):</strong>
+            <p style="margin-bottom: 10px; font-weight: 600;">บริษัทสตาร์ทอัปกำลังเปิดตัว Customer Research Agent โดยในทีมมีวิศวกร Backend เพียง 2 คน ไม่มีทีม Platform เฉพาะทาง และต้องการลดภาระในการดูแลระบบปฏิบัติการ (Operational burden) พวกเขาไม่ต้องการควบคุมโครงสร้างพื้นฐานแบบปรับแต่งเอง หรือใช้ระบบ Telemetry เฉพาะทาง<br><br>ข้อมูลจากเอกสาร (Artifact excerpt):<br>ลำดับความสำคัญในการ Deploy:<br>• เส้นทางที่เร็วที่สุดในการขึ้นระบบ Production จริง<br>• ภาระในการดูแลรักษาโครงสร้างพื้นฐานน้อยที่สุด (Minimal infrastructure maintenance)<br>• ระบบ Log และการมอนิเตอร์มาตรฐานเพียงพอต่อการใช้งานแล้ว<br>• ไม่มีความจำเป็นต้องโฮสต์ระบบ Orchestration เอง (No requirement to self-host)<br><br>แนวทางการ Deploy แบบใดเหมาะสมกับลำดับความสำคัญเหล่านี้มากที่สุด?</p>
+            <div style="font-size: 0.93rem;">
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(46, 125, 50, 0.12); border-left: 3px solid var(--success); font-weight: 600;"><strong>A.</strong> ใช้แนวทาง Managed Runtime ที่โฮสต์โดย Anthropic สำหรับรัน Agent ในส่วนที่รองรับ</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>B.</strong> โฮสต์ระบบ Agent Stack เองทั้งหมด (Self-host) เพื่อปรับแต่งโครงสร้างพื้นฐานได้สูงสุด</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>C.</strong> สร้างบริการ Orchestration แบบเขียนเอง (Custom orchestration service) ก่อนที่จะเริ่มทดสอบพฤติกรรมของ Agent</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>D.</strong> รันบนเครื่องคอมพิวเตอร์ของนักพัฒนาแต่ละคนเท่านั้น เพื่อหลีกเลี่ยงงาน Deploy ขึ้น Production</div>
+            </div>
+          </div>
+
+          <div class="q-answer-box" style="margin-top: 10px;">
+            <div style="padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; background: rgba(46, 125, 50, 0.1); border-left: 4px solid var(--success);">
+              <strong style="color: var(--success);">✅ เฉลยที่ถูกต้อง (Correct Answer — ข้อ A):</strong><br>
+              <span style="font-size: 0.92rem;"><strong>EN:</strong> A) Use an Anthropic-hosted managed approach for the agent runtime where available</span><br>
+              <span style="font-size: 0.92rem;"><strong>TH:</strong> A) ใช้แนวทาง Managed Runtime ที่โฮสต์โดย Anthropic สำหรับรัน Agent ในส่วนที่รองรับ</span>
+            </div>
+            <div>
+              <strong style="color: var(--accent); font-size: 1rem; display: block; margin-bottom: 8px;">💡 คำอธิบายเจาะลึก (ทำไมข้อนี้ถึงถูก และทำไมตัวเลือกอื่นถึงผิด):</strong>
+              <ul>
+  <li><strong>ทำไม A ถึงถูกต้อง (Managed Agent Runtime):</strong> เมื่อโจทย์ระบุชัดเจนว่าทีมมีขนาดเล็ก (วิศวกร 2 คน ไม่มีทีม Platform), ต้องการขึ้น Production เร็วที่สุด, ต้องการดูแล Infrastructure น้อยที่สุด และไม่ต้องการควบคุมระบบ Orchestration หรือ Telemetry พิเศษ การใช้ <strong>Anthropic-hosted Managed Agents</strong> จึงตอบโจทย์ตรงจุดที่สุด เพราะ Anthropic ดูแลทั้ง Agent Harness, Container Sandbox และ Session State ให้ครบวงจร</li>
+  <li><strong>ทำไม B ถึงผิด:</strong> การทำ Self-host ให้สิทธิ์ควบคุมสูงสุดก็จริง แต่ขัดแย้งโดยตรงกับโจทย์ที่เน้น <em>Minimal infrastructure maintenance</em> และไม่มีทีม Platform</li>
+  <li><strong>ทำไม C ถึงผิด:</strong> การสร้างระบบ Orchestration เองตั้งแต่ยังไม่ทันได้พิสูจน์พฤติกรรมของ Agent เป็นการเพิ่มภาระงานโดยไม่จำเป็น (Premature engineering)</li>
+  <li><strong>ทำไม D ถึงผิด:</strong> เครื่องคอมพิวเตอร์ของนักพัฒนาเหมาะสำหรับช่วงพัฒนา (Development) เท่านั้น ไม่สามารถใช้เป็นสถาปัตยกรรมสำหรับให้บริการลูกค้าบน Production ได้</li>
+</ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Set 3 Question 2 -->
+        <div class="question-card mock3-q-item" id="ccdv-f_mock3-q-2" style="border-left: 5px solid var(--accent); margin-bottom: 24px;">
+          <div class="q-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <span class="q-number" style="background: var(--accent);">📚 Official Sample Question · ข้อที่ 2</span>
+              <span class="badge badge-weight">Domain 8: Tools and MCPs</span>
+            </div>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Set 3 · Question 2 of 10</span>
+          </div>
+
+          <div style="background: var(--bg-tertiary); padding: 14px 18px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid var(--accent);">
+            <strong style="color: var(--accent); display: block; margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options A–D):</strong>
+            <p style="margin-bottom: 10px; font-family: 'Inter', sans-serif; font-size: 0.95rem;">Claude calls a custom inventory tool with valid arguments, but the warehouse API returns a timeout. The application currently sends Claude an empty successful result, causing confident but incorrect responses. What is the best next change?</p>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.9rem;">
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(46, 125, 50, 0.12); border-left: 3px solid var(--success); font-weight: 600;"><strong>A.</strong> Return an explicit tool error and let the workflow decide.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>B.</strong> Silently retry forever until the warehouse API responds.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>C.</strong> Change the tool name so Claude avoids the timeout.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>D.</strong> Remove the inventory tool from the available tool list.</div>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-secondary); padding: 14px 18px; border-radius: 8px; margin-bottom: 14px; border: 1px solid var(--border);">
+            <strong style="color: var(--text-primary); display: block; margin-bottom: 6px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทยครบทุกข้อ (A–D):</strong>
+            <p style="margin-bottom: 10px; font-weight: 600;">Claude เรียกใช้งาน Custom Inventory Tool (เครื่องมือเช็กสต็อกสินค้า) ด้วยอาร์กิวเมนต์ที่ถูกต้องทุกประการ แต่ API ของคลังสินค้าเกิด Timeout แอปพลิเคชันในปัจจุบันกลับส่งผลลัพธ์ว่างเปล่าแต่ระบุว่าสำเร็จ (Empty successful result) กลับไปให้ Claude ส่งผลให้ Claude ตอบกลับผู้ใช้ด้วยความมั่นใจแต่ข้อมูลผิดพลาด การปรับปรุงในลำดับถัดไปข้อใดดีที่สุด?</p>
+            <div style="font-size: 0.93rem;">
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(46, 125, 50, 0.12); border-left: 3px solid var(--success); font-weight: 600;"><strong>A.</strong> ส่งกลับเป็น Tool Error อย่างชัดเจน (Explicit tool error) แล้วให้ระบบ Workflow เป็นผู้ตัดสินใจว่าจะจัดการอย่างไรต่อ</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>B.</strong> สั่งให้แอป Retry เงียบๆ ไปเรื่อยๆ ไม่มีที่สิ้นสุด (Retry forever) จนกว่า API คลังสินค้าจะตอบกลับ</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>C.</strong> เปลี่ยนชื่อ Tool เพื่อให้ Claude หลีกเลี่ยงการเกิด Timeout</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>D.</strong> ลบ Inventory Tool ออกจากรายการเครื่องมือที่ใช้งานได้ไปเลย</div>
+            </div>
+          </div>
+
+          <div class="q-answer-box" style="margin-top: 10px;">
+            <div style="padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; background: rgba(46, 125, 50, 0.1); border-left: 4px solid var(--success);">
+              <strong style="color: var(--success);">✅ เฉลยที่ถูกต้อง (Correct Answer — ข้อ A):</strong><br>
+              <span style="font-size: 0.92rem;"><strong>EN:</strong> A) Return an explicit tool error and let the workflow decide.</span><br>
+              <span style="font-size: 0.92rem;"><strong>TH:</strong> A) ส่งกลับเป็น Tool Error อย่างชัดเจน (Explicit tool error) แล้วให้ระบบ Workflow เป็นผู้ตัดสินใจว่าจะจัดการอย่างไรต่อ</span>
+            </div>
+            <div>
+              <strong style="color: var(--accent); font-size: 1rem; display: block; margin-bottom: 8px;">💡 คำอธิบายเจาะลึก (ทำไมข้อนี้ถึงถูก และทำไมตัวเลือกอื่นถึงผิด):</strong>
+              <ul>
+  <li><strong>ทำไม A ถึงถูกต้อง (Explicit Tool Error):</strong> ความล้มเหลวของระบบภายนอก (เช่น API Timeout) <strong>ห้ามส่งกลับเป็นผลลัพธ์ว่างเปล่าที่สถานะเป็นสำเร็จ (<code>[]</code> หรือ <code>{}</code>) เด็ดขาด</strong> เพราะโมเดลจะเข้าใจผิดว่า <em>"ค้นหาสำเร็จแล้วแต่สินค้ามี 0 ชิ้น"</em> จึงตอบลูกค้าแบบมั่นใจผิดๆ! สิ่งที่ถูกคือต้องส่งกลับเป็น Error ที่ชัดเจน (เช่นตั้งค่า <code>is_error: true</code> พร้อมข้อความว่า <code>Warehouse API timeout</code>) เพื่อให้ Workflow หรือ Agent ตัดสินใจได้ว่าจะ Retry แบบมีเพดานจำกัด, แจ้งผู้ใช้ให้รอ, หรือหยุดการทำงานอย่างปลอดภัย</li>
+  <li><strong>ทำไม B ถึงผิด:</strong> การ Retry ควรมีเพดานจำกัด (Bounded retries with backoff) การสั่ง Retry ไปเรื่อยๆ ไม่รู้จบ (Retry forever) จะทำให้ระบบค้าง (Hang) และซ่อนปัญหาไม่ให้ Workflow จัดการ</li>
+  <li><strong>ทำไม C ถึงผิด:</strong> การเปลี่ยนชื่อ Tool ไม่ได้ช่วยแก้ปัญหาที่ API ฝั่งคลังสินค้าเกิด Timeout หรือการส่งค่าสถานะผิด</li>
+  <li><strong>ทำไม D ถึงผิด:</strong> การลบ Tool ทิ้งทำให้ฟีเจอร์เช็กสต็อกใช้งานไม่ได้เลย แทนที่จะจัดการกับความผิดพลาดชั่วคราว (Transient error) อย่างถูกต้อง</li>
+</ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Set 3 Question 3 -->
+        <div class="question-card mock3-q-item" id="ccdv-f_mock3-q-3" style="border-left: 5px solid var(--accent); margin-bottom: 24px;">
+          <div class="q-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <span class="q-number" style="background: var(--accent);">📚 Official Sample Question · ข้อที่ 3</span>
+              <span class="badge badge-weight">Domain 7: Security and Safety</span>
+            </div>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Set 3 · Question 3 of 10</span>
+          </div>
+
+          <div style="background: var(--bg-tertiary); padding: 14px 18px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid var(--accent);">
+            <strong style="color: var(--accent); display: block; margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options A–D):</strong>
+            <p style="margin-bottom: 10px; font-family: 'Inter', sans-serif; font-size: 0.95rem;">A SaaS analytics assistant lets Claude call a reporting tool. The current tool schema is:<br><br>get_account_report({ tenant_id: string, report_name: string })<br><br>The model fills tenant_id from the conversation. The app already authenticates users, but several tenants share the same backend service. What is the best change to prevent cross-tenant data exposure?</p>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.9rem;">
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(46, 125, 50, 0.12); border-left: 3px solid var(--success); font-weight: 600;"><strong>A.</strong> Derive tenant_id server-side from the authenticated session before running the tool.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>B.</strong> Ask Claude to compare the requested tenant with the user's company name.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>C.</strong> Add a content filter that blocks reports mentioning other tenant names.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>D.</strong> Require users to type their tenant ID twice before the tool is called.</div>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-secondary); padding: 14px 18px; border-radius: 8px; margin-bottom: 14px; border: 1px solid var(--border);">
+            <strong style="color: var(--text-primary); display: block; margin-bottom: 6px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทยครบทุกข้อ (A–D):</strong>
+            <p style="margin-bottom: 10px; font-weight: 600;">ผู้ช่วยวิเคราะห์ข้อมูลแบบ SaaS (Multi-tenant) เปิดให้ Claude เรียกใช้เครื่องมือดึงรายงาน โดยมี Schema ปัจจุบันคือ:<br><br><code>get_account_report({ tenant_id: string, report_name: string })</code><br><br>ปัจจุบันโมเดลเป็นผู้กรอกค่า <code>tenant_id</code> เองจากข้อความในบทสนทนา ตัวแอปมีการยืนยันตัวตน (Authenticate) ผู้ใช้อยู่แล้ว แต่มีลูกค้าหลายบริษัท (Tenants) ใช้บริการ Backend ร่วมกัน การเปลี่ยนแปลงข้อใดดีที่สุดเพื่อป้องกันข้อมูลรั่วไหลข้ามบริษัท (Cross-tenant data exposure)?</p>
+            <div style="font-size: 0.93rem;">
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(46, 125, 50, 0.12); border-left: 3px solid var(--success); font-weight: 600;"><strong>A.</strong> ดึงค่า tenant_id ที่ฝั่งเซิร์ฟเวอร์โดยตรงจาก Session ที่ยืนยันตัวตนแล้ว (Authenticated session) ก่อนรัน Tool</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>B.</strong> สั่งใน Prompt ให้ Claude ช่วยเปรียบเทียบชื่อบริษัทที่ขอกับชื่อบริษัทของผู้ใช้ก่อนเรียก Tool</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>C.</strong> เพิ่มตัวกรองเนื้อหา (Content filter) เพื่อบล็อกรายงานที่มีการเอ่ยถึงชื่อบริษัทอื่น</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>D.</strong> บังคับให้ผู้ใช้พิมพ์รหัส Tenant ID ของตัวเองซ้ำ 2 ครั้งก่อนเรียกใช้ Tool</div>
+            </div>
+          </div>
+
+          <div class="q-answer-box" style="margin-top: 10px;">
+            <div style="padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; background: rgba(46, 125, 50, 0.1); border-left: 4px solid var(--success);">
+              <strong style="color: var(--success);">✅ เฉลยที่ถูกต้อง (Correct Answer — ข้อ A):</strong><br>
+              <span style="font-size: 0.92rem;"><strong>EN:</strong> A) Derive tenant_id server-side from the authenticated session before running the tool.</span><br>
+              <span style="font-size: 0.92rem;"><strong>TH:</strong> A) ดึงค่า tenant_id ที่ฝั่งเซิร์ฟเวอร์โดยตรงจาก Session ที่ยืนยันตัวตนแล้ว (Authenticated session) ก่อนรัน Tool</span>
+            </div>
+            <div>
+              <strong style="color: var(--accent); font-size: 1rem; display: block; margin-bottom: 8px;">💡 คำอธิบายเจาะลึก (ทำไมข้อนี้ถึงถูก และทำไมตัวเลือกอื่นถึงผิด):</strong>
+              <ul>
+  <li><strong>ทำไม A ถึงถูกต้อง (Server-Side Identity Binding / Tenant Isolation):</strong> กฎเหล็กด้านความปลอดภัยของระบบ Multi-tenant คือ <strong>ห้ามให้โมเดล LLM หรือข้อความจากผู้ใช้เป็นผู้กำหนดพารามิเตอร์ที่ใช้แบ่งขอบเขตสิทธิ์ (เช่น <code>tenant_id</code>, <code>user_id</code>, <code>org_id</code>) เด็ดขาด!</strong> เพราะหากเกิด Prompt Injection หรือผู้ใช้พิมพ์หลอกว่า <em>"ขอดูรายงานของ tenant_id = บ.คู่แข่ง"</em> โมเดลก็จะส่งรหัสของบริษัทอื่นเข้า Tool ทันที ดังนั้นต้องตัด <code>tenant_id</code> ออกจากสิ่งที่ให้โมเดลเดา แล้วให้โค้ดฝั่ง Server ดึง <code>tenant_id</code> จาก <strong>Authenticated Session / JWT Token</strong> ของผู้ใช้ที่ล็อกอินอยู่โดยตรงเสมอ!</li>
+  <li><strong>ทำไม B ถึงผิด:</strong> การสั่งให้ Claude เช็กชื่อบริษัทใน Prompt (Prompt-level check) ไม่ใช่ขอบเขตการตรวจสอบสิทธิ์ที่เชื่อถือได้ (Not a reliable authorization boundary) และถูกเจาะด้วย Prompt Injection ได้ง่าย</li>
+  <li><strong>ทำไม C ถึงผิด:</strong> ตัวกรองเนื้อหาทำงาน <em>หลังจาก</em> ดึงข้อมูลของบริษัทอื่นออกมาแล้ว และหากรายงานมีแต่ตัวเลขการเงินโดยไม่ได้เขียนชื่อบริษัท ตัวกรองก็จับไม่ได้เลย</li>
+  <li><strong>ทำไม D ถึงผิด:</strong> การให้พิมพ์ซ้ำ 2 ครั้งช่วยลดแค่การพิมพ์ผิด (Typo) แต่ไม่ได้ป้องกันผู้ใช้ที่ตั้งใจพิมพ์รหัสของบริษัทอื่นเพื่อขโมยข้อมูล</li>
+</ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Set 3 Question 4 -->
+        <div class="question-card mock3-q-item" id="ccdv-f_mock3-q-4" style="border-left: 5px solid var(--accent); margin-bottom: 24px;">
+          <div class="q-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <span class="q-number" style="background: var(--accent);">📚 Official Sample Question · ข้อที่ 4</span>
+              <span class="badge badge-weight">Domain 2: Applications and Integration</span>
+            </div>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Set 3 · Question 4 of 10</span>
+          </div>
+
+          <div style="background: var(--bg-tertiary); padding: 14px 18px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid var(--accent);">
+            <strong style="color: var(--accent); display: block; margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options A–D):</strong>
+            <p style="margin-bottom: 10px; font-family: 'Inter', sans-serif; font-size: 0.95rem;">A company is migrating a Claude feature from direct API calls to a cloud provider's managed AI gateway. The feature must keep the same application-level JSON output contract and interactive latency. What should the developer prioritize during the integration?</p>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.9rem;">
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(46, 125, 50, 0.12); border-left: 3px solid var(--success); font-weight: 600;"><strong>A.</strong> Map the gateway invocation format, errors, and streaming behavior to the app contract.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>B.</strong> Assume the direct Anthropic request format works unchanged through the gateway.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>C.</strong> Remove response validation because the provider gateway handles integration details.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>D.</strong> Convert the feature to nightly batches to avoid provider-specific differences.</div>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-secondary); padding: 14px 18px; border-radius: 8px; margin-bottom: 14px; border: 1px solid var(--border);">
+            <strong style="color: var(--text-primary); display: block; margin-bottom: 6px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทยครบทุกข้อ (A–D):</strong>
+            <p style="margin-bottom: 10px; font-weight: 600;">บริษัทแห่งหนึ่งกำลังย้าย (Migrate) ฟีเจอร์ที่ใช้ Claude จากเดิมที่ยิงเรียก Anthropic API โดยตรง ไปเป็นการเรียกผ่าน Managed AI Gateway ของผู้ให้บริการคลาวด์ (เช่น AWS Bedrock, Google Vertex AI หรือ Azure Foundry) โดยฟีเจอร์นี้ต้องคงรูปแบบผลลัพธ์ JSON (Application-level JSON output contract) และความเร็วในการตอบสนองแบบโต้ตอบทันที (Interactive latency) ไว้เหมือนเดิม นักพัฒนาควรให้ความสำคัญกับสิ่งใดเป็นอันดับแรกในการเชื่อมต่อระบบ?</p>
+            <div style="font-size: 0.93rem;">
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(46, 125, 50, 0.12); border-left: 3px solid var(--success); font-weight: 600;"><strong>A.</strong> แปลง (Map) รูปแบบการเรียกใช้ของ Gateway, รหัส Error และพฤติกรรมการทำ Streaming ให้เข้ากับสัญญา (Contract) ของแอปพลิเคชันเดิม</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>B.</strong> สมมติว่ารูปแบบ Request ที่ยิงตรงหา Anthropic จะสามารถใช้งานผ่าน Gateway ได้เหมือนเดิม 100% โดยไม่ต้องแก้</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>C.</strong> ลบโค้ดตรวจสอบความถูกต้องของผลลัพธ์ (Response validation) ออก เพราะ Gateway ของผู้ให้บริการคลาวด์จัดการรายละเอียดให้หมดแล้ว</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>D.</strong> เปลี่ยนฟีเจอร์นี้ให้ทำงานแบบ Nightly Batch ตอนกลางคืนแทน เพื่อหลีกเลี่ยงความแตกต่างระหว่างผู้ให้บริการ</div>
+            </div>
+          </div>
+
+          <div class="q-answer-box" style="margin-top: 10px;">
+            <div style="padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; background: rgba(46, 125, 50, 0.1); border-left: 4px solid var(--success);">
+              <strong style="color: var(--success);">✅ เฉลยที่ถูกต้อง (Correct Answer — ข้อ A):</strong><br>
+              <span style="font-size: 0.92rem;"><strong>EN:</strong> A) Map the gateway invocation format, errors, and streaming behavior to the app contract.</span><br>
+              <span style="font-size: 0.92rem;"><strong>TH:</strong> A) แปลง (Map) รูปแบบการเรียกใช้ของ Gateway, รหัส Error และพฤติกรรมการทำ Streaming ให้เข้ากับสัญญา (Contract) ของแอปพลิเคชันเดิม</span>
+            </div>
+            <div>
+              <strong style="color: var(--accent); font-size: 1rem; display: block; margin-bottom: 8px;">💡 คำอธิบายเจาะลึก (ทำไมข้อนี้ถึงถูก และทำไมตัวเลือกอื่นถึงผิด):</strong>
+              <ul>
+  <li><strong>ทำไม A ถึงถูกต้อง:</strong> เมื่อย้ายจากการเรียก Anthropic API โดยตรงไปผ่าน Cloud Provider AI Gateway (เช่น Bedrock / Vertex AI) แม้ตัวโมเดลข้างในจะเป็น Claude เหมือนกัน แต่ <strong>รูปแบบการเรียกใช้ (Invocation format / Model IDs / Auth headers), โครงสร้างของ Error Codes (เช่น ThrottlingException ของ AWS แทน 429 ของ Anthropic) และรูปแบบการห่อหุ้ม Streaming frames ของ Gateway จะมีความเฉพาะตัวตามผู้ให้บริการคลาวด์นั้นๆ</strong> นักพัฒนาจึงต้องทำ Adapter/Mapping แปลงรายละเอียดของ Gateway ให้กลับมาตรงกับ Application Contract เดิมโดยยังคงความเร็วแบบ Interactive ไว้</li>
+  <li><strong>ทำไม B ถึงผิด:</strong> แต่ละ Gateway มีการห่อหุ้ม Request/Response, การตั้งค่า認證 (IAM/OAuth) และชื่อรุ่นโมเดลที่ต่างจากการยิงตรงหา Anthropic API การทึกทักว่าใช้แทนกันได้ทันทีโดยไม่แปลงจะทำให้ระบบพัง</li>
+  <li><strong>ทำไม C ถึงผิด:</strong> ไม่ว่าจะเรียกผ่าน SDK หรือ Cloud Gateway แอปพลิเคชันก็ยังต้องมี Response Validation เพื่อตรวจสอบว่า JSON ที่โมเดลสร้างขึ้นตรงตาม Schema ของแอปเสมอ</li>
+  <li><strong>ทำไม D ถึงผิด:</strong> การเปลี่ยนไปรันแบบ Nightly Batch ขัดแย้งกับโจทย์ที่ระบุชัดเจนว่าต้องรักษา <em>Interactive latency</em> (การโต้ตอบแบบทันที)</li>
+</ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Set 3 Question 5 -->
+        <div class="question-card mock3-q-item" id="ccdv-f_mock3-q-5" style="border-left: 5px solid var(--accent); margin-bottom: 24px;">
+          <div class="q-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <span class="q-number" style="background: var(--accent);">📚 Official Sample Question · ข้อที่ 5</span>
+              <span class="badge badge-weight">Domain 1: Agents and Workflows</span>
+            </div>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Set 3 · Question 5 of 10</span>
+          </div>
+
+          <div style="background: var(--bg-tertiary); padding: 14px 18px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid var(--accent);">
+            <strong style="color: var(--accent); display: block; margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options A–D):</strong>
+            <p style="margin-bottom: 10px; font-family: 'Inter', sans-serif; font-size: 0.95rem;">A platform team is building an internal operations agent. They must expose step-by-step state in existing dashboards, enforce a maximum of two retries per action, pause for an internal review queue on ambiguous observations, and store handoff events in their own event log.<br><br>Artifact excerpt:<br>Design requirement:<br>• Existing observability system is mandatory<br>• Retry policy differs by action type<br>• Stopping and escalation rules must be testable in unit tests<br>• Team accepts additional implementation responsibility<br><br>Which approach best matches these requirements?</p>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.9rem;">
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(46, 125, 50, 0.12); border-left: 3px solid var(--success); font-weight: 600;"><strong>A.</strong> Use a custom agent loop with explicit state, retries, observations, and stops</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>B.</strong> Use a single prompt and ask Claude to describe its own retry policy</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>C.</strong> Use a generic framework while hiding the internal state transitions</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>D.</strong> Use a deterministic workflow that never allows observation-based adaptation</div>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-secondary); padding: 14px 18px; border-radius: 8px; margin-bottom: 14px; border: 1px solid var(--border);">
+            <strong style="color: var(--text-primary); display: block; margin-bottom: 6px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทยครบทุกข้อ (A–D):</strong>
+            <p style="margin-bottom: 10px; font-weight: 600;">ทีม Platform กำลังสร้าง Internal Operations Agent โดยต้องแสดงสถานะการทำงานทีละขั้นตอนบน Dashboard เดิมที่มีอยู่, บังคับเพดานการ Retry สูงสุดไม่เกิน 2 ครั้งต่อ Action, หยุดพักงานส่งเข้าคิวตรวจสอบภายในเมื่อเจอผลลัพธ์ที่กำกวม และบันทึกเหตุการณ์การส่งต่องาน (Handoff events) ลงในระบบ Event Log ของบริษัทเอง<br><br>ข้อมูลจากเอกสาร (Artifact excerpt):<br>ข้อกำหนดด้านการออกแบบ:<br>• บังคับต้องเชื่อมต่อกับระบบ Observability เดิมของบริษัท<br>• นโยบายการ Retry แตกต่างกันไปตามประเภทของ Action<br>• กฎการหยุดทำงานและการส่งต่อให้มนุษย์ (Stopping & escalation rules) ต้องสามารถเขียน Unit Test ทดสอบได้<br>• ทีมพร้อมรับผิดชอบภาระในการเขียนโค้ดและดูแลระบบเพิ่มเติม<br><br>แนวทางใดตรงกับข้อกำหนดเหล่านี้มากที่สุด?</p>
+            <div style="font-size: 0.93rem;">
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(46, 125, 50, 0.12); border-left: 3px solid var(--success); font-weight: 600;"><strong>A.</strong> สร้าง Custom Agent Loop ที่ควบคุม State, การ Retry, การอ่านผลลัพธ์ (Observations) และเงื่อนไขการหยุดอย่างชัดเจนด้วยโค้ด</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>B.</strong> ใช้แค่ Prompt เดียวแล้วสั่งให้ Claude อธิบายนโยบายการ Retry ของตัวเองออกมา</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>C.</strong> ใช้ Framework สำเร็จรูปทั่วไปที่ซ่อนการเปลี่ยนสถานะภายใน (Internal state transitions) เอาไว้</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>D.</strong> ใช้ Deterministic Workflow ที่ตายตัวและไม่อนุญาตให้ปรับเปลี่ยนการทำงานตามผลลัพธ์ที่สังเกตได้ (Observations) เลย</div>
+            </div>
+          </div>
+
+          <div class="q-answer-box" style="margin-top: 10px;">
+            <div style="padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; background: rgba(46, 125, 50, 0.1); border-left: 4px solid var(--success);">
+              <strong style="color: var(--success);">✅ เฉลยที่ถูกต้อง (Correct Answer — ข้อ A):</strong><br>
+              <span style="font-size: 0.92rem;"><strong>EN:</strong> A) Use a custom agent loop with explicit state, retries, observations, and stops</span><br>
+              <span style="font-size: 0.92rem;"><strong>TH:</strong> A) สร้าง Custom Agent Loop ที่ควบคุม State, การ Retry, การอ่านผลลัพธ์ (Observations) และเงื่อนไขการหยุดอย่างชัดเจนด้วยโค้ด</span>
+            </div>
+            <div>
+              <strong style="color: var(--accent); font-size: 1rem; display: block; margin-bottom: 8px;">💡 คำอธิบายเจาะลึก (ทำไมข้อนี้ถึงถูก และทำไมตัวเลือกอื่นถึงผิด):</strong>
+              <ul>
+  <li><strong>ทำไม A ถึงถูกต้อง (Custom Agent Loop — ตรงข้ามกับข้อ 1!):</strong> ลองเปรียบเทียบข้อ 5 นี้กับข้อ 1 จะเห็นภาพชัดเจนมากครับ! ในข้อ 1 ทีมมีแค่ 2 คนและไม่อยากดูแลระบบ จึงเลือก <em>Managed Agent</em> แต่ในข้อ 5 นี้ <strong>ทีม Platform พร้อมรับภาระในการเขียนโค้ดเอง และต้องการควบคุมระดับละเอียด (Fine-grained control) ทั้งการส่ง State เข้า Dashboard เดิม, กฎการ Retry ที่ต่างกันตามชนิด Action, และการเขียน Unit Test ทดสอบกฎการหยุด/Escalation</strong> ดังนั้นการเขียน <strong>Custom Agent Loop</strong> ของตัวเองที่จัดการ State, Retries และ Stop Conditions ด้วยโค้ดอย่างชัดเจนจึงเหมาะสมที่สุด</li>
+  <li><strong>ทำไม B ถึงผิด:</strong> การเขียนสั่งใน Prompt ให้โมเดลพูดถึงกฎการ Retry ไม่สามารถบังคับเพดาน Retry แบบ Deterministic และไม่สามารถเขียน Unit Test ทดสอบโค้ดได้</li>
+  <li><strong>ทำไม C ถึงผิด:</strong> การใช้ Framework ที่ซ่อน State ภายใน (Black-box state transitions) ขัดแย้งโดยตรงกับข้อกำหนดที่ต้องแสดงสถานะทุกก้าวบน Dashboard เดิมและบันทึก Event Log ของตัวเอง</li>
+  <li><strong>ทำไม D ถึงผิด:</strong> โจทย์ระบุว่าต้องรับมือกับ <em>Ambiguous observations</em> (ผลลัพธ์ที่กำกวมแล้วตัดสินใจส่งเข้าคิวรีวิว) จึงไม่สามารถใช้ Workflow ตายตัวที่ไม่ดูผลลัพธ์จากการรันได้</li>
+</ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Set 3 Question 6 -->
+        <div class="question-card mock3-q-item" id="ccdv-f_mock3-q-6" style="border-left: 5px solid var(--accent); margin-bottom: 24px;">
+          <div class="q-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <span class="q-number" style="background: var(--accent);">📚 Official Sample Question · ข้อที่ 6</span>
+              <span class="badge badge-weight">Domain 8: Tools and MCPs</span>
+            </div>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Set 3 · Question 6 of 10</span>
+          </div>
+
+          <div style="background: var(--bg-tertiary); padding: 14px 18px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid var(--accent);">
+            <strong style="color: var(--accent); display: block; margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options A–D):</strong>
+            <p style="margin-bottom: 10px; font-family: 'Inter', sans-serif; font-size: 0.95rem;">A platform team has three internal Claude-powered applications that all need the same read and write access to the company's ticketing system. The team wants to avoid duplicating authentication, schema validation, and API client code in each application. Which implementation pattern is the best fit?</p>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.9rem;">
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(46, 125, 50, 0.12); border-left: 3px solid var(--success); font-weight: 600;"><strong>A.</strong> Create one reusable MCP server exposing ticketing actions.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>B.</strong> Copy the same custom tool code into each app.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>C.</strong> Put ticketing API instructions into a shared Skill.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>D.</strong> Ask Claude to format ticket updates as plain text.</div>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-secondary); padding: 14px 18px; border-radius: 8px; margin-bottom: 14px; border: 1px solid var(--border);">
+            <strong style="color: var(--text-primary); display: block; margin-bottom: 6px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทยครบทุกข้อ (A–D):</strong>
+            <p style="margin-bottom: 10px; font-weight: 600;">ทีม Platform มีแอปพลิเคชันภายในที่ขับเคลื่อนด้วย Claude อยู่ 3 ตัว ซึ่งทุกตัวต้องการสิทธิ์ในการอ่านและเขียนข้อมูลเข้าสู่ระบบ Ticketing ของบริษัทเหมือนกันทั้งหมด ทีมต้องการหลีกเลี่ยงการเขียนโค้ดซ้ำซ้อนในเรื่องการยืนยันตัวตน (Authentication), การตรวจสอบความถูกต้องของ Schema (Schema validation) และโค้ด API Client ในแต่ละแอปพลิเคชัน รูปแบบการพัฒนาข้อใดเหมาะสมที่สุด?</p>
+            <div style="font-size: 0.93rem;">
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(46, 125, 50, 0.12); border-left: 3px solid var(--success); font-weight: 600;"><strong>A.</strong> สร้าง MCP Server กลาง 1 ตัวที่นำกลับมาใช้ซ้ำได้ (Reusable MCP server) เพื่อเปิดให้บริการคำสั่งจัดการ Ticket</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>B.</strong> คัดลอกโค้ด Custom Tool ชุดเดียวกันไปใส่ไว้ในแต่ละแอปทั้ง 3 ตัว</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>C.</strong> นำคำแนะนำการใช้ Ticketing API ไปใส่ไว้ใน Shared Skill</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>D.</strong> สั่งให้ Claude จัดรูปแบบการอัปเดต Ticket ออกมาเป็นข้อความธรรมดา (Plain text)</div>
+            </div>
+          </div>
+
+          <div class="q-answer-box" style="margin-top: 10px;">
+            <div style="padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; background: rgba(46, 125, 50, 0.1); border-left: 4px solid var(--success);">
+              <strong style="color: var(--success);">✅ เฉลยที่ถูกต้อง (Correct Answer — ข้อ A):</strong><br>
+              <span style="font-size: 0.92rem;"><strong>EN:</strong> A) Create one reusable MCP server exposing ticketing actions.</span><br>
+              <span style="font-size: 0.92rem;"><strong>TH:</strong> A) สร้าง MCP Server กลาง 1 ตัวที่นำกลับมาใช้ซ้ำได้ (Reusable MCP server) เพื่อเปิดให้บริการคำสั่งจัดการ Ticket</span>
+            </div>
+            <div>
+              <strong style="color: var(--accent); font-size: 1rem; display: block; margin-bottom: 8px;">💡 คำอธิบายเจาะลึก (ทำไมข้อนี้ถึงถูก และทำไมตัวเลือกอื่นถึงผิด):</strong>
+              <ul>
+  <li><strong>ทำไม A ถึงถูกต้อง (Reusable MCP Server):</strong> จุดประสงค์หลักของ <strong>Model Context Protocol (MCP)</strong> คือการสร้างมาตรฐานการเชื่อมต่อระบบภายนอกแบบรวมศูนย์ (Write once, connect anywhere) เมื่อมีแอปพลิเคชันหลายตัวต้องใช้ระบบ Ticketing เดียวกัน การสร้าง <strong>MCP Server กลางเพียงตัวเดียว</strong> จะช่วยรวมศูนย์ทั้งการจัดการ Auth credentials, การตรวจ Schema validation และโค้ดยิง API ไว้ที่จุดเดียว เวลาอัปเดต API ของระบบตั๋วก็แก้ที่ MCP Server ที่เดียวจบ</li>
+  <li><strong>ทำไม B ถึงผิด:</strong> การก๊อปปี้โค้ด Tool ไปใส่ทั้ง 3 แอปทำให้เกิดความซ้ำซ้อน (Duplication) ทั้งเรื่องการเก็บคีย์ Auth และการตามแก้บั๊ก 3 ที่</li>
+  <li><strong>ทำไม C ถึงผิด (ระวังสับสนระหว่าง MCP vs Skill!):</strong> <strong>Skill (<code>SKILL.md</code>)</strong> มีไว้เก็บ <em>ความรู้ ขั้นตอนการทำงาน หรือคำแนะนำ (Instructions/Knowledge)</em> เท่านั้น ไม่ใช่เซิร์ฟเวอร์ที่รันโค้ดเชื่อมต่อ API หรือเก็บ Credentials ที่ฝั่ง Backend ได้เหมือน MCP Server</li>
+  <li><strong>ทำไม D ถึงผิด:</strong> การตอบเป็นข้อความธรรมดาไม่ได้ทำการอ่านหรือบันทึกข้อมูลลงในระบบ Ticketing จริงตามที่โจทย์ต้องการ</li>
+</ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Set 3 Question 7 -->
+        <div class="question-card mock3-q-item" id="ccdv-f_mock3-q-7" style="border-left: 5px solid var(--accent); margin-bottom: 24px;">
+          <div class="q-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <span class="q-number" style="background: var(--accent);">📚 Official Sample Question · ข้อที่ 7</span>
+              <span class="badge badge-weight">Domain 6: Prompt and Context Engineering</span>
+            </div>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Set 3 · Question 7 of 10</span>
+          </div>
+
+          <div style="background: var(--bg-tertiary); padding: 14px 18px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid var(--accent);">
+            <strong style="color: var(--accent); display: block; margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options A–D):</strong>
+            <p style="margin-bottom: 10px; font-family: 'Inter', sans-serif; font-size: 0.95rem;">A legal knowledge assistant must answer only from retrieved contract clauses. It recently gave a confident answer that was not supported by the supplied context.<br><br>Artifact:<br>User question: Can the vendor terminate for convenience?<br>Retrieved context:<br>• Clause 8.1: Customer may terminate for convenience with 30 days' notice.<br>• Clause 8.2: Either party may terminate for uncured material breach after 15 days.<br>Claude answer: Yes. The vendor may terminate for convenience with 30 days' notice.<br><br>What is the best prompt/context adjustment?</p>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.9rem;">
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>A.</strong> Ask Claude to sound less certain whenever it answers a contract question.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>B.</strong> Add more unrelated contract clauses so Claude has broader legal context.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(46, 125, 50, 0.12); border-left: 3px solid var(--success); font-weight: 600;"><strong>C.</strong> Tell Claude to answer only from retrieved clauses and state insufficient support when the clauses do not answer.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>D.</strong> Ask Claude to rewrite the retrieved clauses before answering the user's question.</div>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-secondary); padding: 14px 18px; border-radius: 8px; margin-bottom: 14px; border: 1px solid var(--border);">
+            <strong style="color: var(--text-primary); display: block; margin-bottom: 6px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทยครบทุกข้อ (A–D):</strong>
+            <p style="margin-bottom: 10px; font-weight: 600;">ผู้ช่วยสืบค้นความรู้ทางกฎหมายต้องตอบคำถามโดยอ้างอิงจากข้อสัญญาที่ดึงมาได้ (Retrieved contract clauses) เท่านั้น แต่ล่าสุดระบบกลับให้คำตอบอย่างมั่นใจทั้งที่ข้อมูลในบริบทไม่ได้ระบุไว้เช่นนั้น<br><br>ข้อมูลประกอบ (Artifact):<br>คำถามผู้ใช้: ผู้ขาย (Vendor) สามารถบอกเลิกสัญญาเพื่อความสะดวก (Terminate for convenience) ได้หรือไม่?<br>บริบทที่ดึงมาได้:<br>• ข้อ 8.1: ลูกค้า (Customer) สามารถบอกเลิกสัญญาเพื่อความสะดวกได้โดยแจ้งล่วงหน้า 30 วัน<br>• ข้อ 8.2: คู่สัญญาฝ่ายใดฝ่ายหนึ่งสามารถบอกเลิกสัญญาได้หากมีการผิดสัญญาในสาระสำคัญที่ไม่ได้รับการแก้ไขภายใน 15 วัน<br>คำตอบของ Claude: ได้ ผู้ขายสามารถบอกเลิกสัญญาเพื่อความสะดวกได้โดยแจ้งล่วงหน้า 30 วัน<br><br>การปรับปรุง Prompt หรือ Context ข้อใดดีที่สุด?</p>
+            <div style="font-size: 0.93rem;">
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>A.</strong> สั่งให้ Claude ใช้ถ้อยคำที่ฟังดูไม่มั่นใจทุกครั้งที่ตอบคำถามเกี่ยวกับสัญญา</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>B.</strong> เพิ่มข้อสัญญาอื่นๆ ที่ไม่เกี่ยวข้องเข้าไปอีกเพื่อให้ Claude มีบริบททางกฎหมายที่กว้างขึ้น</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(46, 125, 50, 0.12); border-left: 3px solid var(--success); font-weight: 600;"><strong>C.</strong> สั่งให้ Claude ตอบจากข้อสัญญาที่ดึงมาเท่านั้น และให้ระบุว่าข้อมูลไม่เพียงพอ (State insufficient support) เมื่อข้อสัญญาที่มีไม่ได้ระบุคำตอบไว้</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>D.</strong> สั่งให้ Claude เขียนเรียบเรียงข้อสัญญาที่ดึงมาใหม่ก่อนที่จะตอบคำถามของผู้ใช้</div>
+            </div>
+          </div>
+
+          <div class="q-answer-box" style="margin-top: 10px;">
+            <div style="padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; background: rgba(46, 125, 50, 0.1); border-left: 4px solid var(--success);">
+              <strong style="color: var(--success);">✅ เฉลยที่ถูกต้อง (Correct Answer — ข้อ C):</strong><br>
+              <span style="font-size: 0.92rem;"><strong>EN:</strong> C) Tell Claude to answer only from retrieved clauses and state insufficient support when the clauses do not answer.</span><br>
+              <span style="font-size: 0.92rem;"><strong>TH:</strong> C) สั่งให้ Claude ตอบจากข้อสัญญาที่ดึงมาเท่านั้น และให้ระบุว่าข้อมูลไม่เพียงพอ (State insufficient support) เมื่อข้อสัญญาที่มีไม่ได้ระบุคำตอบไว้</span>
+            </div>
+            <div>
+              <strong style="color: var(--accent); font-size: 1rem; display: block; margin-bottom: 8px;">💡 คำอธิบายเจาะลึก (ทำไมข้อนี้ถึงถูก และทำไมตัวเลือกอื่นถึงผิด):</strong>
+              <ul>
+  <li><strong>ทำไม C ถึงถูกต้อง (Grounding + Abstention Instruction):</strong> ในระบบ RAG หรือการถาม-ตอบจากเอกสารกฎหมาย สาเหตุที่โมเดลตอบมั่ว (Hallucination / Extrapolation) เพราะในสัญญาข้อ 8.1 พูดถึงสิทธิ์ของ <em>Customer</em> แต่ไม่ได้พูดถึงสิทธิ์ <em>Terminate for convenience</em> ของ <em>Vendor</em> โมเดลจึงเผลอเหมาเอาเอง วิธีแก้ที่ถูกต้องในทาง Prompt Engineering คือต้องกำหนดกฎเหล็ก 2 ข้อคู่กันเสมอ: (1) <strong>ให้อ้างอิงจากข้อมูลใน Context ที่ให้มาเท่านั้น</strong> และ (2) <strong>ให้ทางออกที่ชัดเจน (Escape hatch / Abstention) ว่าหากข้อมูลใน Context ไม่เพียงพอที่จะฟันธง ให้ระบุอย่างชัดเจนว่า "ข้อมูลในข้อสัญญาที่ให้มาไม่เพียงพอที่จะสรุป" แทนการคาดเดาเอง</strong></li>
+  <li><strong>ทำไม A ถึงผิด:</strong> การสั่งให้พูดแบบไม่มั่นใจ (เช่นเติมคำว่า "อาจจะ") เป็นแค่การเปลี่ยนน้ำเสียง แต่โมเดลก็ยังให้ข้อมูลที่ผิดกฎหมายอยู่ดี</li>
+  <li><strong>ทำไม B ถึงผิด:</strong> การยัดข้อสัญญาที่ไม่เกี่ยวข้องเพิ่มเข้าไปจะยิ่งทำให้ Context รก (Context dilution) และไม่ได้แก้พฤติกรรมการตอบเกินจริง</li>
+  <li><strong>ทำไม D ถึงผิด:</strong> การสั่งให้เขียนข้อสัญญาใหม่ก่อนตอบไม่ได้ป้องกันไม่ให้โมเดลตีความสลับระหว่าง Customer กับ Vendor</li>
+</ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Set 3 Question 8 -->
+        <div class="question-card mock3-q-item" id="ccdv-f_mock3-q-8" style="border-left: 5px solid var(--accent); margin-bottom: 24px;">
+          <div class="q-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <span class="q-number" style="background: var(--accent);">📚 Official Sample Question · ข้อที่ 8</span>
+              <span class="badge badge-weight">Domain 2: Applications and Integration</span>
+            </div>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Set 3 · Question 8 of 10</span>
+          </div>
+
+          <div style="background: var(--bg-tertiary); padding: 14px 18px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid var(--accent);">
+            <strong style="color: var(--accent); display: block; margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options A–D):</strong>
+            <p style="margin-bottom: 10px; font-family: 'Inter', sans-serif; font-size: 0.95rem;">A legal research app sends the same 80-page policy manual with each user question during a session. The manual changes monthly, while the question and short chat history change on every request. The team wants to reduce repeated processing cost without changing answers. What should the developer do first?</p>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.9rem;">
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(46, 125, 50, 0.12); border-left: 3px solid var(--success); font-weight: 600;"><strong>A.</strong> Configure prompt caching around the reusable policy manual portion.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>B.</strong> Cache the entire request including every user question and response.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>C.</strong> Move the workload to Message Batches for all user questions.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>D.</strong> Remove the policy manual after the first request in the session.</div>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-secondary); padding: 14px 18px; border-radius: 8px; margin-bottom: 14px; border: 1px solid var(--border);">
+            <strong style="color: var(--text-primary); display: block; margin-bottom: 6px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทยครบทุกข้อ (A–D):</strong>
+            <p style="margin-bottom: 10px; font-weight: 600;">แอปพลิเคชันค้นคว้าทางกฎหมายส่งคู่มือนโยบายความยาว 80 หน้าฉบับเดียวกันแนบไปกับทุกคำถามของผู้ใช้ตลอดเซสชัน โดยคู่มือนี้จะเปลี่ยนแค่เดือนละครั้ง ในขณะที่คำถามและประวัติแชทสั้นๆ จะเปลี่ยนไปในทุก Request ทีมต้องการลดต้นทุนการประมวลผลซ้ำซ้อนโดยไม่ทำให้คำตอบเปลี่ยนไป นักพัฒนาควรทำสิ่งใดเป็นอันดับแรก?</p>
+            <div style="font-size: 0.93rem;">
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(46, 125, 50, 0.12); border-left: 3px solid var(--success); font-weight: 600;"><strong>A.</strong> ตั้งค่า Prompt Caching ครอบคลุมส่วนของคู่มือนโยบายที่นำกลับมาใช้ซ้ำ (Reusable policy manual portion)</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>B.</strong> ทำการแคชทั้ง Request รวมถึงคำถามของผู้ใช้และคำตอบทุกครั้ง</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>C.</strong> ย้ายการประมวลผลคำถามของผู้ใช้ทั้งหมดไปใช้ Message Batches API</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>D.</strong> ลบคู่มือนโยบายออกหลังจากส่ง Request แรกของเซสชันไปแล้ว</div>
+            </div>
+          </div>
+
+          <div class="q-answer-box" style="margin-top: 10px;">
+            <div style="padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; background: rgba(46, 125, 50, 0.1); border-left: 4px solid var(--success);">
+              <strong style="color: var(--success);">✅ เฉลยที่ถูกต้อง (Correct Answer — ข้อ A):</strong><br>
+              <span style="font-size: 0.92rem;"><strong>EN:</strong> A) Configure prompt caching around the reusable policy manual portion.</span><br>
+              <span style="font-size: 0.92rem;"><strong>TH:</strong> A) ตั้งค่า Prompt Caching ครอบคลุมส่วนของคู่มือนโยบายที่นำกลับมาใช้ซ้ำ (Reusable policy manual portion)</span>
+            </div>
+            <div>
+              <strong style="color: var(--accent); font-size: 1rem; display: block; margin-bottom: 8px;">💡 คำอธิบายเจาะลึก (ทำไมข้อนี้ถึงถูก และทำไมตัวเลือกอื่นถึงผิด):</strong>
+              <ul>
+  <li><strong>ทำไม A ถึงถูกต้อง (Prompt Caching on Static Prefix):</strong> โจทย์นี้เข้าทาง <strong>Prompt Caching</strong> แบบ 100% เพราะมีเอกสารขนาดใหญ่ (80 หน้า) ที่คงที่เหมือนกันทุกเทิร์นในเซสชัน โดยนักพัฒนาควรวางคู่มือ 80 หน้าไว้ที่ส่วนต้นของ Prompt (Static prefix) แล้วปักจุด <code>cache_control: {"type": "ephemeral"}</code> ไว้ที่ท้ายคู่มือ ส่วนประวัติแชทและคำถามใหม่ที่เปลี่ยนทุกเทิร์นให้ต่อท้ายหลังจุดแคช จะช่วยลดต้นทุนค่าอ่าน Input token ของคู่มือ 80 หน้าลงได้ถึง 90% และลดเวลา TTFT โดยที่คำตอบเหมือนเดิมทุกประการ!</li>
+  <li><strong>ทำไม B ถึงผิด:</strong> การพยายามแคชทั้งก้อนรวมคำถามใหม่ที่เปลี่ยนทุกครั้งจะทำให้เกิด Cache Miss ในส่วนท้าย หรือหากแคชระดับแอปแบบ Exact-match ก็จะไม่เกิดการ Reuse เลยเมื่อผู้ใช้ถามคำถามใหม่</li>
+  <li><strong>ทำไม C ถึงผิด:</strong> Message Batches API ใช้สำหรับงานประมวลผลเบื้องหลังที่รอผลได้นานถึง 24 ชั่วโมง ไม่สามารถใช้กับแอปแชทโต้ตอบสด (Interactive session) ได้</li>
+  <li><strong>ทำไม D ถึงผิด:</strong> Messages API เป็นแบบ Stateless (ไม่จำข้อมูลข้าม Request เอง) หากลบคู่มือ 80 หน้าออกในเทิร์นที่ 2 โมเดลก็จะไม่มีคู่มือให้อ่านอีกเลย ทำให้คำตอบผิดเพี้ยนทันที</li>
+</ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Set 3 Question 9 -->
+        <div class="question-card mock3-q-item" id="ccdv-f_mock3-q-9" style="border-left: 5px solid var(--accent); margin-bottom: 24px;">
+          <div class="q-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <span class="q-number" style="background: var(--accent);">📚 Official Sample Question · ข้อที่ 9</span>
+              <span class="badge badge-weight">Domain 3: Claude Code</span>
+            </div>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Set 3 · Question 9 of 10</span>
+          </div>
+
+          <div style="background: var(--bg-tertiary); padding: 14px 18px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid var(--accent);">
+            <strong style="color: var(--accent); display: block; margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options A–D):</strong>
+            <p style="margin-bottom: 10px; font-family: 'Inter', sans-serif; font-size: 0.95rem;">A team is initializing Claude Code for a repository used by 20 engineers.<br><br>Draft setup plan:<br>• Goal: consistent Claude Code behavior across contributors.<br>• Needed: durable coding conventions, project-specific review workflow, and configuration that can be maintained as the repository evolves.<br><br>Which setup plan is the BEST starting point?</p>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.9rem;">
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(46, 125, 50, 0.12); border-left: 3px solid var(--success); font-weight: 600;"><strong>A.</strong> Add scoped CLAUDE.md guidance, define needed custom commands, and keep configuration in settings.json.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>B.</strong> Put all conventions, workflows, and configuration values into one large settings.json file.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>C.</strong> Rely on each engineer's Agent Memory and avoid repository-level Claude Code files.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>D.</strong> Use only interactive prompts so each contributor can describe the project manually.</div>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-secondary); padding: 14px 18px; border-radius: 8px; margin-bottom: 14px; border: 1px solid var(--border);">
+            <strong style="color: var(--text-primary); display: block; margin-bottom: 6px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทยครบทุกข้อ (A–D):</strong>
+            <p style="margin-bottom: 10px; font-weight: 600;">ทีมวิศวกรกำลังตั้งค่าเริ่มต้น (Initialize) สำหรับใช้งาน Claude Code ใน Repository ที่มีวิศวกรใช้งานร่วมกัน 20 คน<br><br>แผนการตั้งค่าร่างแรก:<br>• เป้าหมาย: ให้ Claude Code มีพฤติกรรมการทำงานที่สม่ำเสมอตรงกันทุกคนในทีม<br>• สิ่งที่ต้องการ: มาตรฐานการเขียนโค้ดที่คงทนถาวร (Durable coding conventions), ขั้นตอนการรีวิวโค้ดเฉพาะของโปรเจกต์ (Project-specific review workflow) และไฟล์ตั้งค่าระบบที่ดูแลรักษาต่อได้เมื่อโปรเจกต์เติบโตขึ้น<br><br>แผนการตั้งค่าในข้อใดเป็นจุดเริ่มต้นที่ดีที่สุด?</p>
+            <div style="font-size: 0.93rem;">
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(46, 125, 50, 0.12); border-left: 3px solid var(--success); font-weight: 600;"><strong>A.</strong> เพิ่มคำแนะนำมาตรฐานลงในไฟล์ CLAUDE.md ตามขอบเขตที่เหมาะสม, สร้าง Custom Commands (หรือ Skills) สำหรับขั้นตอนการทำงานที่ใช้ซ้ำ และเก็บค่าการตั้งค่าระบบไว้ใน settings.json</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>B.</strong> นำทั้งมาตรฐานการเขียนโค้ด ขั้นตอนการทำงาน และค่าตั้งค่าระบบทั้งหมดไปรวมไว้ในไฟล์ settings.json ขนาดใหญ่เพียงไฟล์เดียว</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>C.</strong> พึ่งพา Agent Memory ส่วนตัวของวิศวกรแต่ละคน และหลีกเลี่ยงการสร้างไฟล์ของ Claude Code ไว้ในระดับ Repository</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>D.</strong> ใช้เฉพาะการพิมพ์สั่งแบบโต้ตอบสด (Interactive prompts) เพื่อให้วิศวกรแต่ละคนอธิบายโปรเจกต์ด้วยตัวเองทุกครั้ง</div>
+            </div>
+          </div>
+
+          <div class="q-answer-box" style="margin-top: 10px;">
+            <div style="padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; background: rgba(46, 125, 50, 0.1); border-left: 4px solid var(--success);">
+              <strong style="color: var(--success);">✅ เฉลยที่ถูกต้อง (Correct Answer — ข้อ A):</strong><br>
+              <span style="font-size: 0.92rem;"><strong>EN:</strong> A) Add scoped CLAUDE.md guidance, define needed custom commands, and keep configuration in settings.json.</span><br>
+              <span style="font-size: 0.92rem;"><strong>TH:</strong> A) เพิ่มคำแนะนำมาตรฐานลงในไฟล์ CLAUDE.md ตามขอบเขตที่เหมาะสม, สร้าง Custom Commands (หรือ Skills) สำหรับขั้นตอนการทำงานที่ใช้ซ้ำ และเก็บค่าการตั้งค่าระบบไว้ใน settings.json</span>
+            </div>
+            <div>
+              <strong style="color: var(--accent); font-size: 1rem; display: block; margin-bottom: 8px;">💡 คำอธิบายเจาะลึก (ทำไมข้อนี้ถึงถูก และทำไมตัวเลือกอื่นถึงผิด):</strong>
+              <ul>
+  <li><strong>ทำไม A ถึงถูกต้อง (Separation of Concerns ใน Claude Code):</strong> การตั้งค่า Claude Code สำหรับทีมในระดับ Repository ต้องแยกหน้าที่ของไฟล์ทั้ง 3 ประเภทให้ถูกตามหลักการของ Anthropic:
+    <ol>
+      <li><strong><code>CLAUDE.md</code> (และ <code>.claude/rules/*.md</code>):</strong> ใช้เก็บมาตรฐานการเขียนโค้ด โครงสร้างสถาปัตยกรรม และคำสั่ง Build/Test ที่ต้องการให้ติดตัวเป็น Context ถาวร</li>
+      <li><strong>Custom Commands / Skills (<code>.claude/commands/</code> หรือ <code>.claude/skills/</code>):</strong> ใช้เก็บเวิร์กโฟลว์เฉพาะกิจที่เรียกใช้ซ้ำบ่อยๆ เช่น ขั้นตอนการทำ Code Review ของโปรเจกต์</li>
+      <li><strong><code>.claude/settings.json</code>:</strong> ใช้เก็บค่า Configuration ของระบบ เช่น Permissions (<code>allow</code>/<code>deny</code>), Hooks, และ Environment variables โดย Commit ทั้งหมดขึ้น Git เพื่อให้วิศวกรทั้ง 20 คนได้พฤติกรรมเดียวกัน</li>
+    </ol>
+  </li>
+  <li><strong>ทำไม B ถึงผิด:</strong> ไฟล์ <code>settings.json</code> มีไว้เก็บค่าคอนฟิกแบบ JSON Schema (เช่น permissions, hooks, model) ไม่ใช่ที่สำหรับเขียนอธิบาย Coding conventions หรือขั้นตอน Workflow</li>
+  <li><strong>ทำไม C ถึงผิด:</strong> Auto Memory ของแต่ละเครื่องเป็นข้อมูลส่วนตัวของใครของมัน ทำให้วิศวกรทั้ง 20 คนได้ผลลัพธ์ไม่ตรงกันและไม่สามารถทำ Code Review ผ่าน Git ได้</li>
+  <li><strong>ทำไม D ถึงผิด:</strong> การให้แต่ละคนพิมพ์อธิบายใหม่เองทุกครั้งเสียเวลาและทำให้มาตรฐานแกว่งไม่ตรงกัน</li>
+</ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Set 3 Question 10 -->
+        <div class="question-card mock3-q-item" id="ccdv-f_mock3-q-10" style="border-left: 5px solid var(--accent); margin-bottom: 24px;">
+          <div class="q-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <span class="q-number" style="background: var(--accent);">📚 Official Sample Question · ข้อที่ 10</span>
+              <span class="badge badge-weight">Domain 5: Model Selection and Optimization</span>
+            </div>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Set 3 · Question 10 of 10</span>
+          </div>
+
+          <div style="background: var(--bg-tertiary); padding: 14px 18px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid var(--accent);">
+            <strong style="color: var(--accent); display: block; margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options A–D):</strong>
+            <p style="margin-bottom: 10px; font-family: 'Inter', sans-serif; font-size: 0.95rem;">A developer is configuring Claude for two product features and wants one default mode for each. The team is especially concerned about unnecessary latency.<br><br>Artifact:<br>Feature 1: Real-time autocomplete classification<br>• Input: short product title<br>• Output: one of five labels<br>• Latency target: under 500 ms<br>• Risk if wrong: low<br><br>Feature 2: Financial contract risk review<br>• Input: long contract and negotiation notes<br>• Output: ranked risks with justification<br>• Latency target: under 45 seconds<br>• Risk if wrong: high<br><br>Which configuration is most appropriate?</p>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.9rem;">
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(46, 125, 50, 0.12); border-left: 3px solid var(--success); font-weight: 600;"><strong>A.</strong> Use fast or lower-effort mode for Feature 1 and extended thinking for Feature 2.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>B.</strong> Use extended thinking for both features to maximize reasoning consistency.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>C.</strong> Use fast mode for both features to keep the product responsive.</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>D.</strong> Use Haiku with extended thinking for both features to balance all constraints.</div>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-secondary); padding: 14px 18px; border-radius: 8px; margin-bottom: 14px; border: 1px solid var(--border);">
+            <strong style="color: var(--text-primary); display: block; margin-bottom: 6px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทยครบทุกข้อ (A–D):</strong>
+            <p style="margin-bottom: 10px; font-weight: 600;">นักพัฒนากำลังตั้งค่า Claude สำหรับฟีเจอร์ของผลิตภัณฑ์ 2 ตัว และต้องการกำหนดโหมดเริ่มต้นที่เหมาะสมให้กับแต่ละฟีเจอร์ โดยทีมให้ความสำคัญเป็นพิเศษกับการหลีกเลี่ยงความหน่วง (Latency) ที่ไม่จำเป็น<br><br>ข้อมูลประกอบ (Artifact):<br>ฟีเจอร์ที่ 1: การจำแนกหมวดหมู่แบบเติมคำอัตโนมัติแบบเรียลไทม์ (Real-time autocomplete classification)<br>• ข้อมูลขาเข้า: ชื่อสินค้าสั้นๆ<br>• ข้อมูลขาออก: ป้ายกำกับ 1 จาก 5 หมวดหมู่<br>• เป้าหมายเวลาตอบสนอง (Latency target): ต่ำกว่า 500 มิลลิวินาที (< 500 ms)<br>• ความเสี่ยงหากตอบผิด: ต่ำ<br><br>ฟีเจอร์ที่ 2: การตรวจสอบความเสี่ยงของสัญญาทางการเงิน (Financial contract risk review)<br>• ข้อมูลขาเข้า: สัญญาฉบับยาวและบันทึกการเจรจาต่อรอง<br>• ข้อมูลขาออก: ลำดับความเสี่ยงพร้อมเหตุผลประกอบ<br>• เป้าหมายเวลาตอบสนอง (Latency target): ต่ำกว่า 45 วินาที (< 45 seconds)<br>• ความเสี่ยงหากตอบผิด: สูง<br><br>การตั้งค่าในข้อใดเหมาะสมที่สุด?</p>
+            <div style="font-size: 0.93rem;">
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: rgba(46, 125, 50, 0.12); border-left: 3px solid var(--success); font-weight: 600;"><strong>A.</strong> ใช้โหมดความเร็วสูงหรือใช้ความพยายามในการคิดต่ำ (Fast or lower-effort mode) สำหรับฟีเจอร์ที่ 1 และเปิดใช้การคิดเชิงลึก (Extended thinking) สำหรับฟีเจอร์ที่ 2</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>B.</strong> เปิดใช้ Extended thinking กับทั้งสองฟีเจอร์เพื่อความสม่ำเสมอสูงสุดในการใช้เหตุผล</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>C.</strong> ใช้โหมดความเร็วสูง (Fast mode) กับทั้งสองฟีเจอร์เพื่อให้ผลิตภัณฑ์ตอบสนองได้ไวที่สุด</div>
+            <div style="margin-bottom: 6px; padding: 6px 10px; border-radius: 6px; background: transparent;"><strong>D.</strong> ใช้โมเดล Haiku ร่วมกับ Extended thinking สำหรับทั้งสองฟีเจอร์เพื่อถ่วงดุลข้อจำกัดทั้งหมด</div>
+            </div>
+          </div>
+
+          <div class="q-answer-box" style="margin-top: 10px;">
+            <div style="padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; background: rgba(46, 125, 50, 0.1); border-left: 4px solid var(--success);">
+              <strong style="color: var(--success);">✅ เฉลยที่ถูกต้อง (Correct Answer — ข้อ A):</strong><br>
+              <span style="font-size: 0.92rem;"><strong>EN:</strong> A) Use fast or lower-effort mode for Feature 1 and extended thinking for Feature 2.</span><br>
+              <span style="font-size: 0.92rem;"><strong>TH:</strong> A) ใช้โหมดความเร็วสูงหรือใช้ความพยายามในการคิดต่ำ (Fast or lower-effort mode) สำหรับฟีเจอร์ที่ 1 และเปิดใช้การคิดเชิงลึก (Extended thinking) สำหรับฟีเจอร์ที่ 2</span>
+            </div>
+            <div>
+              <strong style="color: var(--accent); font-size: 1rem; display: block; margin-bottom: 8px;">💡 คำอธิบายเจาะลึก (ทำไมข้อนี้ถึงถูก และทำไมตัวเลือกอื่นถึงผิด):</strong>
+              <ul>
+  <li><strong>ทำไม A ถึงถูกต้อง (Match Thinking Effort to Task Complexity &amp; Latency Budget):</strong> การเลือกรุ่นโมเดลและระดับการคิด (Thinking / Effort) ต้องพิจารณาจาก 3 ปัจจัยเสมอคือ <strong>ความซับซ้อนของงาน, งบประมาณเวลา (Latency target) และความเสี่ยงหากผิดพลาด (Risk)</strong>:
+    <ul>
+      <li><strong>ฟีเจอร์ที่ 1 (คัดแยกชื่อสินค้าลง 5 หมวดหมู่ ภายใน &lt; 500 ms ความเสี่ยงต่ำ):</strong> เป็นงาน Classification พื้นฐานที่ต้องการความเร็วระดับเสี้ยววินาที จึงต้องใช้โมเดลที่เร็วหรือตั้งค่า Effort ต่ำ / ปิด Extended Thinking</li>
+      <li><strong>ฟีเจอร์ที่ 2 (วิเคราะห์ความเสี่ยงสัญญาการเงินฉบับยาว ภายใน &lt; 45 วินาที ความเสี่ยงสูงมาก):</strong> เป็นงานวิเคราะห์หลายมิติที่มีความเสี่ยงสูงและมีเวลาให้คิดถึง 45 วินาที จึงเหมาะอย่างยิ่งที่จะเปิด <strong>Extended Thinking (หรือ Adaptive Thinking ระดับ High)</strong> เพื่อให้โมเดลไตร่ตรองข้อสัญญาอย่างรอบคอบก่อนสรุปผล</li>
+    </ul>
+  </li>
+  <li><strong>ทำไม B ถึงผิด:</strong> การเปิด Extended Thinking กับฟีเจอร์ที่ 1 จะทำให้เวลาตอบสนองทะลุเกิน 500 ms ทันทีและเสียค่า Token คิดวิเคราะห์โดยไม่จำเป็น</li>
+  <li><strong>ทำไม C ถึงผิด:</strong> การใช้โหมดเร็วโดยไม่คิดเชิงลึกกับฟีเจอร์ที่ 2 ซึ่งมีความเสี่ยงทางการเงินสูง จะทำให้ความแม่นยำในการวิเคราะห์สัญญาซับซ้อนลดลง ทั้งที่มีงบเวลาตั้ง 45 วินาที</li>
+  <li><strong>ทำไม D ถึงผิด:</strong> การฝืนใช้การตั้งค่าแบบเดียวกันกับทั้ง 2 ฟีเจอร์ที่มีธรรมชาติของโจทย์ต่างกันสุดขั้ว (Sub-500ms low-risk vs 45s high-risk) จะทำให้ฟีเจอร์ที่ 1 ช้าเกินไป และฟีเจอร์ที่ 2 อาจไม่ได้ศักยภาพการวิเคราะห์สูงสุด</li>
+</ul>
+            </div>
+          </div>
+        </div>
+      </section>
 
 
       <!-- Footer -->
