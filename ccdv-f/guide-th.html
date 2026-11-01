@@ -1408,7 +1408,8 @@
           <li><a href="#mock-lesson-4" class="toc-link">บทเสริมที่ 4: Domain 8 (MCP Transports &amp; PTC)</a></li>
           <li><a href="#mock-lesson-5" class="toc-link">บทเสริมที่ 5: Domain 4 (Evals &amp; Debugging Matrix)</a></li>
         </ul>
-        <li class="toc-item"><a href="#part-v-mock-questions" class="toc-link" style="font-weight: 700; color: var(--accent);">📝 Part V: ข้อสอบ Mock Exam ครบ 53 ข้อ (EN+TH)</a></li>
+        <li class="toc-item"><a href="#part-v-mock-questions" class="toc-link" style="font-weight: 700; color: var(--accent);">📝 Part V (ชุดที่ 1): ข้อสอบ Mock 53 ข้อ (33/53)</a></li>
+        <li class="toc-item"><a href="#part-vi-mock-set-2" class="toc-link" style="font-weight: 700; color: var(--success);">🏆 Part VI (ชุดที่ 2): ข้อสอบ Practice 20 ข้อ (18/20)</a></li>
       </ul>
     </aside>
 
@@ -3580,8 +3581,12 @@ def call_with_backoff(make_request, max_attempts=5):
       <section class="section-card" id="mock-lesson-overview">
         <h2>📊 วิเคราะห์คะแนนแยกตาม 8 Domains &amp; แผนเจาะลึกเนื้อหาเพิ่มเติมใน 5 หมวดที่ได้ <code>Review</code></h2>
         <p>
-          จากการทำข้อสอบ Mock Exam จำนวน <strong>53 ข้อ</strong> คุณได้คะแนนรวม <strong>33 / 53 ข้อ (62.3%)</strong> โดยสำหรับการอธิบายเฉลยเจาะลึกของข้อสอบที่คุณตอบพลาดทั้ง 20 ข้อ (<code>Q2, Q3, Q4, Q6, Q7, Q11, Q16, Q23, Q27, Q29, Q31, Q34, Q36, Q39, Q43, Q45, Q46, Q47, Q48, Q53</code>) <strong>ได้ถูกย้ายและรวมเข้าไปไว้ในแต่ละข้อของ <a href="#part-v-mock-questions">Part V (ข้อสอบครบ 53 ข้อ)</a> เรียบร้อยแล้ว</strong> เพื่อไม่ให้เนื้อหาซ้ำซ้อนกัน!
+          คุณได้ฝึกทำข้อสอบรวมแล้ว <strong>2 ชุด (รวม 73 ข้อ)</strong> โดยแบ่งแยกชุดกันอย่างชัดเจนในคู่มือนี้:
         </p>
+        <ul>
+          <li><strong><a href="#part-v-mock-questions">📝 Part V — Mock Exam ชุดที่ 1 (53 ข้อ):</a></strong> ได้คะแนน <strong>33 / 53 ข้อ (62.3%)</strong> · พลาด 20 ข้อ (<code>Q2, Q3, Q4, Q6, Q7, Q11, Q16, Q23, Q27, Q29, Q31, Q34, Q36, Q39, Q43, Q45, Q46, Q47, Q48, Q53</code>)</li>
+          <li><strong><a href="#part-vi-mock-set-2">🏆 Part VI — Mock Exam ชุดที่ 2 (Official Practice 20 ข้อ):</a></strong> ได้คะแนนพุ่งขึ้นเป็น <strong>18 / 20 ข้อ (90.0%!)</strong> · พลาดเพียง 2 ข้อเท่านั้น คือ <a href="#mock2-q-3"><strong>Set 2 · Q3</strong></a> (Domain 1: Shared DB + Idempotency key) และ <a href="#mock2-q-16"><strong>Set 2 · Q16</strong></a> (Domain 2: Contract tests + Cross-team review) และได้คะแนนเต็ม 100% ในอีก 6 Domains ที่เหลือ!</li>
+        </ul>
         <p>
           ส่วนใน <strong>Part IV นี้</strong> จะทำหน้าที่เป็น <strong>"บทเรียนติวเข้มเนื้อหาใหม่เพิ่มเติม (Weak-Domain Deep-Dive Booster)"</strong> โดยคัดเฉพาะ<strong>แนวคิด สถาปัตยกรรม และกฎเกณฑ์สำคัญที่ยังไม่ได้ถูกถามใน Mock ชุดนี้ (หรือถูกถามเพียงบางมุม) แต่มีโอกาสออกสอบจริงสูงมาก</strong> ใน <strong>5 Domains ที่คุณได้สถานะ <code>Review</code> (43%–58%)</strong> เพื่อดึงคะแนนทั้ง 5 หมวดนี้ให้พุ่งขึ้นสู่ระดับ 85%–100%!
         </p>
@@ -3611,9 +3616,8 @@ def call_with_backoff(make_request, max_attempts=5):
                   </td>
                   <td><span class="badge badge-heaviest">⚠️ Review (#1)</span></td>
                   <td>
-                    ❌ <strong>พลาด 4 ข้อ:</strong>
-                    <a href="#mock-q-3">Q3</a>, <a href="#mock-q-4">Q4</a>, <a href="#mock-q-29">Q29</a>, <a href="#mock-q-31">Q31</a><br>
-                    ✅ <strong>ถูก 3 ข้อ:</strong> <a href="#mock-q-1">Q1</a>, <a href="#mock-q-5">Q5</a>, <a href="#mock-q-50">Q50</a>
+                    <strong>ชุดที่ 1 (3/7):</strong> ❌ พลาด <a href="#mock-q-3">Q3</a>, <a href="#mock-q-4">Q4</a>, <a href="#mock-q-29">Q29</a>, <a href="#mock-q-31">Q31</a> | ✅ ถูก <a href="#mock-q-1">Q1</a>, <a href="#mock-q-5">Q5</a>, <a href="#mock-q-50">Q50</a><br>
+                    <strong>ชุดที่ 2 (2/3):</strong> ❌ พลาด <a href="#mock2-q-3">Set2·Q3</a> | ✅ ถูก <a href="#mock2-q-11">Set2·Q11</a>, <a href="#mock2-q-18">Set2·Q18</a>
                   </td>
                   <td><a href="#mock-lesson-1"><strong>บทเสริมที่ 1:</strong> 5 Workflow Patterns, Hooks Lifecycle &amp; Managed Agents</a></td>
                 </tr>
@@ -3674,9 +3678,8 @@ def call_with_backoff(make_request, max_attempts=5):
                   </td>
                   <td><span class="badge badge-paid">⚠️ Review (#5)</span></td>
                   <td>
-                    ❌ <strong>พลาด 5 ข้อ:</strong>
-                    <a href="#mock-q-6">Q6</a>, <a href="#mock-q-16">Q16</a>, <a href="#mock-q-27">Q27</a>, <a href="#mock-q-45">Q45</a>, <a href="#mock-q-48">Q48</a><br>
-                    ✅ <strong>ถูก 7 ข้อ:</strong> <a href="#mock-q-12">Q12</a>, <a href="#mock-q-17">Q17</a>, <a href="#mock-q-19">Q19</a>, <a href="#mock-q-20">Q20</a>, <a href="#mock-q-25">Q25</a>, <a href="#mock-q-41">Q41</a>, <a href="#mock-q-44">Q44</a>
+                    <strong>ชุดที่ 1 (7/12):</strong> ❌ พลาด <a href="#mock-q-6">Q6</a>, <a href="#mock-q-16">Q16</a>, <a href="#mock-q-27">Q27</a>, <a href="#mock-q-45">Q45</a>, <a href="#mock-q-48">Q48</a> | ✅ ถูก 7 ข้อ<br>
+                    <strong>ชุดที่ 2 (2/3):</strong> ❌ พลาด <a href="#mock2-q-16">Set2·Q16</a> | ✅ ถูก <a href="#mock2-q-1">Set2·Q1</a>, <a href="#mock2-q-9">Set2·Q9</a>
                   </td>
                   <td><a href="#mock-lesson-2"><strong>บทเสริมที่ 2:</strong> Streaming SSE, 7 <code>stop_reason</code>, Caching Hierarchy &amp; Batches</a></td>
                 </tr>
@@ -3830,6 +3833,17 @@ def call_with_backoff(make_request, max_attempts=5):
           <li><strong><code>Session</code>:</strong> อินสแตนซ์การรันงานจริงที่ผูก <code>Agent</code> เข้ากับ <code>Environment</code> พร้อมเก็บสถานะและประวัติการทำงาน</li>
           <li><strong><code>Events</code>:</strong> สตรีมข้อความและเหตุการณ์ที่รับ-ส่งแบบสองทางระหว่างแอปของคุณกับ <code>Session</code> ที่กำลังทำงานอยู่</li>
         </ol>
+
+        <h3>1.4 การออกแบบให้ Worker ตัวใดก็ได้มารับงานต่อได้อย่างปลอดภัย (Stateless Worker Resumption &amp; Idempotency Keys — จากจุดที่พลาดใน Mock ชุดที่ 2 ข้อ <a href="#mock2-q-3">Set 2 · Q3</a>)</h3>
+        <p>
+          ในระบบจริง งานของ Agent มักต้อง<strong>หยุดรอเหตุการณ์ภายนอกที่ใช้เวลานาน</strong> (เช่น รอลูกค้าอัปโหลดเอกสารยืนยันตัวตน หรือรอหัวหน้ากดอนุมัติ) เมื่อลูกค้าอัปโหลดเสร็จแล้ว <strong>โปรเซสของ Worker ตัวใหม่ (คนละตัวกับตอนแรก) อาจเป็นคนหยิบงานนี้ไปทำต่อ</strong> หรือ Worker ตัวแรกอาจเกิด Timeout/Crash หลังจากยิง API สร้างบัญชีเสร็จแต่ยังไม่ทันบันทึกสถานะ! กฎเหล็ก 2 ข้อที่ต้องใช้คู่กันเสมอในห้องสอบคือ:
+        </p>
+        <ol>
+          <li><strong>ห้ามเก็บสถานะความคืบหน้าไว้ใน RAM ของ Worker ตัวแรก (No In-Memory Sticky State):</strong>
+            ต้องบันทึกสถานะของงาน รายการเอกสารที่ยังค้างอยู่ และสถานะการอนุมัติลงใน <strong>ฐานข้อมูลกลางที่ใช้ร่วมกัน (Shared External Database/Store)</strong> ที่ Worker ทุกตัวสามารถเปิดอ่านได้ทันที</li>
+          <li><strong>ต้องใช้ Idempotency Key เดิมซ้ำเมื่อทำการ Retry ขั้นตอนที่มีผลข้างเคียง (Side-effecting Operations):</strong>
+            ก่อนเรียกสร้างบัญชีหรือตัดเงิน ต้องผูก <strong>Idempotency Key</strong> ที่กำหนดตายตัวประจำขั้นตอนของงานนั้น (เช่น <code>onboarding:{application_id}:create_account</code>) และบันทึกผลลัพธ์ไว้ หาก Worker ตัวแรกสร้างบัญชีสำเร็จแล้วแต่ตายก่อนบันทึก พอ Worker ตัวที่สองมารันซ้ำด้วย <strong>Idempotency Key ตัวเดิม</strong> ระบบปลายทางจะรู้ทันทีว่าเคยทำสำเร็จไปแล้วและส่งผลลัพธ์เดิมกลับมาโดย<strong>ไม่สร้างบัญชีซ้ำเป็นอันที่สอง!</strong> (ห้ามสุ่มสร้าง Operation ID ใหม่ทุกครั้งที่ Retry เด็ดขาด!)</li>
+        </ol>
       </section>
 
       <!-- Booster Module 2: Domain 2 -->
@@ -3937,6 +3951,21 @@ def call_with_backoff(make_request, max_attempts=5):
         <ul>
           <li><strong>Message Batches API:</strong> ลดราคาทั้ง Input และ Output ลง <strong>50%</strong>, รองรับสูงสุด <strong>100,000 requests หรือ 256 MB ต่อ Batch</strong>, ใช้เวลาประมวลผลไม่เกิน 24 ชั่วโมง, <strong>ไม่รับประกันลำดับของผลลัพธ์</strong> จึงต้องใช้ฟิลด์ <strong><code>custom_id</code></strong> ในการจับคู่คำตอบกลับหาคำขอต้นทางเสมอ!</li>
           <li><strong>การทำ Prompt Caching ร่วมกับ Batch API:</strong> เนื่องจากคำขอใน Batch ถูกรันแบบขนานและอะซิงโครนัส จึงไม่รับประกันว่าจะโดนแคช 100% ทุกข้อ วิธีเพิ่มอัตรา Cache Hit ใน Batch คือการส่งคำขออุ่นเครื่อง (Warm-up request) แบบปกติก่อน 1 ครั้งให้แคชถูกเขียนเสร็จ แล้วค่อยส่ง Batch ตามเข้าไป</li>
+        </ul>
+
+        <h3>2.5 หลักวิศวกรรมซอฟต์แวร์สำหรับระบบ AI ใน Production (จาก Mock ชุดที่ 2 ข้อ <a href="#mock2-q-1">Q1</a>, <a href="#mock2-q-9">Q9</a> และจุดที่พลาดใน <a href="#mock2-q-16">Set 2 · Q16</a>)</h3>
+        <ul>
+          <li><strong>1. การป้องกันโค้ดพังเมื่อหลายทีมแก้ไขเซอร์วิสที่ใช้ร่วมกัน (Contract Testing &amp; Cross-Team Review — ข้อ <a href="#mock2-q-16">Set 2 · Q16</a>):</strong>
+            เมื่อทีมหนึ่งแก้ JSON Schema ของผลลัพธ์ ส่วนอีกทีมแก้ตรรกะการ Retry การรันชุดทดสอบของแต่ละ Branch ซ้ำ 2 รอบ (Running branch tests twice) <strong>ไม่ช่วยอะไรเลย!</strong> เพราะเทสต์ในแต่ละ Branch ต่างก็ผ่านภายใต้สมมติฐานของตัวเอง สิ่งที่แก้ได้โดยตรงคือ:
+            <ol>
+              <li>เพิ่ม <strong>Contract Tests (การทดสอบสัญญาโครงสร้างข้อมูลกลาง)</strong> ที่ตรวจสอบรูปแบบ Response ที่ทั้งสองทีมพึ่งพาร่วมกัน</li>
+              <li>กำหนดให้ต้องทำ <strong>Cross-Team Code Review</strong> (ให้ทั้งสองทีมร่วมกันรีวิวทุกครั้งที่มีการแก้ไขอินเทอร์เฟซกลางก่อนทำการ Merge)</li>
+            </ol>
+          </li>
+          <li><strong>2. การปล่อยอัปเดต Prompt / Tool Schema อย่างปลอดภัย (Canary Rollout &amp; Rollback — ข้อ <a href="#mock2-q-1">Set 2 · Q1</a>):</strong>
+            แม้เวอร์ชันใหม่จะผ่าน Development tests ทั้งหมดแล้ว ก็ห้ามสลับทราฟฟิก Production 100% ทันทีในงานที่มีความเสี่ยงสูง (เช่น การคืนเงินลูกค้า) และห้ามไปแก้ Live prompt สดๆ บน Production แต่ต้อง<strong>แบ่งทราฟฟิกส่วนน้อยไปลองก่อน (Canary release), ตรวจสอบความถูกต้องของผลลัพธ์ทางธุรกิจจริง และเตรียมแผน Rollback ให้พร้อมเสมอ</strong></li>
+          <li><strong>3. ห้ามเรียก Synchronous SDK Client ข้างใน Async Event Loop (ข้อ <a href="#mock2-q-9">Set 2 · Q9</a>):</strong>
+            ในเว็บเซิร์ฟเวอร์แบบ <code>async</code> (เช่น FastAPI) การเรียกใช้ไคลเอนต์แบบซิงโครนัสจะไปบล็อก Event loop ทั้งเส้น ทำให้แม้แต่ Request อื่นที่ไม่ได้ใช้ AI ก็ค้างไปด้วย ต้องเปลี่ยนไปใช้ <strong><code>AsyncAnthropic</code> (Async client)</strong> หรือรันแยกใน <strong>Bounded worker pool</strong> เท่านั้น</li>
         </ul>
       </section>
 
@@ -6205,6 +6234,852 @@ ightarrow$ Default ของบัญชี) เพื่อให้ผู้�
           });
         }
       </script>
+
+
+      <!-- PART VI: MOCK EXAM SET 2 (20 OFFICIAL PRACTICE QUESTIONS) -->
+      <div class="part-banner" id="part-vi-mock-set-2" style="background: linear-gradient(135deg, #2b7a4b 0%, #1f1e1d 100%);">
+        Part VI: ข้อสอบ Mock Exam ชุดที่ 2 — Official Practice Questions ครบ 20 ข้อ (ได้คะแนน 18/20 = 90%!)
+      </div>
+
+      <section class="section-card" id="mock2-questions-section">
+        <h2>🏆 ทบทวนข้อสอบ Mock Exam ชุดที่ 2 ทั้ง 20 ข้อ (ตอบถูก 18 ข้อ · พลาดเพียง 2 ข้อคือ Q3 และ Q16)</h2>
+        <p>
+          ข้อสอบชุดที่ 2 นี้เป็นแนวข้อสอบ Official Practice แบบ Scenario-based จำนวน <strong>20 ข้อ</strong> ซึ่งคุณทำคะแนนได้สูงถึง <strong>18 / 20 ข้อ (90%)</strong>! ทุกข้อด้านล่างมีครบทั้ง <strong>โจทย์และตัวเลือก A–D ภาษาอังกฤษต้นฉบับ</strong>, <strong>คำแปลภาษาไทยครบทุกตัวเลือก</strong>, <strong>คำตอบที่คุณเลือกเทียบกับเฉลย</strong> และ <strong>คำอธิบายเจาะลึกรายตัวเลือก</strong> โดยแยกออกจากชุด 53 ข้อใน Part V อย่างชัดเจน:
+        </p>
+
+        <div class="questions-toolbar" style="position: sticky; top: calc(var(--header-height) + 6px); z-index: 80; box-shadow: var(--shadow-md);">
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <span style="font-weight: 700; font-size: 0.9rem;">🔍 กรองข้อสอบชุดที่ 2:</span>
+            <button class="btn-primary-exam" id="mock2FilterAllBtn" onclick="filterMock2Questions('all')">
+              📚 แสดงทั้งหมด (20 ข้อ)
+            </button>
+            <button class="btn-toggle" id="mock2FilterMissedBtn" onclick="filterMock2Questions('missed')" style="border-color: var(--danger); color: var(--danger); font-weight: 700;">
+              ❌ ดูเฉพาะข้อที่ฉันตอบพลาด (2 ข้อ: Q3, Q16)
+            </button>
+            <button class="btn-toggle" id="mock2FilterCorrectBtn" onclick="filterMock2Questions('correct')" style="border-color: var(--success); color: var(--success); font-weight: 700;">
+              ✅ ดูเฉพาะข้อที่ตอบถูกแล้ว (18 ข้อ)
+            </button>
+          </div>
+          <a href="#part-iv-mock-lessons" class="btn-toggle" style="text-decoration: none;">⬆️ กลับไปดูตารางรวม 8 Domains &amp; บทเรียนเสริม (Part IV)</a>
+        </div>
+
+        <div id="mock20Container">
+          
+        <div class="question-card mock2-q-item mock-correct" data-status="correct" style="border-left: 5px solid var(--success);" id="mock2-q-1">
+          <div class="question-header" style="justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span class="q-number" style="background-color: var(--success);">Set 2 · Q1</span>
+              <span class="badge badge-paid" style="font-size: 0.82rem;">Domain 2: Applications and Integration (Select one)</span>
+              <span class="badge badge-free" style="font-size: 0.86rem; padding: 4px 12px;">✅ ข้อที่คุณตอบถูกแล้ว (Correct)</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Set 2 — Question 1 of 20</span>
+          </div>
+
+          <div style="background-color: var(--bg-primary); border: 1px solid var(--border); padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 14px;">
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options):</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1.65; margin-bottom: 10px;">Your team changed the system prompt and one tool schema of a Claude application that issues customer refunds. The new version passed every development test, and the product owner wants to switch all production traffic to it today. A faulty change would send wrong refunds to real customers. What is the best next step for this release?</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--border-strong); margin-bottom: 14px;">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> Switch all traffic to the new version today, since it passed every one of the development tests.</div><div style="margin-bottom: 4px;"><strong>B)</strong> Switch all traffic, then watch token usage and API error rates on a daily dashboard.</div><div style="margin-bottom: 4px;"><strong>C)</strong> Edit the live prompt in place so that any problem can be fixed without a new deployment.</div><div style="margin-bottom: 4px;"><strong>D)</strong> Send a small share of traffic to the new version, check its refunds, and keep rollback ready.</div>
+            </div>
+
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; border-top: 1px dashed var(--border-strong); padding-top: 10px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทย:</div>
+            <div style="font-size: 0.96rem; line-height: 1.7; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">ทีมของคุณได้แก้ไข System prompt และ Tool schema ตัวหนึ่งของแอปพลิเคชัน Claude ที่ใช้ทำรายการคืนเงิน (Refunds) ให้ลูกค้า เวอร์ชันใหม่นี้ผ่านการทดสอบในขั้นพัฒนา (Development tests) ทุกข้อแล้ว และ Product owner ต้องการสลับทราฟฟิกบน Production ทั้งหมดมาใช้เวอร์ชันใหม่นี้ในวันนี้เลย หากการแก้ไขนี้มีข้อผิดพลาดจะทำให้โอนเงินคืนผิดพลาดให้ลูกค้าจริง ขั้นตอนถัดไปที่ดีที่สุดสำหรับการปล่อยอัปเดตนี้คืออะไร?</div>
+            <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--accent);">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> สลับทราฟฟิกทั้งหมดไปยังเวอร์ชันใหม่วันนี้เลย เนื่องจากผ่านการทดสอบในขั้นพัฒนาครบทุกข้อแล้ว</div><div style="margin-bottom: 4px;"><strong>B)</strong> สลับทราฟฟิกทั้งหมด แล้วคอยดูยอดใช้ Token และอัตรา API Error บนแดชบอร์ดรายวัน</div><div style="margin-bottom: 4px;"><strong>C)</strong> แก้ไข Prompt บนระบบจริง (Live prompt) โดยตรง เพื่อที่ว่าหากมีปัญหาจะได้แก้ได้ทันทีโดยไม่ต้อง Deploy ใหม่</div><div style="margin-bottom: 4px;"><strong>D)</strong> แบ่งทราฟฟิกส่วนน้อยไปยังเวอร์ชันใหม่ ตรวจสอบผลการคืนเงิน และเตรียมแผนย้อนกลับ (Rollback) ให้พร้อม</div>
+            </div>
+          </div>
+          
+          <div class="q-answer-box" style="margin-top: 0; margin-bottom: 14px;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ เฉลยที่ถูกต้อง (Correct Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;"><strong>EN:</strong><br>D) Send a small share of traffic to the new version, check its refunds, and keep rollback ready.</div>
+            <div style="font-size: 0.95rem; border-top: 1px dashed rgba(43, 122, 75, 0.3); padding-top: 6px;"><strong>TH:</strong><br>D) แบ่งทราฟฟิกส่วนน้อยไปยังเวอร์ชันใหม่ (Canary release) ตรวจสอบความถูกต้องของผลการคืนเงิน และเตรียมพร้อมสำหรับการทำ Rollback เสมอ</div>
+          </div>
+
+          <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึกครบทุกตัวเลือก (Deep-Dive Explanation):</div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>หลักการปล่อยอัปเดตระบบ AI ที่มีผลกระทบสูง (Canary Deployment &amp; Rollback Readiness):</strong>
+<ul style="margin-top: 6px; margin-bottom: 6px;">
+  <li>✅ <strong>ทำไม D ถึงถูกต้อง:</strong> การเปลี่ยนแปลงทั้ง System prompt และ Tool schema ในระบบที่มีผลทางการเงินโดยตรง ต้องค่อยๆ ปล่อยทราฟฟิกส่วนน้อย (Canary / Gradual rollout) พร้อมตรวจสอบความถูกต้องของผลลัพธ์ทางธุรกิจจริง (Refund outcomes) และมีกลไก Rollback ที่พร้อมสลับกลับได้ทันที</li>
+  <li>❌ <strong>ทำไม A ถึงผิด:</strong> ชุดทดสอบตอนพัฒนา (Development tests) ไม่สามารถครอบคลุมคำขอแปลกๆ ของลูกค้าจริงใน Production ได้ครบ 100% การสลับทราฟฟิกทั้งหมดทันทีจึงเสี่ยงทำให้ลูกค้าทุกคนได้รับผลกระทบพร้อมกัน</li>
+  <li>❌ <strong>ทำไม B ถึงผิด:</strong> การดูแค่ Token usage และ API HTTP error rates ไม่สามารถบอกได้เลยว่า "จำนวนเงินที่โอนคืนลูกค้าถูกต้องหรือไม่" (เพราะ API อาจตอบ 200 OK แต่โอนเงินผิดยอด!)</li>
+  <li>❌ <strong>ทำไม C ถึงผิด:</strong> การแก้ Prompt สดๆ บน Production โดยไม่ผ่าน Version control ทำให้ไม่มีเวอร์ชันอ้างอิงที่แน่นอนสำหรับเปรียบเทียบหรือสั่ง Rollback และสืบหาต้นตอไม่ได้เมื่อเกิดการคืนเงินผิดพลาด</li>
+</ul></div>
+          </div>
+        </div>
+        <div class="question-card mock2-q-item mock-correct" data-status="correct" style="border-left: 5px solid var(--success);" id="mock2-q-2">
+          <div class="question-header" style="justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span class="q-number" style="background-color: var(--success);">Set 2 · Q2</span>
+              <span class="badge badge-paid" style="font-size: 0.82rem;">Domain 6: Prompt and Context Engineering (Select one)</span>
+              <span class="badge badge-free" style="font-size: 0.86rem; padding: 4px 12px;">✅ ข้อที่คุณตอบถูกแล้ว (Correct)</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Set 2 — Question 2 of 20</span>
+          </div>
+
+          <div style="background-color: var(--bg-primary); border: 1px solid var(--border); padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 14px;">
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options):</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1.65; margin-bottom: 10px;">A bank runs two Claude agents at the same time, each helping an analyst investigate a different customer. Both agents need the same long set of investigation instructions. A developer proposes running both investigations in one shared conversation so the instructions are written only once. Which design keeps each customer's data out of the other investigation while still reusing the instructions?</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--border-strong); margin-bottom: 14px;">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> Use one shared conversation and tell each agent in the system prompt to ignore the other customer.</div><div style="margin-bottom: 4px;"><strong>B)</strong> Run each investigation in its own conversation with the same instructions in its system prompt.</div><div style="margin-bottom: 4px;"><strong>C)</strong> Keep separate conversations but sync both histories after each tool call so analysts can compare.</div><div style="margin-bottom: 4px;"><strong>D)</strong> Keep separate conversations and give both agents one shared scratchpad for the facts they find.</div>
+            </div>
+
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; border-top: 1px dashed var(--border-strong); padding-top: 10px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทย:</div>
+            <div style="font-size: 0.96rem; line-height: 1.7; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">ธนาคารแห่งหนึ่งรันเอเจนต์ Claude สองตัวพร้อมกัน โดยแต่ละตัวช่วยนักวิเคราะห์ตรวจสอบข้อมูลของลูกค้าคนละราย เอเจนต์ทั้งสองตัวต้องใช้ชุดคำสั่งการตรวจสอบ (Investigation instructions) ที่ยาวชุดเดียวกัน นักพัฒนาคนหนึ่งเสนอให้รันการตรวจสอบทั้งสองเคสในบทสนทนาเดียวกันที่ใช้ร่วมกันเพื่อที่จะได้เขียนคำสั่งเพียงครั้งเดียว การออกแบบใดที่ช่วยแยกข้อมูลของลูกค้าแต่ละรายออกจากกันในขณะที่ยังคงนำชุดคำสั่งกลับมาใช้ซ้ำได้?</div>
+            <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--accent);">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> ใช้บทสนทนาเดียวกันร่วมกัน แล้วสั่งใน System prompt ให้แต่ละเอเจนต์เพิกเฉยต่อข้อมูลของลูกค้าอีกราย</div><div style="margin-bottom: 4px;"><strong>B)</strong> รันการตรวจสอบแต่ละเคสแยกในบทสนทนาของตัวเอง โดยใส่ชุดคำสั่งเดียวกันไว้ใน System prompt ของแต่ละบทสนทนา</div><div style="margin-bottom: 4px;"><strong>C)</strong> แยกบทสนทนาออกจากกัน แต่ซิงก์ประวัติทั้งสองฝั่งเข้าด้วยกันหลังจบการเรียก Tool ทุกครั้งเพื่อให้นักวิเคราะห์เปรียบเทียบได้</div><div style="margin-bottom: 4px;"><strong>D)</strong> แยกบทสนทนาออกจากกัน แต่ให้เอเจนต์ทั้งสองเขียนข้อเท็จจริงที่พบลงในสมุดทด (Scratchpad) ร่วมกันอันเดียว</div>
+            </div>
+          </div>
+          
+          <div class="q-answer-box" style="margin-top: 0; margin-bottom: 14px;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ เฉลยที่ถูกต้อง (Correct Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;"><strong>EN:</strong><br>B) Run each investigation in its own conversation with the same instructions in its system prompt.</div>
+            <div style="font-size: 0.95rem; border-top: 1px dashed rgba(43, 122, 75, 0.3); padding-top: 6px;"><strong>TH:</strong><br>B) รันการตรวจสอบแต่ละเคสแยกในบทสนทนา (Conversation) ของตัวเอง โดยใส่ชุดคำสั่งเดียวกันไว้ใน System prompt ของแต่ละบทสนทนา</div>
+          </div>
+
+          <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึกครบทุกตัวเลือก (Deep-Dive Explanation):</div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>การแยกบริบทข้อมูลความลับของลูกค้าแต่ละราย (Tenant / Customer Context Isolation):</strong>
+<ul style="margin-top: 6px; margin-bottom: 6px;">
+  <li>✅ <strong>ทำไม B ถึงถูกต้อง:</strong> การแยก Conversation/Session ของลูกค้าแต่ละรายออกจากกันโดยเด็ดขาด คือวิธีเดียวที่รับประกันว่าข้อมูลของลูกค้ารายหนึ่งจะไม่รั่วไหลไปสู่อีกราย ส่วนชุดคำสั่งยาวๆ ที่ใช้ร่วมกันสามารถใส่ไว้ใน System prompt ของทั้งสองเซสชันได้ (และยังใช้ Prompt Caching ช่วยแชร์แคชของ System prompt เพื่อประหยัดต้นทุนได้อีกด้วย!)</li>
+  <li>❌ <strong>ทำไม A ถึงผิด:</strong> เมื่อข้อมูลของลูกค้าทั้งสองรายไปอยู่ใน Context เดียวกันแล้ว การสั่งด้วย Prompt ว่า "ให้เพิกเฉย" ไม่สามารถรับประกันความปลอดภัยทางข้อมูล (Hard isolation) ได้เลย</li>
+  <li>❌ <strong>ทำไม C และ D ถึงผิด:</strong> ทั้งการซิงก์ประวัติข้ามกันหลังเรียก Tool (C) และการใช้ Scratchpad ร่วมกัน (D) ล้วนเป็นการนำข้อมูลของลูกค้ารายหนึ่งไปเทใส่อีกบทสนทนาหนึ่ง ซึ่งทำลายการแยกส่วนข้อมูลทันที</li>
+</ul></div>
+          </div>
+        </div>
+        <div class="question-card mock2-q-item mock-missed" data-status="missed" style="border-left: 5px solid var(--danger);" id="mock2-q-3">
+          <div class="question-header" style="justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span class="q-number" style="background-color: var(--danger);">Set 2 · Q3</span>
+              <span class="badge badge-paid" style="font-size: 0.82rem;">Domain 1: Agents and Workflows (Select two)</span>
+              <span class="badge badge-heaviest" style="font-size: 0.86rem; padding: 4px 12px;">❌ ข้อที่คุณตอบพลาด (Missed — เน้นทบทวน!)</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Set 2 — Question 3 of 20</span>
+          </div>
+
+          <div style="background-color: var(--bg-primary); border: 1px solid var(--border); padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 14px;">
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options):</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1.65; margin-bottom: 10px;">An onboarding agent opens customer accounts. It pauses while the customer uploads identity documents, and when the task resumes, a different worker process may pick it up. In one incident, a worker created the account, then timed out before recording that the step was done, so the next worker ran the step again. Which TWO changes let any worker resume the task safely?</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--border-strong); margin-bottom: 14px;">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> Save the outstanding document requests and approval status in a shared database that every worker reads.</div><div style="margin-bottom: 4px;"><strong>B)</strong> Keep the task's progress in the first worker's memory and route the resumed task back to that worker.</div><div style="margin-bottom: 4px;"><strong>C)</strong> Record each completed account action with its idempotency key and reuse that key whenever a step is retried.</div><div style="margin-bottom: 4px;"><strong>D)</strong> Restart the task from the beginning on the new worker and give each account action a fresh operation ID.</div>
+            </div>
+
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; border-top: 1px dashed var(--border-strong); padding-top: 10px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทย:</div>
+            <div style="font-size: 0.96rem; line-height: 1.7; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">เอเจนต์สำหรับรับลูกค้าใหม่ (Onboarding agent) ทำหน้าที่เปิดบัญชีให้ลูกค้า โดยระบบจะหยุดรอชั่วคราวในขณะที่ลูกค้าอัปโหลดเอกสารยืนยันตัวตน และเมื่อกลับมารันงานต่อ โปรเซสของ Worker ตัวอื่นอาจเป็นคนรับงานนั้นไปทำต่อ ในเหตุการณ์หนึ่ง Worker ตัวแรกได้สร้างบัญชีเสร็จแล้ว แต่เกิด Timeout ไปก่อนที่จะทันบันทึกว่าขั้นตอนนั้นทำเสร็จแล้ว ทำให้ Worker ตัวถัดมารันขั้นตอนสร้างบัญชีซ้ำอีกครั้ง การเปลี่ยนแปลงสองข้อใดต่อไปนี้ที่จะช่วยให้ Worker ตัวใดก็ได้สามารถรับงานไปทำต่อได้อย่างปลอดภัย? (เลือก 2 ข้อ)</div>
+            <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--accent);">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> บันทึกรายการเอกสารที่ยังค้างอยู่และสถานะการอนุมัติลงในฐานข้อมูลกลาง (Shared database) ที่ Worker ทุกตัวสามารถอ่านได้</div><div style="margin-bottom: 4px;"><strong>B)</strong> เก็บความคืบหน้าของงานไว้ในหน่วยความจำ (Memory) ของ Worker ตัวแรก แล้วบังคับส่งงานที่กลับมาทำต่อให้วิ่งกลับไปหา Worker ตัวเดิม</div><div style="margin-bottom: 4px;"><strong>C)</strong> บันทึกการกระทำเกี่ยวกับบัญชีที่เสร็จสิ้นแต่ละขั้นพร้อมกับ Idempotency key และนำคีย์เดิมนั้นกลับมาใช้ซ้ำทุกครั้งที่มีการลองรันขั้นตอนนี้ใหม่ (Retry)</div><div style="margin-bottom: 4px;"><strong>D)</strong> เริ่มรันงานใหม่ตั้งแต่ต้นบน Worker ตัวใหม่ และสร้าง Operation ID ใหม่สดให้กับการกระทำในบัญชีแต่ละครั้ง</div>
+            </div>
+          </div>
+          
+          <div style="background-color: var(--danger-bg); border: 1px solid rgba(185, 56, 44, 0.3); border-left: 4px solid var(--danger); padding: 14px 18px; border-radius: var(--radius-sm); margin-bottom: 12px;">
+            <div style="font-weight: 700; color: var(--danger); margin-bottom: 4px;">❌ คำตอบที่คุณเลือกตอนทำ Mock ชุดที่ 2 (Your Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.93rem; margin-bottom: 6px;"><strong>EN:</strong> Selected B (Keep the task's progress in the first worker's memory and route the resumed task back to that worker) and C</div>
+            <div style="font-size: 0.93rem; color: var(--text-secondary);"><strong>TH:</strong> คุณเลือก C (ถูก) แต่พลาดไปเลือก B (เก็บสถานะไว้ใน RAM ของ Worker ตัวแรกแล้วบังคับส่งกลับไปหาตัวเดิม) แทนที่จะเลือก A (เก็บสถานะในฐานข้อมูลกลางที่ทุก Worker อ่านได้)</div>
+          </div>
+          <div class="q-answer-box" style="margin-top: 0; margin-bottom: 14px;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ เฉลยที่ถูกต้อง (Correct Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;"><strong>EN:</strong><br>A) Save the outstanding document requests and approval status in a shared database that every worker reads.<br>C) Record each completed account action with its idempotency key and reuse that key whenever a step is retried.</div>
+            <div style="font-size: 0.95rem; border-top: 1px dashed rgba(43, 122, 75, 0.3); padding-top: 6px;"><strong>TH:</strong><br>A) บันทึกรายการเอกสารที่ยังค้างอยู่และสถานะการอนุมัติลงในฐานข้อมูลกลาง (Shared database) ที่ Worker ทุกตัวอ่านได้<br>C) บันทึกการกระทำแต่ละขั้นพร้อมกับ Idempotency key และนำคีย์เดิมกลับมาใช้ซ้ำทุกครั้งที่มีการ Retry ขั้นตอนนั้น</div>
+          </div>
+
+          <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึกครบทุกตัวเลือก (Deep-Dive Explanation):</div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>กฎเหล็กของการออกแบบระบบ Long-Running / Distributed Agents ให้ทนทานต่อการล่ม (Fault-Tolerant Resumption):</strong>
+<ul style="margin-top: 6px; margin-bottom: 6px;">
+  <li>❌ <strong>ทำไมตัวเลือก B ที่คุณเผลอเลือกถึงผิด:</strong> โจทย์ระบุชัดเจนว่า <em>"when the task resumes, a different worker process may pick it up"</em> และ <em>"a worker created the account, then timed out"</em> หากเก็บสถานะความคืบหน้าไว้แค่ใน RAM (Memory) ของ Worker ตัวแรก เมื่อ Worker ตัวแรกเกิด Timeout หรือแครชไป ข้อมูลใน RAM ก็จะหายวับไปทันที! และ Worker ตัวอื่นก็ไม่สามารถมารับช่วงต่อได้เลย</li>
+  <li>✅ <strong>ทำไม A ถึงถูกต้อง (Externalized Shared State):</strong> เพื่อให้ <em>"Worker ตัวใดก็ได้ (any worker)"</em> มารับงานต่อได้ทันที สถานะของงานที่ค้างอยู่ (เช่น เอกสารที่รออยู่และสถานะการอนุมัติ) ต้องถูกบันทึกไว้ใน <strong>ฐานข้อมูลกลาง (Shared database)</strong> นอกหน่วยความจำของโปรเซส</li>
+  <li>✅ <strong>ทำไม C ถึงถูกต้อง (Idempotency Key ป้องกันการสร้างบัญชีซ้ำ):</strong> ในจังหวะที่ Worker ตัวแรกยิง API สร้างบัญชีสำเร็จแล้วแต่ตายก่อนบันทึกสถานะลง DB เมื่อ Worker ตัวที่สองมารับงานต่อและลองสั่งสร้างบัญชีอีกครั้ง การส่ง <strong>Idempotency key ตัวเดิมที่ผูกกับงานชิ้นนั้น</strong> ไปด้วย จะทำให้ระบบบัญชีปลายทางรู้ทันทีว่า <em>"คำสั่งนี้เคยสร้างบัญชีไปแล้ว!"</em> และคืนผลลัพธ์เดิมกลับมาแทนการเปิดบัญชีซ้ำเป็นบัญชีที่สอง!</li>
+  <li>❌ <strong>ทำไม D ถึงผิด:</strong> การสร้าง Operation ID ใหม่สดทุกครั้งที่ Retry จะทำให้ระบบปลายทางคิดว่าเป็นคำขอใหม่แกะกล่อง และเปิดบัญชีซ้ำให้ลูกค้าทันที</li>
+</ul></div>
+          </div>
+        </div>
+        <div class="question-card mock2-q-item mock-correct" data-status="correct" style="border-left: 5px solid var(--success);" id="mock2-q-4">
+          <div class="question-header" style="justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span class="q-number" style="background-color: var(--success);">Set 2 · Q4</span>
+              <span class="badge badge-paid" style="font-size: 0.82rem;">Domain 5: Model Selection and Optimization (Select one)</span>
+              <span class="badge badge-free" style="font-size: 0.86rem; padding: 4px 12px;">✅ ข้อที่คุณตอบถูกแล้ว (Correct)</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Set 2 — Question 4 of 20</span>
+          </div>
+
+          <div style="background-color: var(--bg-primary); border: 1px solid var(--border); padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 14px;">
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options):</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1.65; margin-bottom: 10px;">A team uses Claude to label customer feedback as positive, negative or mixed. When they send the same borderline comment several times, Claude sometimes returns different but reasonable labels. The manager believes identical prompts should always produce identical results and asks the developer to explain. What should the developer tell the manager?</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--border-strong); margin-bottom: 14px;">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> The different labels point to a network retry fault, so duplicate responses should be filtered out.</div><div style="margin-bottom: 4px;"><strong>B)</strong> Claude's output is probabilistic, so the team should test repeated runs to measure consistency.</div><div style="margin-bottom: 4px;"><strong>C)</strong> The first label Claude returns is its main answer, so the application should keep only the first one.</div><div style="margin-bottom: 4px;"><strong>D)</strong> Setting temperature to 0 guarantees the same label every time, so no further testing is needed.</div>
+            </div>
+
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; border-top: 1px dashed var(--border-strong); padding-top: 10px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทย:</div>
+            <div style="font-size: 0.96rem; line-height: 1.7; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">ทีมใช้ Claude ในการจัดหมวดหมู่ความคิดเห็นของลูกค้าเป็น เชิงบวก (positive), เชิงลบ (negative) หรือ ผสมกัน (mixed) เมื่อพวกเขาส่งความคิดเห็นที่ก้ำกึ่ง (Borderline comment) ข้อความเดิมซ้ำหลายครั้ง บางครั้ง Claude ก็ส่งป้ายกำกับที่ต่างกันแต่สมเหตุสมผลกลับมา ผู้จัดการเชื่อว่า Prompt ที่เหมือนกันเป๊ะควรให้ผลลัพธ์ที่เหมือนกันเป๊ะเสมอ จึงให้นักพัฒนาช่วยอธิบาย นักพัฒนาควรบอกผู้จัดการอย่างไร?</div>
+            <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--accent);">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> ป้ายกำกับที่ต่างกันเกิดจากความผิดพลาดในการ Retry เครือข่าย ดังนั้นควรกรองคำตอบที่ซ้ำออก</div><div style="margin-bottom: 4px;"><strong>B)</strong> ผลลัพธ์ของ Claude มีธรรมชาติเป็นเชิงความน่าจะเป็น (Probabilistic) ดังนั้นทีมควรทดสอบรันซ้ำหลายครั้งเพื่อวัดความสม่ำเสมอ (Consistency)</div><div style="margin-bottom: 4px;"><strong>C)</strong> ป้ายกำกับแรกที่ Claude ส่งกลับมาคือคำตอบหลักเสมอ ดังนั้นแอปพลิเคชันควรเก็บเฉพาะคำตอบแรกสุด</div><div style="margin-bottom: 4px;"><strong>D)</strong> การตั้งค่า temperature เป็น 0 จะรับประกันว่าได้ป้ายกำกับเดิมทุกครั้ง 100% จึงไม่จำเป็นต้องทดสอบเพิ่มเติม</div>
+            </div>
+          </div>
+          
+          <div class="q-answer-box" style="margin-top: 0; margin-bottom: 14px;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ เฉลยที่ถูกต้อง (Correct Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;"><strong>EN:</strong><br>B) Claude's output is probabilistic, so the team should test repeated runs to measure consistency.</div>
+            <div style="font-size: 0.95rem; border-top: 1px dashed rgba(43, 122, 75, 0.3); padding-top: 6px;"><strong>TH:</strong><br>B) ผลลัพธ์ของ Claude เป็นเชิงความน่าจะเป็น (Probabilistic) ดังนั้นทีมควรทดสอบรันซ้ำหลายครั้งเพื่อวัดความสม่ำเสมอ (Consistency)</div>
+          </div>
+
+          <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึกครบทุกตัวเลือก (Deep-Dive Explanation):</div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>ธรรมชาติเชิงความน่าจะเป็นของ LLM (Probabilistic Generation) และกับดักเรื่อง <code>temperature=0</code>:</strong>
+<ul style="margin-top: 6px; margin-bottom: 6px;">
+  <li>✅ <strong>ทำไม B ถึงถูกต้อง:</strong> การสร้างข้อความของ LLM เป็นกระบวนการเชิงความน่าจะเป็น โดยเฉพาะกับข้อมูลที่ก้ำกึ่ง (Borderline cases) จึงต้องใช้วิธีรันทดสอบซ้ำหลายครั้งเพื่อวัดระดับความสม่ำเสมอและปรับปรุงเกณฑ์ใน Prompt ให้ชัดเจนขึ้น</li>
+  <li>❌ <strong>ระวังกับดักตัวเลือก D (ออกสอบบ่อยมาก!):</strong> แม้จะตั้ง <code>temperature=0.0</code> เอกสารของ Anthropic ระบุชัดเจนว่า <strong>ไม่ได้รับประกันผลลัพธ์ที่เหมือนกัน 100% ทุกครั้ง (Not fully deterministic)</strong> เนื่องจากลักษณะการคำนวณ Floating-point แบบขนานบนฮาร์ดแวร์ GPU (และในโหมด Thinking รุ่นใหม่ก็ไม่อนุญาตให้แก้ค่า Temperature ด้วย)</li>
+</ul></div>
+          </div>
+        </div>
+        <div class="question-card mock2-q-item mock-correct" data-status="correct" style="border-left: 5px solid var(--success);" id="mock2-q-5">
+          <div class="question-header" style="justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span class="q-number" style="background-color: var(--success);">Set 2 · Q5</span>
+              <span class="badge badge-paid" style="font-size: 0.82rem;">Domain 7: Security and Safety (Select one)</span>
+              <span class="badge badge-free" style="font-size: 0.86rem; padding: 4px 12px;">✅ ข้อที่คุณตอบถูกแล้ว (Correct)</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Set 2 — Question 5 of 20</span>
+          </div>
+
+          <div style="background-color: var(--bg-primary); border: 1px solid var(--border); padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 14px;">
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options):</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1.65; margin-bottom: 10px;">A reporting tool serves many customer companies. Today it places one administrator API token in the system prompt, and Claude includes that token in tool calls to fetch each customer's data. Which credential design should replace this?</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--border-strong); margin-bottom: 14px;">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> The host issues short-lived credentials scoped to each customer and adds them when it runs tools.</div><div style="margin-bottom: 4px;"><strong>B)</strong> The host keeps the administrator token in a secret store and adds it when it runs any tool.</div><div style="margin-bottom: 4px;"><strong>C)</strong> The system prompt holds a separate long-lived token per customer, and Claude picks the right one.</div><div style="margin-bottom: 4px;"><strong>D)</strong> The token is encrypted in the system prompt, and the tool code decrypts it before each call.</div>
+            </div>
+
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; border-top: 1px dashed var(--border-strong); padding-top: 10px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทย:</div>
+            <div style="font-size: 0.96rem; line-height: 1.7; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">เครื่องมือสร้างรายงานตัวหนึ่งให้บริการลูกค้าหลายบริษัท ปัจจุบันระบบวาง API token ระดับผู้ดูแลระบบ (Administrator token) เพียงตัวเดียวไว้ใน System prompt แล้วให้ Claude นำ Token นั้นใส่เข้าไปในอาร์กิวเมนต์เวลาเรียก Tool เพื่อดึงข้อมูลของลูกค้าแต่ละราย การออกแบบการจัดการ Credential แบบใดที่ควรนำมาใช้แทนวิธีนี้?</div>
+            <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--accent);">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> ให้ระบบ Host ออก Credential อายุสั้นที่จำกัดขอบเขตเฉพาะลูกค้ารายนั้น (Per-customer scoped, short-lived) แล้วเป็นคนแนบใส่ให้เองตอนรันโค้ดของ Tool</div><div style="margin-bottom: 4px;"><strong>B)</strong> ให้ระบบ Host เก็บ Administrator token ไว้ใน Secret store แล้วแนบใส่ให้ตอนรัน Tool ทุกตัว</div><div style="margin-bottom: 4px;"><strong>C)</strong> เก็บ Token อายุยาวแยกตามรายลูกค้าไว้ใน System prompt แล้วให้ Claude เป็นคนเลือกหยิบตัวที่ถูกต้อง</div><div style="margin-bottom: 4px;"><strong>D)</strong> เข้ารหัส Token ไว้ใน System prompt แล้วให้โค้ดของ Tool ถอดรหัสก่อนเรียกใช้งานทุกครั้ง</div>
+            </div>
+          </div>
+          
+          <div class="q-answer-box" style="margin-top: 0; margin-bottom: 14px;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ เฉลยที่ถูกต้อง (Correct Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;"><strong>EN:</strong><br>A) The host issues short-lived credentials scoped to each customer and adds them when it runs tools.</div>
+            <div style="font-size: 0.95rem; border-top: 1px dashed rgba(43, 122, 75, 0.3); padding-top: 6px;"><strong>TH:</strong><br>A) ให้ระบบ Host ออก Credential อายุสั้นที่จำกัดขอบเขตเฉพาะลูกค้ารายนั้น แล้วเป็นคนแนบใส่ให้เองในโค้ดตอนรัน Tool (โดยไม่ผ่าน Context ของโมเดล)</div>
+          </div>
+
+          <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึกครบทุกตัวเลือก (Deep-Dive Explanation):</div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>กฎเหล็ก 2 ข้อของการจัดการ Secrets &amp; Multi-Tenant Credentials:</strong>
+<ul style="margin-top: 6px; margin-bottom: 6px;">
+  <li><strong>กฎข้อที่ 1 (Keep secrets out of model context):</strong> ห้ามใส่ API Token หรือรหัสผ่านไว้ใน System prompt หรือให้โมเดลมองเห็นเด็ดขาด (ตัดตัวเลือก C และ D ทิ้งทันที) ตัวโค้ดฝั่ง Host ต้องเป็นคนแนบ Credential ตอนยิง API ภายนอกเอง</li>
+  <li><strong>กฎข้อที่ 2 (Least Privilege &amp; Per-Tenant Scoping):</strong> ห้ามใช้ Admin Token ตัวเดียวที่มีสิทธิ์เข้าถึงลูกค้าทุกบริษัทในการรัน Tool (จึงตัดตัวเลือก B ทิ้ง เพราะถ้าโมเดลส่ง <code>customer_id</code> ของบริษัทอื่นมาในพารามิเตอร์ Tool ตัว Admin Token ก็จะดึงข้อมูลข้ามบริษัทออกมาได้ทันที!) ต้องใช้ <strong>Short-lived token ที่จำกัดสิทธิ์เฉพาะลูกค้ารายนั้น (Scoped to each customer — ตัวเลือก A ✅)</strong> เท่านั้น</li>
+</ul></div>
+          </div>
+        </div>
+        <div class="question-card mock2-q-item mock-correct" data-status="correct" style="border-left: 5px solid var(--success);" id="mock2-q-6">
+          <div class="question-header" style="justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span class="q-number" style="background-color: var(--success);">Set 2 · Q6</span>
+              <span class="badge badge-paid" style="font-size: 0.82rem;">Domain 8: Tools and MCPs (Select one)</span>
+              <span class="badge badge-free" style="font-size: 0.86rem; padding: 4px 12px;">✅ ข้อที่คุณตอบถูกแล้ว (Correct)</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Set 2 — Question 6 of 20</span>
+          </div>
+
+          <div style="background-color: var(--bg-primary); border: 1px solid var(--border); padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 14px;">
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options):</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1.65; margin-bottom: 10px;">A team is building an MCP server for HR. It must offer the company policy handbook, which clients browse section by section, and a payroll calculator that takes an employee's salary and hours and returns take-home pay. How should the server expose these two capabilities?</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--border-strong); margin-bottom: 14px;">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> Expose both as prompts, since each of them returns text that Claude reads and uses.</div><div style="margin-bottom: 4px;"><strong>B)</strong> Expose both as resources, since clients read the results that each one of them returns.</div><div style="margin-bottom: 4px;"><strong>C)</strong> Expose the handbook as a tool that returns sections on request, and the calculator as a resource.</div><div style="margin-bottom: 4px;"><strong>D)</strong> Expose the handbook sections as resources and the calculator as a tool with typed inputs.</div>
+            </div>
+
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; border-top: 1px dashed var(--border-strong); padding-top: 10px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทย:</div>
+            <div style="font-size: 0.96rem; line-height: 1.7; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">ทีมกำลังสร้าง MCP server สำหรับฝ่าย HR ซึ่งต้องให้บริการ 2 ส่วนคือ: (1) คู่มือนโยบายบริษัท ซึ่งฝั่ง Client สามารถเปิดอ่านทีละหัวข้อได้ และ (2) เครื่องคำนวณเงินเดือน ที่รับค่าเงินเดือนและจำนวนชั่วโมงทำงานของพนักงานแล้วคำนวณเงินสุทธิส่งกลับมา เซิร์ฟเวอร์ควรเปิดเผยความสามารถทั้งสองนี้อย่างไร?</div>
+            <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--accent);">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> เปิดให้ทั้งคู่เป็น Prompts เนื่องจากทั้งสองอย่างคืนค่าข้อความให้ Claude อ่านและใช้งาน</div><div style="margin-bottom: 4px;"><strong>B)</strong> เปิดให้ทั้งคู่เป็น Resources เนื่องจากฝั่ง Client อ่านผลลัพธ์ที่แต่ละตัวส่งกลับมา</div><div style="margin-bottom: 4px;"><strong>C)</strong> เปิดให้คู่มือนโยบายเป็น Tool ที่คืนค่าหัวข้อตามคำขอ และเปิดให้เครื่องคำนวณเป็น Resource</div><div style="margin-bottom: 4px;"><strong>D)</strong> เปิดให้หัวข้อต่างๆ ของคู่มือนโยบายเป็น Resources และเปิดให้เครื่องคำนวณเป็น Tool ที่มีการระบุชนิดของพารามิเตอร์ขาเข้า</div>
+            </div>
+          </div>
+          
+          <div class="q-answer-box" style="margin-top: 0; margin-bottom: 14px;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ เฉลยที่ถูกต้อง (Correct Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;"><strong>EN:</strong><br>D) Expose the handbook sections as resources and the calculator as a tool with typed inputs.</div>
+            <div style="font-size: 0.95rem; border-top: 1px dashed rgba(43, 122, 75, 0.3); padding-top: 6px;"><strong>TH:</strong><br>D) เปิดให้หัวข้อต่างๆ ของคู่มือนโยบายเป็น Resources และเปิดให้เครื่องคำนวณเงินเดือนเป็น Tool ที่มีการกำหนดชนิดพารามิเตอร์ขาเข้าชัดเจน</div>
+          </div>
+
+          <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึกครบทุกตัวเลือก (Deep-Dive Explanation):</div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>การเลือกใช้ MCP Primitives ทั้ง 3 ชนิดให้ตรงตามหน้าที่:</strong>
+<ul style="margin-top: 6px; margin-bottom: 6px;">
+  <li><strong><code>Resources</code>:</strong> ใช้สำหรับ<strong>ข้อมูลอ้างอิงที่ระบุพิกัดด้วย URI เพื่อเปิดอ่าน (Read-only data / Content browsing)</strong> เช่น ไฟล์เอกสาร คู่มือนโยบายบริษัท หรือบันทึกข้อมูล</li>
+  <li><strong><code>Tools</code>:</strong> ใช้สำหรับ<strong>การกระทำหรือการคำนวณที่รับพารามิเตอร์ขาเข้า (Operations / Computations with typed inputs)</strong> เช่น เครื่องคำนวณเงินเดือน หรือการยิง API</li>
+  <li><strong><code>Prompts</code>:</strong> ใช้สำหรับเทมเพลตข้อความหรือคำสั่งสำเร็จรูปที่เตรียมไว้ให้ผู้ใช้เลือกใช้</li>
+</ul></div>
+          </div>
+        </div>
+        <div class="question-card mock2-q-item mock-correct" data-status="correct" style="border-left: 5px solid var(--success);" id="mock2-q-7">
+          <div class="question-header" style="justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span class="q-number" style="background-color: var(--success);">Set 2 · Q7</span>
+              <span class="badge badge-paid" style="font-size: 0.82rem;">Domain 3: Claude Code (Select two)</span>
+              <span class="badge badge-free" style="font-size: 0.86rem; padding: 4px 12px;">✅ ข้อที่คุณตอบถูกแล้ว (Correct)</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Set 2 — Question 7 of 20</span>
+          </div>
+
+          <div style="background-color: var(--bg-primary); border: 1px solid var(--border); padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 14px;">
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options):</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1.65; margin-bottom: 10px;">A CI pipeline needs to run Claude Code with no interactive terminal, collect output that a script can parse, and prevent any file changes the team has not approved. Which TWO setup choices meet these needs?</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--border-strong); margin-bottom: 14px;">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> Run Claude Code in non-interactive mode with the `-p` flag instead of an interactive session.</div><div style="margin-bottom: 4px;"><strong>B)</strong> Pass an explicit list of allowed tools and request JSON with `--output-format json`.</div><div style="margin-bottom: 4px;"><strong>C)</strong> Skip permission prompts with `--dangerously-skip-permissions`, since CI runners are discarded.</div><div style="margin-bottom: 4px;"><strong>D)</strong> Start an interactive session and drive it with a script that types prompts and answers.</div>
+            </div>
+
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; border-top: 1px dashed var(--border-strong); padding-top: 10px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทย:</div>
+            <div style="font-size: 0.96rem; line-height: 1.7; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">ไปป์ไลน์ CI ต้องการรัน Claude Code โดยไม่มีหน้าจอโต้ตอบ (No interactive terminal), รวบรวมผลลัพธ์ในรูปแบบที่สคริปต์สามารถนำไปพาร์สต่อได้ และป้องกันการแก้ไขไฟล์ใดๆ ที่ทีมยังไม่ได้อนุมัติ ตัวเลือกการตั้งค่าสองข้อใดต่อไปนี้ตอบโจทย์ความต้องการเหล่านี้? (เลือก 2 ข้อ)</div>
+            <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--accent);">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> รัน Claude Code ในโหมด Non-interactive ด้วยแฟล็ก <code>-p</code> แทนการเปิดเซสชันแบบโต้ตอบ</div><div style="margin-bottom: 4px;"><strong>B)</strong> ส่งรายการเครื่องมือที่อนุญาตอย่างชัดเจน (Allowed tools) และขอผลลัพธ์เป็น JSON ด้วย <code>--output-format json</code></div><div style="margin-bottom: 4px;"><strong>C)</strong> ข้ามการถามสิทธิ์ทั้งหมดด้วย <code>--dangerously-skip-permissions</code> เนื่องจากเครื่อง CI runner ใช้เสร็จแล้วก็ถูกลบทิ้ง</div><div style="margin-bottom: 4px;"><strong>D)</strong> เปิดเซสชันแบบ Interactive แล้วใช้สคริปต์จำลองการพิมพ์ข้อความและกดตอบคำถาม</div>
+            </div>
+          </div>
+          
+          <div class="q-answer-box" style="margin-top: 0; margin-bottom: 14px;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ เฉลยที่ถูกต้อง (Correct Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;"><strong>EN:</strong><br>A) Run Claude Code in non-interactive mode with the `-p` flag instead of an interactive session.<br>B) Pass an explicit list of allowed tools and request JSON with `--output-format json`.</div>
+            <div style="font-size: 0.95rem; border-top: 1px dashed rgba(43, 122, 75, 0.3); padding-top: 6px;"><strong>TH:</strong><br>A) รัน Claude Code ในโหมด Non-interactive (Headless mode) ด้วยแฟล็ก -p<br>B) ระบุรายการ Allowed tools อย่างชัดเจน และกำหนดรูปแบบผลลัพธ์เป็น JSON ด้วย --output-format json</div>
+          </div>
+
+          <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึกครบทุกตัวเลือก (Deep-Dive Explanation):</div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>สูตรสำเร็จของการรัน Claude Code ในระบบ CI/CD Automation:</strong>
+<ul style="margin-top: 6px; margin-bottom: 6px;">
+  <li>✅ <strong>A + B:</strong> ใช้แฟล็ก <code>-p</code> (<code>--print</code> / Headless mode) คู่กับ <code>--output-format json</code> (หรือ <code>stream-json</code>) และกำหนด <code>--allowedTools</code> เฉพาะเครื่องมืออ่านข้อมูลที่อนุมัติแล้ว (เพราะในโหมด <code>-p</code> เครื่องมือใดที่ต้องถามสิทธิ์และไม่อยู่ในรายการที่อนุญาตจะถูกปฏิเสธโดยอัตโนมัติ)</li>
+  <li>❌ <strong>ระวังตัวลวง C:</strong> แม้เครื่อง CI runner จะถูกลบทิ้งหลังรันเสร็จ แต่ถ้ารันด้วย <code>--dangerously-skip-permissions</code> เอเจนต์ก็ยังสามารถแก้ไขไฟล์แล้วสั่ง <code>git push</code> หรือยิง API ออกไปทำลายระบบภายนอกได้!</li>
+</ul></div>
+          </div>
+        </div>
+        <div class="question-card mock2-q-item mock-correct" data-status="correct" style="border-left: 5px solid var(--success);" id="mock2-q-8">
+          <div class="question-header" style="justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span class="q-number" style="background-color: var(--success);">Set 2 · Q8</span>
+              <span class="badge badge-paid" style="font-size: 0.82rem;">Domain 4: Eval, Testing, and Debugging (Select two)</span>
+              <span class="badge badge-free" style="font-size: 0.86rem; padding: 4px 12px;">✅ ข้อที่คุณตอบถูกแล้ว (Correct)</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Set 2 — Question 8 of 20</span>
+          </div>
+
+          <div style="background-color: var(--bg-primary); border: 1px solid var(--border); padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 14px;">
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options):</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1.65; margin-bottom: 10px;">A tool trace shows that the tool returned the correct customer record, yet the phone number written to the database is not in that record. Retrying reproduces the same wrong value. Which TWO debugging steps best show where the wrong number comes from?</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--border-strong); margin-bottom: 14px;">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> Keep the failing trace and inspect each step that transforms the data before the write.</div><div style="margin-bottom: 4px;"><strong>B)</strong> Retry many more times and compare the outputs to see whether the wrong value changes.</div><div style="margin-bottom: 4px;"><strong>C)</strong> Add assertions that check the tool result and the final write payload separately.</div><div style="margin-bottom: 4px;"><strong>D)</strong> Swap in a different model and check whether the wrong value still appears.</div>
+            </div>
+
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; border-top: 1px dashed var(--border-strong); padding-top: 10px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทย:</div>
+            <div style="font-size: 0.96rem; line-height: 1.7; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">บันทึกการทำงาน (Tool trace) แสดงให้เห็นว่า Tool ส่งข้อมูลระเบียนลูกค้าที่ถูกต้องกลับมาแล้ว แต่เบอร์โทรศัพท์ที่ถูกบันทึกลงในฐานข้อมูลกลับไม่ได้อยู่ในระเบียนนั้น เมื่อลองรันซ้ำก็ยังคงได้ค่าที่ผิดค่าเดิมเป๊ะ ขั้นตอนการดีบั๊กสองข้อใดต่อไปนี้ที่จะช่วยชี้จุดต้นตอของเบอร์โทรศัพท์ที่ผิดได้ดีที่สุด? (เลือก 2 ข้อ)</div>
+            <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--accent);">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> เก็บรักษา Trace ที่เกิดปัญหานั้นไว้ แล้วตรวจสอบทุกขั้นตอนที่มีการแปลงข้อมูลก่อนที่จะเขียนลงฐานข้อมูล</div><div style="margin-bottom: 4px;"><strong>B)</strong> ลองรันซ้ำอีกหลายๆ ครั้งแล้วเปรียบเทียบผลลัพธ์ดูว่าค่าที่ผิดนั้นเปลี่ยนไปหรือไม่</div><div style="margin-bottom: 4px;"><strong>C)</strong> เพิ่มการตรวจสอบ (Assertions) ที่เช็กผลลัพธ์จาก Tool และเช็กข้อมูล Payload สุดท้ายก่อนเขียนลงฐานข้อมูลแยกจากกัน</div><div style="margin-bottom: 4px;"><strong>D)</strong> สลับไปใช้โมเดลรุ่นอื่นแล้วดูว่าค่าที่ผิดยังปรากฏอยู่หรือไม่</div>
+            </div>
+          </div>
+          
+          <div class="q-answer-box" style="margin-top: 0; margin-bottom: 14px;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ เฉลยที่ถูกต้อง (Correct Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;"><strong>EN:</strong><br>A) Keep the failing trace and inspect each step that transforms the data before the write.<br>C) Add assertions that check the tool result and the final write payload separately.</div>
+            <div style="font-size: 0.95rem; border-top: 1px dashed rgba(43, 122, 75, 0.3); padding-top: 6px;"><strong>TH:</strong><br>A) เก็บรักษา Trace ที่พังไว้และไล่ตรวจทุกขั้นตอนที่แปลงข้อมูลก่อนเขียนลงฐานข้อมูล<br>C) เพิ่ม Assertions เพื่อตรวจเช็กผลลัพธ์จาก Tool และตรวจ Payload สุดท้ายก่อนเขียนแยกจากกัน</div>
+          </div>
+
+          <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึกครบทุกตัวเลือก (Deep-Dive Explanation):</div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>การดีบั๊กหาจุดที่ข้อมูลเพี้ยนในระบบ Agent (Boundary Isolation &amp; Trace Inspection):</strong>
+<ul style="margin-top: 6px; margin-bottom: 6px;">
+  <li>เมื่อข้อมูลจาก Tool ถูกต้องแต่ข้อมูลที่ลง DB ผิดซ้ำด้วยค่าเดิมเป๊ะ เราต้องแยกว่า <strong>"โมเดล Claude เป็นคนแต่งตัวเลขขึ้นเองตอนสรุป"</strong> หรือ <strong>"โค้ดแปลงข้อมูล (Data transformation code) ของแอปเราเองที่เป็นคนแมปฟิลด์ผิด"</strong></li>
+  <li>การไล่ดู Trace ทีละขั้น (A) และการใส่ Assertions ดักที่รอยต่อระหว่าง Tool result กับ Write payload (C) จะชี้จุดที่ตัวเลขเพี้ยนได้อย่างแม่นยำทันที</li>
+</ul></div>
+          </div>
+        </div>
+        <div class="question-card mock2-q-item mock-correct" data-status="correct" style="border-left: 5px solid var(--success);" id="mock2-q-9">
+          <div class="question-header" style="justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span class="q-number" style="background-color: var(--success);">Set 2 · Q9</span>
+              <span class="badge badge-paid" style="font-size: 0.82rem;">Domain 2: Applications and Integration (Select one)</span>
+              <span class="badge badge-free" style="font-size: 0.86rem; padding: 4px 12px;">✅ ข้อที่คุณตอบถูกแล้ว (Correct)</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Set 2 — Question 9 of 20</span>
+          </div>
+
+          <div style="background-color: var(--bg-primary); border: 1px solid var(--border); padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 14px;">
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options):</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1.65; margin-bottom: 10px;">A Python web service built on an async framework handles each request in an `async` handler but calls Claude through the SDK's synchronous client. Under load, even requests that do not use Claude stall while Claude is responding. What is the right fix?</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--border-strong); margin-bottom: 14px;">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> Switch to the SDK's async client, or run the synchronous call in a bounded worker pool.</div><div style="margin-bottom: 4px;"><strong>B)</strong> Shorten the system prompt so Claude responds faster and each call holds the handler for less time.</div><div style="margin-bottom: 4px;"><strong>C)</strong> Raise the server's request timeout so stalled requests wait longer instead of failing.</div><div style="margin-bottom: 4px;"><strong>D)</strong> Wrap the synchronous call in a try/except block and retry it when a timeout occurs.</div>
+            </div>
+
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; border-top: 1px dashed var(--border-strong); padding-top: 10px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทย:</div>
+            <div style="font-size: 0.96rem; line-height: 1.7; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">เว็บเซอร์วิสภาษา Python ที่สร้างบน Async framework จัดการแต่ละคำขอด้วยฟังก์ชัน `async` handler แต่กลับเรียกใช้งาน Claude ผ่านไคลเอนต์แบบซิงโครนัส (Synchronous client) ของ SDK เมื่อมีทราฟฟิกเข้ามาเยอะ แม้แต่คำขออื่นๆ ที่ไม่ได้เรียกใช้ Claude เลยก็พลอยค้างไปด้วยในขณะที่กำลังรอ Claude ตอบกลับ วิธีแก้ไขที่ถูกต้องคืออะไร?</div>
+            <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--accent);">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> เปลี่ยนไปใช้ Async client ของ SDK (`AsyncAnthropic`) หรือรันการเรียกแบบซิงโครนัสนั้นแยกใน Bounded worker pool</div><div style="margin-bottom: 4px;"><strong>B)</strong> ย่อ System prompt ให้สั้นลงเพื่อให้ Claude ตอบเร็วขึ้นและถือครอง Handler น้อยลง</div><div style="margin-bottom: 4px;"><strong>C)</strong> เพิ่มค่า Request timeout ของเซิร์ฟเวอร์เพื่อให้คำขอที่ค้างอยู่รอได้นานขึ้นแทนที่จะล้มเหลว</div><div style="margin-bottom: 4px;"><strong>D)</strong> ครอบการเรียกแบบซิงโครนัสด้วย try/except แล้วสั่ง Retry เมื่อเกิด Timeout</div>
+            </div>
+          </div>
+          
+          <div class="q-answer-box" style="margin-top: 0; margin-bottom: 14px;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ เฉลยที่ถูกต้อง (Correct Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;"><strong>EN:</strong><br>A) Switch to the SDK's async client, or run the synchronous call in a bounded worker pool.</div>
+            <div style="font-size: 0.95rem; border-top: 1px dashed rgba(43, 122, 75, 0.3); padding-top: 6px;"><strong>TH:</strong><br>A) เปลี่ยนไปใช้ Async client ของ SDK (AsyncAnthropic) หรือโยนการเรียกแบบซิงโครนัสไปรันใน Bounded worker pool (thread pool)</div>
+          </div>
+
+          <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึกครบทุกตัวเลือก (Deep-Dive Explanation):</div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>ปัญหาการบล็อก Event Loop ในระบบ Async Python (เช่น FastAPI / asyncio):</strong>
+<ul style="margin-top: 6px; margin-bottom: 6px;">
+  <li>การเรียก <code>Anthropic().messages.create()</code> (Synchronous client) ข้างในฟังก์ชัน <code>async def</code> จะทำการ <strong>บล็อก Event Loop ทั้งเส้นของโปรเซสนั้น</strong> ตลอดหลายวินาทีที่รอ Claude คิดคำตอบ ทำให้ Request อื่นๆ (แม้แต่ Health check ที่ไม่เกี่ยวกับ AI) ค้างทั้งหมด!</li>
+  <li>วิธีแก้ที่ถูกต้องคือต้องเปลี่ยนไปใช้ <strong><code>AsyncAnthropic()</code> คู่กับ <code>await</code></strong> หรือส่งงานซิงโครนัสไปรันใน Thread/Worker pool ที่จำกัดขนาด (ตัวเลือก A ✅)</li>
+</ul></div>
+          </div>
+        </div>
+        <div class="question-card mock2-q-item mock-correct" data-status="correct" style="border-left: 5px solid var(--success);" id="mock2-q-10">
+          <div class="question-header" style="justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span class="q-number" style="background-color: var(--success);">Set 2 · Q10</span>
+              <span class="badge badge-paid" style="font-size: 0.82rem;">Domain 6: Prompt and Context Engineering (Select one)</span>
+              <span class="badge badge-free" style="font-size: 0.86rem; padding: 4px 12px;">✅ ข้อที่คุณตอบถูกแล้ว (Correct)</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Set 2 — Question 10 of 20</span>
+          </div>
+
+          <div style="background-color: var(--bg-primary); border: 1px solid var(--border); padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 14px;">
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options):</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1.65; margin-bottom: 10px;">An accounts-payable system asks Claude to extract invoice data as JSON and creates accounting records from the results automatically. One response matches the invoice schema exactly, but its tax amount does not fit the tax rate for the region given in the request. What should happen before a record is created?</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--border-strong); margin-bottom: 14px;">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> Code checks the tax amount and other business rules against the request and rejects failures.</div><div style="margin-bottom: 4px;"><strong>B)</strong> The record is created, because the response passed JSON schema validation without any errors.</div><div style="margin-bottom: 4px;"><strong>C)</strong> The response is sent back to Claude in the same conversation to confirm its own tax calculation.</div><div style="margin-bottom: 4px;"><strong>D)</strong> The record is created and flagged so that finance can correct any tax errors at month-end close.</div>
+            </div>
+
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; border-top: 1px dashed var(--border-strong); padding-top: 10px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทย:</div>
+            <div style="font-size: 0.96rem; line-height: 1.7; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">ระบบบัญชีเจ้าหนี้สั่งให้ Claude ดึงข้อมูลใบแจ้งหนี้ออกมาเป็น JSON แล้วสร้างรายการบันทึกทางบัญชีจากผลลัพธ์นั้นโดยอัตโนมัติ มีผลลัพธ์หนึ่งที่ตรงตาม JSON Schema ของใบแจ้งหนี้ทุกประการ แต่ยอดภาษีในนั้นไม่สอดคล้องกับอัตราภาษีของภูมิภาคที่ระบุไว้ในคำขอ ควรทำอย่างไรก่อนที่จะสร้างรายการบันทึกทางบัญชี?</div>
+            <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--accent);">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> ให้โค้ดโปรแกรมตรวจสอบยอดภาษีและกฎทางธุรกิจอื่นๆ เทียบกับคำขอ และปฏิเสธรายการที่ไม่ผ่านเกณฑ์</div><div style="margin-bottom: 4px;"><strong>B)</strong> สร้างรายการบันทึกได้ทันที เพราะผลลัพธ์ผ่านการตรวจสอบ JSON Schema โดยไม่มีข้อผิดพลาดแล้ว</div><div style="margin-bottom: 4px;"><strong>C)</strong> ส่งผลลัพธ์กลับไปให้ Claude ในบทสนทนาเดิมเพื่อยืนยันการคำนวณภาษีของตัวเองอีกครั้ง</div><div style="margin-bottom: 4px;"><strong>D)</strong> สร้างรายการบันทึกไปก่อนแล้วปักธงไว้ เพื่อให้ฝ่ายการเงินมาแก้ข้อผิดพลาดตอนปิดงบสิ้นเดือน</div>
+            </div>
+          </div>
+          
+          <div class="q-answer-box" style="margin-top: 0; margin-bottom: 14px;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ เฉลยที่ถูกต้อง (Correct Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;"><strong>EN:</strong><br>A) Code checks the tax amount and other business rules against the request and rejects failures.</div>
+            <div style="font-size: 0.95rem; border-top: 1px dashed rgba(43, 122, 75, 0.3); padding-top: 6px;"><strong>TH:</strong><br>A) ใช้โค้ดโปรแกรมตรวจสอบยอดภาษีและกฎทางธุรกิจ (Business rules) เทียบกับคำขอ และปฏิเสธรายการที่ไม่ถูกต้องก่อนบันทึกลงระบบบัญชี</div>
+          </div>
+
+          <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึกครบทุกตัวเลือก (Deep-Dive Explanation):</div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>ความต่างระหว่าง Schema Validation vs. Semantic / Business-Rule Validation:</strong>
+<ul style="margin-top: 6px; margin-bottom: 6px;">
+  <li>การที่ JSON ผ่าน <strong>Schema validation</strong> (หรือได้มาจาก Structured Outputs) รับประกันแค่ว่า <strong>"ชื่อฟิลด์และชนิดข้อมูล (เช่นเป็นตัวเลข float) ถูกต้องตามโครงสร้าง"</strong> เท่านั้น แต่ไม่ได้รับประกันว่าตัวเลขข้างในคำนวณถูกต้องตามหลักบัญชี!</li>
+  <li>ดังนั้น กฎทางธุรกิจและคณิตศาสตร์ (เช่น $\text{Tax} == \text{Subtotal} \times \text{RegionalRate}$) ต้องตรวจสอบด้วย <strong>โค้ด Deterministic ของโปรแกรม (ตัวเลือก A ✅)</strong> ก่อนเขียนลงฐานข้อมูลเสมอ</li>
+</ul></div>
+          </div>
+        </div>
+        <div class="question-card mock2-q-item mock-correct" data-status="correct" style="border-left: 5px solid var(--success);" id="mock2-q-11">
+          <div class="question-header" style="justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span class="q-number" style="background-color: var(--success);">Set 2 · Q11</span>
+              <span class="badge badge-paid" style="font-size: 0.82rem;">Domain 1: Agents and Workflows (Select one)</span>
+              <span class="badge badge-free" style="font-size: 0.86rem; padding: 4px 12px;">✅ ข้อที่คุณตอบถูกแล้ว (Correct)</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Set 2 — Question 11 of 20</span>
+          </div>
+
+          <div style="background-color: var(--bg-primary); border: 1px solid var(--border); padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 14px;">
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options):</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1.65; margin-bottom: 10px;">A warehouse uses Claude for two jobs. Most requests are routine stock checks that always run the same database query. A few are stock discrepancies, where Claude must compare barcode scans, delivery notes and camera summaries, and the steps differ from case to case. Which design gives each job only as much freedom as it needs?</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--border-strong); margin-bottom: 14px;">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> Send every request, including routine stock checks, to one agent that plans its own steps.</div><div style="margin-bottom: 4px;"><strong>B)</strong> Handle stock checks with a fixed workflow and send discrepancies to an agent that plans its steps.</div><div style="margin-bottom: 4px;"><strong>C)</strong> Handle both jobs with one fixed workflow that runs every comparison step on every request.</div><div style="margin-bottom: 4px;"><strong>D)</strong> Use one agent for both jobs and let it write to the inventory system to correct stock counts.</div>
+            </div>
+
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; border-top: 1px dashed var(--border-strong); padding-top: 10px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทย:</div>
+            <div style="font-size: 0.96rem; line-height: 1.7; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">คลังสินค้าแห่งหนึ่งใช้ Claude สำหรับงานสองประเภท งานส่วนใหญ่เป็นการเช็กสต็อกประจำวันที่รันคำสั่งค้นหาฐานข้อมูลเดิมเสมอ ส่วนงานส่วนน้อยเป็นเคสสต็อกไม่ตรงกัน (Discrepancies) ซึ่ง Claude ต้องเปรียบเทียบข้อมูลสแกนบาร์โค้ด ใบส่งของ และสรุปจากกล้องวงจรปิด โดยขั้นตอนจะแตกต่างกันไปในแต่ละเคส การออกแบบใดที่ให้อิสระแก่แต่ละงานเท่าที่จำเป็นจริงๆ?</div>
+            <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--accent);">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> ส่งทุกคำขอรวมถึงการเช็กสต็อกทั่วไป ไปให้เอเจนต์ตัวเดียวที่วางแผนขั้นตอนเองทั้งหมด</div><div style="margin-bottom: 4px;"><strong>B)</strong> จัดการงานเช็กสต็อกทั่วไปด้วยเวิร์กโฟลว์ที่มีขั้นตอนตายตัว (Fixed workflow) และส่งเฉพาะเคสที่สต็อกไม่ตรงกันไปให้เอเจนต์ที่วางแผนขั้นตอนได้เอง</div><div style="margin-bottom: 4px;"><strong>C)</strong> จัดการทั้งสองงานด้วยเวิร์กโฟลว์ตายตัวอันเดียวที่รันทุกขั้นตอนการเปรียบเทียบในทุกๆ คำขอ</div><div style="margin-bottom: 4px;"><strong>D)</strong> ใช้เอเจนต์ตัวเดียวสำหรับทั้งสองงาน และอนุญาตให้มันเขียนแก้ไขตัวเลขสต็อกลงในระบบคลังสินค้าได้โดยตรง</div>
+            </div>
+          </div>
+          
+          <div class="q-answer-box" style="margin-top: 0; margin-bottom: 14px;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ เฉลยที่ถูกต้อง (Correct Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;"><strong>EN:</strong><br>B) Handle stock checks with a fixed workflow and send discrepancies to an agent that plans its steps.</div>
+            <div style="font-size: 0.95rem; border-top: 1px dashed rgba(43, 122, 75, 0.3); padding-top: 6px;"><strong>TH:</strong><br>B) จัดการงานเช็กสต็อกประจำวันด้วย Fixed workflow และส่งเฉพาะเคสสต็อกไม่ตรงกัน (ที่ขั้นตอนไม่แน่นอน) ไปให้ Agent ที่วางแผนขั้นตอนเอง</div>
+          </div>
+
+          <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึกครบทุกตัวเลือก (Deep-Dive Explanation):</div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>การจับคู่ระดับความเป็นอิสระ (Autonomy) ให้ตรงกับความไม่แน่นอนของงาน:</strong>
+<ul style="margin-top: 6px; margin-bottom: 6px;">
+  <li>งานที่ขั้นตอนชัดเจนตายตัวและเกิดขึ้นบ่อย (Routine stock checks) &rarr; ใช้ <strong>Fixed Workflow</strong> เพื่อความเร็ว ประหยัด และคาดเดาผลได้ 100%</li>
+  <li>งานที่ขั้นตอนแตกต่างกันไปตามสถานการณ์หน้างาน (Stock discrepancies) &rarr; ใช้ <strong>Agent</strong> ที่สามารถเลือกเครื่องมือและวางแผนก้าวถัดไปตามข้อมูลที่ตรวจพบ</li>
+</ul></div>
+          </div>
+        </div>
+        <div class="question-card mock2-q-item mock-correct" data-status="correct" style="border-left: 5px solid var(--success);" id="mock2-q-12">
+          <div class="question-header" style="justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span class="q-number" style="background-color: var(--success);">Set 2 · Q12</span>
+              <span class="badge badge-paid" style="font-size: 0.82rem;">Domain 5: Model Selection and Optimization (Select one)</span>
+              <span class="badge badge-free" style="font-size: 0.86rem; padding: 4px 12px;">✅ ข้อที่คุณตอบถูกแล้ว (Correct)</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Set 2 — Question 12 of 20</span>
+          </div>
+
+          <div style="background-color: var(--bg-primary); border: 1px solid var(--border); padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 14px;">
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options):</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1.65; margin-bottom: 10px;">A dashboard shows a long Claude analysis to the user while it is being written. After the response finishes, the backend must save one complete copy of it to the conversation history. How should the application receive and store the response?</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--border-strong); margin-bottom: 14px;">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> Stream the response and save each text delta to the history as its own assistant message.</div><div style="margin-bottom: 4px;"><strong>B)</strong> Open a WebSocket to the API, because the Messages API cannot stream over plain HTTP.</div><div style="margin-bottom: 4px;"><strong>C)</strong> Send a non-streaming request with a progress spinner, then show and save the full response.</div><div style="margin-bottom: 4px;"><strong>D)</strong> Stream the response over server-sent events, show each delta, and save the final message.</div>
+            </div>
+
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; border-top: 1px dashed var(--border-strong); padding-top: 10px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทย:</div>
+            <div style="font-size: 0.96rem; line-height: 1.7; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">หน้าแดชบอร์ดแสดงบทวิเคราะห์ขนาดยาวของ Claude ให้ผู้ใช้เห็นแบบสดๆ ในขณะที่กำลังเขียนอยู่ หลังจากที่ตอบเสร็จสมบูรณ์แล้ว ระบบหลังบ้านจะต้องบันทึกสำเนาฉบับสมบูรณ์เพียงหนึ่งชุดลงในประวัติการสนทนา แอปพลิเคชันควรรับและจัดเก็บผลลัพธ์นี้อย่างไร?</div>
+            <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--accent);">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> สตรีมคำตอบและบันทึกแต่ละ text delta ลงในประวัติแยกเป็นข้อความของ assistant คนละอัน</div><div style="margin-bottom: 4px;"><strong>B)</strong> เปิดการเชื่อมต่อ WebSocket ไปยัง API เนื่องจาก Messages API ไม่สามารถสตรีมผ่าน HTTP ปกติได้</div><div style="margin-bottom: 4px;"><strong>C)</strong> ส่งคำขอแบบไม่สตรีมพร้อมแสดงตัวหมุนโหลด จากนั้นค่อยแสดงและบันทึกคำตอบเต็มเมื่อเสร็จแล้ว</div><div style="margin-bottom: 4px;"><strong>D)</strong> สตรีมคำตอบผ่าน Server-Sent Events (SSE) แสดงแต่ละ delta ที่มาถึงให้ผู้ใช้เห็น และบันทึกข้อความฉบับเต็มที่รวมเสร็จแล้วเพียงชุดเดียวเมื่อจบสตรีม</div>
+            </div>
+          </div>
+          
+          <div class="q-answer-box" style="margin-top: 0; margin-bottom: 14px;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ เฉลยที่ถูกต้อง (Correct Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;"><strong>EN:</strong><br>D) Stream the response over server-sent events, show each delta, and save the final message.</div>
+            <div style="font-size: 0.95rem; border-top: 1px dashed rgba(43, 122, 75, 0.3); padding-top: 6px;"><strong>TH:</strong><br>D) สตรีมคำตอบผ่าน Server-Sent Events (SSE) โดยแสดงแต่ละ delta ที่มาถึงบนหน้าจอทันที และบันทึกเฉพาะข้อความฉบับสมบูรณ์ที่ประกอบรวมกันเสร็จแล้วลงในประวัติ</div>
+          </div>
+
+          <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึกครบทุกตัวเลือก (Deep-Dive Explanation):</div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>รูปแบบมาตรฐานของการทำ Streaming คู่กับการบันทึก Conversation History:</strong>
+<ul style="margin-top: 6px; margin-bottom: 6px;">
+  <li>Messages API สตรีมผ่าน <strong>HTTP Server-Sent Events (SSE)</strong> (ไม่ใช่ WebSocket!)</li>
+  <li>ในระหว่างที่อีเวนต์ <code>content_block_delta</code> (<code>text_delta</code>) ทยอยส่งมา ให้ส่งต่อไปแสดงผลบน UI ทันทีเพื่อลด Perceived latency และเมื่อจบสตรีมที่ <code>message_stop</code> ให้บันทึกข้อความเต็มเพียงก้อนเดียวลงในประวัติการสนทนา (ห้ามบันทึกแยกทุกๆ delta เป็นคนละข้อความเหมือนข้อ A เด็ดขาด!)</li>
+</ul></div>
+          </div>
+        </div>
+        <div class="question-card mock2-q-item mock-correct" data-status="correct" style="border-left: 5px solid var(--success);" id="mock2-q-13">
+          <div class="question-header" style="justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span class="q-number" style="background-color: var(--success);">Set 2 · Q13</span>
+              <span class="badge badge-paid" style="font-size: 0.82rem;">Domain 7: Security and Safety (Select one)</span>
+              <span class="badge badge-free" style="font-size: 0.86rem; padding: 4px 12px;">✅ ข้อที่คุณตอบถูกแล้ว (Correct)</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Set 2 — Question 13 of 20</span>
+          </div>
+
+          <div style="background-color: var(--bg-primary); border: 1px solid var(--border); padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 14px;">
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options):</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1.65; margin-bottom: 10px;">A Claude Code `PreToolUse` hook checks shell commands. When a command touches the `secrets/` directory, the hook prints "blocked" and exits with code 0. Traces show the command still runs. What change and test would make this a working guardrail?</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--border-strong); margin-bottom: 14px;">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> Have the hook write its warning to a log file, then check the log after a test run.</div><div style="margin-bottom: 4px;"><strong>B)</strong> Move the check to a `PostToolUse` hook and test that it reports the command.</div><div style="margin-bottom: 4px;"><strong>C)</strong> Add a system prompt rule not to touch `secrets/`, then test it with sample commands.</div><div style="margin-bottom: 4px;"><strong>D)</strong> Return a blocking result, such as exit code 2, and test that the files are untouched.</div>
+            </div>
+
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; border-top: 1px dashed var(--border-strong); padding-top: 10px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทย:</div>
+            <div style="font-size: 0.96rem; line-height: 1.7; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">`PreToolUse` hook ตัวหนึ่งใน Claude Code ทำหน้าที่ตรวจเช็กคำสั่งเชลล์ เมื่อเจอคำสั่งที่แตะต้องโฟลเดอร์ `secrets/` ตัว Hook จะพิมพ์คำว่า "blocked" ออกมาแล้วจบการทำงานด้วยรหัส Exit code 0 แต่จากบันทึก Trace พบว่าคำสั่งอันตรายนั้นยังคงถูกรันต่อไป การแก้ไขและการทดสอบในข้อใดที่จะทำให้สิ่งนี้กลายเป็น Guardrail ที่ใช้งานได้จริง?</div>
+            <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--accent);">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> ให้ Hook เขียนคำเตือนลงในไฟล์ Log แทน แล้วตรวจดูไฟล์ Log หลังจากรันทดสอบ</div><div style="margin-bottom: 4px;"><strong>B)</strong> ย้ายการตรวจเช็กไปไว้ที่ `PostToolUse` hook แล้วทดสอบว่ามันรายงานคำสั่งนั้น</div><div style="margin-bottom: 4px;"><strong>C)</strong> เพิ่มกฎใน System prompt ว่าห้ามแตะต้อง `secrets/` แล้วทดสอบด้วยคำสั่งตัวอย่าง</div><div style="margin-bottom: 4px;"><strong>D)</strong> ส่งผลลัพธ์ที่เป็นการสั่งบล็อก เช่นจบด้วย Exit code 2 และทดสอบว่าไฟล์ใน `secrets/` ไม่ถูกแตะต้องจริงๆ</div>
+            </div>
+          </div>
+          
+          <div class="q-answer-box" style="margin-top: 0; margin-bottom: 14px;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ เฉลยที่ถูกต้อง (Correct Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;"><strong>EN:</strong><br>D) Return a blocking result, such as exit code 2, and test that the files are untouched.</div>
+            <div style="font-size: 0.95rem; border-top: 1px dashed rgba(43, 122, 75, 0.3); padding-top: 6px;"><strong>TH:</strong><br>D) คืนค่าผลลัพธ์ที่เป็นการสั่งบล็อก เช่นการใช้ Exit code 2 (หรือคืนค่า JSON permissionDecision: "deny") และทดสอบยืนยันว่าไฟล์ไม่ถูกแตะต้องจริง</div>
+          </div>
+
+          <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึกครบทุกตัวเลือก (Deep-Dive Explanation):</div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>กฎเหล็กของ Exit Codes ใน Claude Code Hooks (ตรงกับที่เราเน้นใน Part IV บทเสริมที่ 1.2 เป๊ะ!):</strong>
+<ul style="margin-top: 6px; margin-bottom: 6px;">
+  <li><strong>Exit code <code>0</code>:</strong> แปลว่า <strong>"สำเร็จ / อนุญาตให้รันต่อ!"</strong> ดังนั้นต่อให้พิมพ์คำว่า <code>"blocked"</code> ออกมาแต่ถ้า <code>exit 0</code> คำสั่งเชลล์ก็จะถูกรันต่อไปอยู่ดี!</li>
+  <li><strong>Exit code <code>2</code>:</strong> คือรหัสพิเศษที่สั่งให้ Claude Code <strong>บล็อกการรัน Tool นั้นทันที</strong> พร้อมส่งข้อความจาก <code>stderr</code> กลับไปให้โมเดลรับทราบ</li>
+</ul></div>
+          </div>
+        </div>
+        <div class="question-card mock2-q-item mock-correct" data-status="correct" style="border-left: 5px solid var(--success);" id="mock2-q-14">
+          <div class="question-header" style="justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span class="q-number" style="background-color: var(--success);">Set 2 · Q14</span>
+              <span class="badge badge-paid" style="font-size: 0.82rem;">Domain 8: Tools and MCPs (Select one)</span>
+              <span class="badge badge-free" style="font-size: 0.86rem; padding: 4px 12px;">✅ ข้อที่คุณตอบถูกแล้ว (Correct)</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Set 2 — Question 14 of 20</span>
+          </div>
+
+          <div style="background-color: var(--bg-primary); border: 1px solid var(--border); padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 14px;">
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options):</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1.65; margin-bottom: 10px;">Your application defines a `check_stock` tool that your own code implements. Claude returns a response with `stop_reason` set to `tool_use` and a `tool_use` block asking for a stock lookup. What should your application do next?</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--border-strong); margin-bottom: 14px;">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> Wait for Claude's next message, since Claude has already queried the inventory service on its own.</div><div style="margin-bottom: 4px;"><strong>B)</strong> Validate the input, run the lookup, and return a `tool_result` with the matching `tool_use_id`.</div><div style="margin-bottom: 4px;"><strong>C)</strong> Run the lookup and send the result to Claude as plain text at the start of a new conversation.</div><div style="margin-bottom: 4px;"><strong>D)</strong> Run the lookup and add its result to the system prompt of the next request sent to Claude.</div>
+            </div>
+
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; border-top: 1px dashed var(--border-strong); padding-top: 10px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทย:</div>
+            <div style="font-size: 0.96rem; line-height: 1.7; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">แอปพลิเคชันของคุณนิยามเครื่องมือชื่อ `check_stock` ซึ่งโค้ดฝั่งของคุณเป็นคนเขียนการทำงานไว้เอง เมื่อส่งคำขอไป Claude ตอบกลับมาโดยมี `stop_reason` เป็น `tool_use` พร้อมบล็อก `tool_use` ที่ขอให้ค้นหาสต็อก แอปพลิเคชันของคุณควรทำอย่างไรเป็นลำดับถัดไป?</div>
+            <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--accent);">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> รอข้อความถัดไปจาก Claude ได้เลย เนื่องจาก Claude ได้ทำการค้นหาข้อมูลจากระบบคลังสินค้าด้วยตัวเองไปแล้ว</div><div style="margin-bottom: 4px;"><strong>B)</strong> ตรวจสอบความถูกต้องของ Input, รันโค้ดค้นหาสต็อก และส่งบล็อก `tool_result` ที่มี `tool_use_id` ตรงกันกลับไปให้ Claude</div><div style="margin-bottom: 4px;"><strong>C)</strong> รันโค้ดค้นหาสต็อก แล้วส่งผลลัพธ์เป็นข้อความธรรมดาไปให้ Claude ในบทสนทนาใหม่</div><div style="margin-bottom: 4px;"><strong>D)</strong> รันโค้ดค้นหาสต็อก แล้วนำผลลัพธ์ไปใส่เพิ่มใน System prompt ของคำขอถัดไปที่ส่งให้ Claude</div>
+            </div>
+          </div>
+          
+          <div class="q-answer-box" style="margin-top: 0; margin-bottom: 14px;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ เฉลยที่ถูกต้อง (Correct Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;"><strong>EN:</strong><br>B) Validate the input, run the lookup, and return a `tool_result` with the matching `tool_use_id`.</div>
+            <div style="font-size: 0.95rem; border-top: 1px dashed rgba(43, 122, 75, 0.3); padding-top: 6px;"><strong>TH:</strong><br>B) ตรวจสอบความถูกต้องของ Input, รันโค้ดค้นหาสต็อกในระบบของคุณ แล้วส่งบล็อก tool_result ที่ระบุ tool_use_id ตรงกันกลับไปในบทสนทนาเดิม</div>
+          </div>
+
+          <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึกครบทุกตัวเลือก (Deep-Dive Explanation):</div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>โปรโตคอลการเรียกใช้งาน Client-side Tool มาตรฐาน:</strong>
+<ul style="margin-top: 6px; margin-bottom: 6px;">
+  <li>เมื่อได้ <code>stop_reason: "tool_use"</code> โมเดลเพียงแค่ส่ง "คำขอเรียกใช้ฟังก์ชัน" กลับมาให้แอปของคุณเท่านั้น โค้ดของคุณต้องเป็นคนตรวจพารามิเตอร์ รันฟังก์ชันจริง แล้วส่งผลลัพธ์กลับไปในข้อความ <code>role: "user"</code> ด้วยบล็อก <code>type: "tool_result"</code> ที่ผูก <code>tool_use_id</code> ให้ตรงกับคำขอเดิม</li>
+</ul></div>
+          </div>
+        </div>
+        <div class="question-card mock2-q-item mock-correct" data-status="correct" style="border-left: 5px solid var(--success);" id="mock2-q-15">
+          <div class="question-header" style="justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span class="q-number" style="background-color: var(--success);">Set 2 · Q15</span>
+              <span class="badge badge-paid" style="font-size: 0.82rem;">Domain 3: Claude Code (Select one)</span>
+              <span class="badge badge-free" style="font-size: 0.86rem; padding: 4px 12px;">✅ ข้อที่คุณตอบถูกแล้ว (Correct)</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Set 2 — Question 15 of 20</span>
+          </div>
+
+          <div style="background-color: var(--bg-primary); border: 1px solid var(--border); padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 14px;">
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options):</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1.65; margin-bottom: 10px;">A repository has six short conventions that should apply in every Claude Code session. It also has a 20-page database migration procedure that the team uses twice a year. How should the team set these up?</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--border-strong); margin-bottom: 14px;">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> Put the six conventions in CLAUDE.md and package the migration procedure as a Skill.</div><div style="margin-bottom: 4px;"><strong>B)</strong> Put both in CLAUDE.md so Claude always has the migration procedure available.</div><div style="margin-bottom: 4px;"><strong>C)</strong> Put both in each developer's personal user settings so everyone has a copy.</div><div style="margin-bottom: 4px;"><strong>D)</strong> Put the conventions in a subagent's system prompt and link the procedure from it.</div>
+            </div>
+
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; border-top: 1px dashed var(--border-strong); padding-top: 10px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทย:</div>
+            <div style="font-size: 0.96rem; line-height: 1.7; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">Repository แห่งหนึ่งมีข้อตกลงสั้นๆ 6 ข้อที่ควรบังคับใช้ในทุกๆ เซสชันของ Claude Code และยังมีคู่มือขั้นตอนการทำ Database migration ยาว 20 หน้าที่ทีมจะใช้เพียงปีละ 2 ครั้งเท่านั้น ทีมควรตั้งค่าสิ่งเหล่านี้อย่างไร?</div>
+            <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--accent);">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> ใส่ข้อตกลงสั้นๆ 6 ข้อไว้ใน CLAUDE.md และแยกคู่มือการทำ Migration ยาว 20 หน้าไปสร้างเป็น Skill</div><div style="margin-bottom: 4px;"><strong>B)</strong> ใส่ทั้งสองอย่างไว้ใน CLAUDE.md เพื่อให้ Claude มีคู่มือการทำ Migration พร้อมใช้ตลอดเวลา</div><div style="margin-bottom: 4px;"><strong>C)</strong> ใส่ทั้งสองอย่างไว้ใน User settings ส่วนตัวของนักพัฒนาแต่ละคนเพื่อให้ทุกคนมีสำเนา</div><div style="margin-bottom: 4px;"><strong>D)</strong> ใส่ข้อตกลงไว้ใน System prompt ของ Subagent แล้วใส่ลิงก์ไปยังคู่มือจากในนั้น</div>
+            </div>
+          </div>
+          
+          <div class="q-answer-box" style="margin-top: 0; margin-bottom: 14px;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ เฉลยที่ถูกต้อง (Correct Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;"><strong>EN:</strong><br>A) Put the six conventions in CLAUDE.md and package the migration procedure as a Skill.</div>
+            <div style="font-size: 0.95rem; border-top: 1px dashed rgba(43, 122, 75, 0.3); padding-top: 6px;"><strong>TH:</strong><br>A) ใส่ข้อตกลงสั้นๆ 6 ข้อไว้ใน CLAUDE.md (โหลดทุกครั้ง) และแพ็กเกจคู่มือ Migration ยาว 20 หน้าไว้เป็น Skill (โหลดเฉพาะตอนต้องใช้งาน)</div>
+          </div>
+
+          <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึกครบทุกตัวเลือก (Deep-Dive Explanation):</div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>การแบ่งหน้าที่ระหว่าง <code>CLAUDE.md</code> (Always-loaded) vs. <code>Skills</code> (On-demand progressive disclosure):</strong>
+<ul style="margin-top: 6px; margin-bottom: 6px;">
+  <li><strong><code>CLAUDE.md</code>:</strong> ถูกโหลดเข้า Context ใน<strong>ทุกเซสชัน</strong> จึงควรเก็บเฉพาะกฎสั้นๆ ที่ใช้ตลอดเวลา</li>
+  <li><strong><code>Skills</code> (<code>.claude/skills/.../SKILL.md</code>):</strong> โหลดเข้า Context เต็มๆ เฉพาะเมื่อถูกเรียกใช้หรือเมื่องานตรงกับคำอธิบายของ Skill จึงเหมาะสำหรับคู่มือยาว 20 หน้าที่นานๆ ใช้ที เพื่อไม่ให้เปลือง Context ในวันทำงานปกติ</li>
+</ul></div>
+          </div>
+        </div>
+        <div class="question-card mock2-q-item mock-missed" data-status="missed" style="border-left: 5px solid var(--danger);" id="mock2-q-16">
+          <div class="question-header" style="justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span class="q-number" style="background-color: var(--danger);">Set 2 · Q16</span>
+              <span class="badge badge-paid" style="font-size: 0.82rem;">Domain 2: Applications and Integration (Select two)</span>
+              <span class="badge badge-heaviest" style="font-size: 0.86rem; padding: 4px 12px;">❌ ข้อที่คุณตอบพลาด (Missed — เน้นทบทวน!)</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Set 2 — Question 16 of 20</span>
+          </div>
+
+          <div style="background-color: var(--bg-primary); border: 1px solid var(--border); padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 14px;">
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options):</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1.65; margin-bottom: 10px;">Two teams work on a shared service that extracts order details with Claude. One team changes the JSON schema of the service's response; the other changes how the service retries failed calls. Each branch passes its own tests, but the merged code fails. Which TWO practices would most directly prevent this kind of failure?</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--border-strong); margin-bottom: 14px;">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> Let each team keep its own copy of the response schema in its branch until the release.</div><div style="margin-bottom: 4px;"><strong>B)</strong> Add contract tests that check the shared response format that both teams depend on.</div><div style="margin-bottom: 4px;"><strong>C)</strong> Run each branch's own test suite twice before merging to catch any intermittent failures.</div><div style="margin-bottom: 4px;"><strong>D)</strong> Require both teams to review any change to the shared interface before it is merged.</div>
+            </div>
+
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; border-top: 1px dashed var(--border-strong); padding-top: 10px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทย:</div>
+            <div style="font-size: 0.96rem; line-height: 1.7; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">ทีมสองทีมทำงานร่วมกันบนเซอร์วิสกลางที่ใช้ Claude ดึงรายละเอียดคำสั่งซื้อ ทีมแรกแก้ไข JSON Schema ของผลลัพธ์ที่เซอร์วิสนี้ส่งกลับ ส่วนอีกทีมแก้ไขวิธีที่เซอร์วิสทำการ Retry เมื่อเรียกใช้งานล้มเหลว โค้ดในแต่ละ Branch ผ่านชุดทดสอบของทีมตัวเองทั้งหมด แต่พอรวมโค้ด (Merge) เข้าด้วยกันแล้วระบบกลับพัง แนวปฏิบัติสองข้อใดต่อไปนี้ที่จะช่วยป้องกันความล้มเหลวลักษณะนี้ได้โดยตรงที่สุด? (เลือก 2 ข้อ)</div>
+            <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--accent);">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> ให้แต่ละทีมเก็บสำเนาของ Response schema แยกไว้ใน Branch ของตัวเองจนกว่าจะถึงวันปล่อยอัปเดต</div><div style="margin-bottom: 4px;"><strong>B)</strong> เพิ่มการทดสอบสัญญาข้อตกลงร่วม (Contract tests) ที่ตรวจสอบรูปแบบผลลัพธ์กลางที่ทั้งสองทีมต้องพึ่งพาร่วมกัน</div><div style="margin-bottom: 4px;"><strong>C)</strong> รันชุดทดสอบเฉพาะของแต่ละ Branch ซ้ำสองรอบก่อนทำการ Merge เพื่อดักจับความล้มเหลวที่เกิดเป็นบางครั้ง (Intermittent failures)</div><div style="margin-bottom: 4px;"><strong>D)</strong> กำหนดให้ทั้งสองทีมต้องร่วมกันตรวจสอบ (Review) การเปลี่ยนแปลงใดๆ ที่เกิดขึ้นกับอินเทอร์เฟซที่ใช้ร่วมกันก่อนที่จะอนุญาตให้ Merge</div>
+            </div>
+          </div>
+          
+          <div style="background-color: var(--danger-bg); border: 1px solid rgba(185, 56, 44, 0.3); border-left: 4px solid var(--danger); padding: 14px 18px; border-radius: var(--radius-sm); margin-bottom: 12px;">
+            <div style="font-weight: 700; color: var(--danger); margin-bottom: 4px;">❌ คำตอบที่คุณเลือกตอนทำ Mock ชุดที่ 2 (Your Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.93rem; margin-bottom: 6px;"><strong>EN:</strong> Selected B and C (Run each branch's own test suite twice before merging to catch any intermittent failures)</div>
+            <div style="font-size: 0.93rem; color: var(--text-secondary);"><strong>TH:</strong> คุณเลือก B (ถูก) แต่พลาดไปเลือก C (รันเทสต์ของแต่ละ Branch ซ้ำ 2 รอบ) แทนที่จะเลือก D (บังคับให้ทั้งสองทีมร่วมกันรีวิวเมื่อมีการแก้ไขอินเทอร์เฟซกลาง)</div>
+          </div>
+          <div class="q-answer-box" style="margin-top: 0; margin-bottom: 14px;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ เฉลยที่ถูกต้อง (Correct Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;"><strong>EN:</strong><br>B) Add contract tests that check the shared response format that both teams depend on.<br>D) Require both teams to review any change to the shared interface before it is merged.</div>
+            <div style="font-size: 0.95rem; border-top: 1px dashed rgba(43, 122, 75, 0.3); padding-top: 6px;"><strong>TH:</strong><br>B) เพิ่ม Contract tests ที่ตรวจสอบรูปแบบผลลัพธ์กลางที่ทั้งสองทีมต้องพึ่งพาร่วมกัน<br>D) กำหนดให้ทั้งสองทีมต้องร่วมกันรีวิว (Cross-team review) การแก้ไขใดๆ ที่กระทบต่ออินเทอร์เฟซกลางก่อนทำการ Merge</div>
+          </div>
+
+          <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึกครบทุกตัวเลือก (Deep-Dive Explanation):</div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>ทำไมถึงพลาดข้อนี้ &amp; หลักการป้องกัน Integration Failure ระหว่างหลายทีม:</strong>
+<ul style="margin-top: 6px; margin-bottom: 6px;">
+  <li>❌ <strong>ทำไมตัวเลือก C ที่คุณเผลอเลือกถึงผิด:</strong> ปัญหาในโจทย์<strong>ไม่ได้เกิดจากความไม่เสถียรแบบสุ่ม (Flaky / Intermittent test)</strong>! แต่เกิดจากทีมที่ 1 แก้ JSON Schema โดยที่เทสต์ใน Branch ของทีมที่ 2 ยังจำลอง (Mock) Schema แบบเก่าอยู่ ดังนั้นต่อให้คุณสั่งรันเทสต์ของแต่ละ Branch ซ้ำ 2 รอบ หรือ 100 รอบก่อน Merge มันก็จะยังเขียวใน Branch ตัวเองแล้วไปพังตอน Merge เหมือนเดิม!</li>
+  <li>✅ <strong>ทำไม B และ D ถึงเป็นคู่ที่ถูกต้อง:</strong>
+    <br>&bull; <strong>ในมุมการทดสอบอัตโนมัติ (Automated Check — ข้อ B):</strong> ต้องมี <strong>Contract tests</strong> ที่ยึดสัญญาโครงสร้างข้อมูลกลางชุดเดียวกัน เพื่อให้ทันทีที่ทีมใดทีมหนึ่งแก้ Schema จนผิดข้อตกลง เทสต์จะฟ้องทันทีก่อน Merge
+    <br>&bull; <strong>ในมุมกระบวนการทำงานร่วมกัน (Governance / Code Review — ข้อ D):</strong> อินเทอร์เฟซและ Schema ที่ใช้ร่วมกันต้องตั้งกฎ <strong>Cross-team review (เช่น CODEOWNERS)</strong> บังคับให้ทั้งสองทีมต้องเห็นและอนุมัติการแก้ไขอินเทอร์เฟซกลางก่อน Merge เสมอ
+  </li>
+</ul></div>
+          </div>
+        </div>
+        <div class="question-card mock2-q-item mock-correct" data-status="correct" style="border-left: 5px solid var(--success);" id="mock2-q-17">
+          <div class="question-header" style="justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span class="q-number" style="background-color: var(--success);">Set 2 · Q17</span>
+              <span class="badge badge-paid" style="font-size: 0.82rem;">Domain 6: Prompt and Context Engineering (Select one)</span>
+              <span class="badge badge-free" style="font-size: 0.86rem; padding: 4px 12px;">✅ ข้อที่คุณตอบถูกแล้ว (Correct)</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Set 2 — Question 17 of 20</span>
+          </div>
+
+          <div style="background-color: var(--bg-primary); border: 1px solid var(--border); padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 14px;">
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options):</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1.65; margin-bottom: 10px;">An agent reviewing a long legal case is close to its context limit, mostly because of raw results from searches it has already finished. The final report still needs three source document IDs, and a partner's approval is still pending. When the conversation is compacted, what must the summary keep?</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--border-strong); margin-bottom: 14px;">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> The three source document IDs, the decisions made so far, and the pending approval.</div><div style="margin-bottom: 4px;"><strong>B)</strong> The full search results, so the report can quote them, with the decisions left out.</div><div style="margin-bottom: 4px;"><strong>C)</strong> Only the latest user message, since the earlier turns can be rebuilt if they are needed.</div><div style="margin-bottom: 4px;"><strong>D)</strong> A short account of the searches and the decisions made, leaving out any open items.</div>
+            </div>
+
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; border-top: 1px dashed var(--border-strong); padding-top: 10px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทย:</div>
+            <div style="font-size: 0.96rem; line-height: 1.7; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">เอเจนต์ที่กำลังตรวจสอบคดีทางกฎหมายขนาดยาวกำลังจะชนเพดาน Context limit โดยส่วนใหญ่เกิดจากผลลัพธ์ดิบจากการค้นหาที่ทำเสร็จไปแล้ว ทั้งนี้รายงานฉบับสุดท้ายยังคงต้องใช้รหัสเอกสารอ้างอิง (Source document IDs) 3 รายการ และยังต้องรอการอนุมัติจากพาร์ทเนอร์ที่ยังค้างอยู่ เมื่อบทสนทนาถูกบีบอัด (Compacted) บทสรุปจะต้องเก็บรักษาสิ่งใดไว้?</div>
+            <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--accent);">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> รหัสเอกสารอ้างอิงทั้ง 3 รายการ, การตัดสินใจที่ทำไปแล้วจนถึงปัจจุบัน และรายการอนุมัติที่ยังค้างอยู่ (Pending approval)</div><div style="margin-bottom: 4px;"><strong>B)</strong> ผลลัพธ์การค้นหาฉบับเต็มทั้งหมดเพื่อให้นำมาอ้างอิงได้ โดยตัดการตัดสินใจที่ผ่านมาออก</div><div style="margin-bottom: 4px;"><strong>C)</strong> เฉพาะข้อความล่าสุดของผู้ใช้เท่านั้น เนื่องจากเทิร์นก่อนหน้าสามารถสร้างใหม่ได้หากจำเป็น</div><div style="margin-bottom: 4px;"><strong>D)</strong> สรุปสั้นๆ ของการค้นหาและการตัดสินใจที่ทำไปแล้ว โดยตัดรายการที่ยังค้างอยู่ (Open items) ออก</div>
+            </div>
+          </div>
+          
+          <div class="q-answer-box" style="margin-top: 0; margin-bottom: 14px;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ เฉลยที่ถูกต้อง (Correct Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;"><strong>EN:</strong><br>A) The three source document IDs, the decisions made so far, and the pending approval.</div>
+            <div style="font-size: 0.95rem; border-top: 1px dashed rgba(43, 122, 75, 0.3); padding-top: 6px;"><strong>TH:</strong><br>A) รหัสเอกสารอ้างอิงทั้ง 3 รายการ, การตัดสินใจที่ทำไปแล้ว และสถานะการอนุมัติที่ยังค้างอยู่ (Pending approval)</div>
+          </div>
+
+          <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึกครบทุกตัวเลือก (Deep-Dive Explanation):</div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>หัวใจของการทำ Context Compaction อย่างปลอดภัย:</strong>
+<ul style="margin-top: 6px; margin-bottom: 6px;">
+  <li><strong>สิ่งที่ต้องตัดทิ้ง:</strong> ข้อมูลดิบขนาดใหญ่จาก Tool ที่ประมวลผลเสร็จแล้ว (Raw search results)</li>
+  <li><strong>3 สิ่งที่ต้องเก็บรักษาไว้ใน Summary เสมอ:</strong> (1) ตัวระบุสำคัญที่ต้องใช้อ้างอิงต่อ (Identifiers / Document IDs / File paths), (2) ข้อสรุปและการตัดสินใจที่ทำไปแล้ว (Key decisions), และ (3) งานที่ยังค้างอยู่หรือด่านอนุมัติที่ยังไม่เสร็จ (Pending approvals / Open blockers) เพื่อไม่ให้เอเจนต์ข้ามขั้นตอนการขออนุมัติ!</li>
+</ul></div>
+          </div>
+        </div>
+        <div class="question-card mock2-q-item mock-correct" data-status="correct" style="border-left: 5px solid var(--success);" id="mock2-q-18">
+          <div class="question-header" style="justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span class="q-number" style="background-color: var(--success);">Set 2 · Q18</span>
+              <span class="badge badge-paid" style="font-size: 0.82rem;">Domain 1: Agents and Workflows (Select one)</span>
+              <span class="badge badge-free" style="font-size: 0.86rem; padding: 4px 12px;">✅ ข้อที่คุณตอบถูกแล้ว (Correct)</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Set 2 — Question 18 of 20</span>
+          </div>
+
+          <div style="background-color: var(--bg-primary); border: 1px solid var(--border); padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 14px;">
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options):</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1.65; margin-bottom: 10px;">A payroll team always follows the same four steps: check the employee record, fetch approved hours, calculate deductions, and submit the payment. Any exception must stop for a person to review before submission. Which design gives the clearest control over this fixed sequence?</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--border-strong); margin-bottom: 14px;">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> A coded workflow that runs the four steps in order and routes exceptions to human review.</div><div style="margin-bottom: 4px;"><strong>B)</strong> An agent that is given the four steps as tools and decides which one to call next.</div><div style="margin-bottom: 4px;"><strong>C)</strong> Four specialized agents, one per step, that each update the same payroll record when ready.</div><div style="margin-bottom: 4px;"><strong>D)</strong> One prompt that lists every payroll policy and asks Claude to complete the whole process.</div>
+            </div>
+
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; border-top: 1px dashed var(--border-strong); padding-top: 10px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทย:</div>
+            <div style="font-size: 0.96rem; line-height: 1.7; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">ทีมทำเงินเดือนปฏิบัติตามขั้นตอนเดิม 4 ขั้นตอนเสมอ ได้แก่: ตรวจระเบียนพนักงาน, ดึงจำนวนชั่วโมงที่อนุมัติแล้ว, คำนวณรายการหัก และส่งคำสั่งจ่ายเงิน โดยหากมีข้อยกเว้นผิดปกติใดๆ จะต้องหยุดรอให้มนุษย์ตรวจสอบก่อนส่งคำสั่งจ่ายเงินเสมอ การออกแบบใดให้การควบคุมลำดับขั้นตอนที่ตายตัวนี้ได้ชัดเจนที่สุด?</div>
+            <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--accent);">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> เวิร์กโฟลว์ที่เขียนควบคุมด้วยโค้ด (Coded workflow) ให้รันทั้ง 4 ขั้นตอนตามลำดับ และส่งเคสที่มีข้อยกเว้นไปให้มนุษย์ตรวจสอบ</div><div style="margin-bottom: 4px;"><strong>B)</strong> เอเจนต์หนึ่งตัวที่ได้รับทั้ง 4 ขั้นตอนเป็น Tools แล้วตัดสินใจเองว่าจะเรียกใช้ตัวไหนเป็นลำดับถัดไป</div><div style="margin-bottom: 4px;"><strong>C)</strong> เอเจนต์เฉพาะทาง 4 ตัว ตัวละขั้นตอน ที่ต่างคนต่างอัปเดตระเบียนเงินเดือนเดียวกันเมื่อพร้อม</div><div style="margin-bottom: 4px;"><strong>D)</strong> Prompt เดียวที่ระบุนโยบายเงินเดือนทั้งหมดแล้วสั่งให้ Claude ทำกระบวนการทั้งหมดให้เสร็จ</div>
+            </div>
+          </div>
+          
+          <div class="q-answer-box" style="margin-top: 0; margin-bottom: 14px;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ เฉลยที่ถูกต้อง (Correct Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;"><strong>EN:</strong><br>A) A coded workflow that runs the four steps in order and routes exceptions to human review.</div>
+            <div style="font-size: 0.95rem; border-top: 1px dashed rgba(43, 122, 75, 0.3); padding-top: 6px;"><strong>TH:</strong><br>A) เวิร์กโฟลว์ที่ควบคุมลำดับด้วยโค้ด (Coded deterministic workflow) ให้รัน 4 ขั้นตอนตามลำดับตายตัว และบังคับส่งข้อยกเว้นให้มนุษย์ตรวจสอบ</div>
+          </div>
+
+          <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึกครบทุกตัวเลือก (Deep-Dive Explanation):</div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>เมื่อลำดับขั้นตอนตายตัวและมีกฎหยุดรอคนอนุมัติ (Mandatory Human Gate) ต้องใช้ Coded Workflow!</strong>
+<ul style="margin-top: 6px; margin-bottom: 6px;">
+  <li>การบังคับลำดับ 1 &rarr; 2 &rarr; 3 &rarr; (ตรวจเงื่อนไข / รอคนอนุมัติ) &rarr; 4 ในงานการเงินต้องคุมด้วย <strong>โค้ดโปรแกรม (Coded Workflow — ตัวเลือก A ✅)</strong> เท่านั้น ห้ามปล่อยให้ LLM ตัดสินใจเลือกลำดับเองผ่าน Prompt หรือ Autonomous tool loop</li>
+</ul></div>
+          </div>
+        </div>
+        <div class="question-card mock2-q-item mock-correct" data-status="correct" style="border-left: 5px solid var(--success);" id="mock2-q-19">
+          <div class="question-header" style="justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span class="q-number" style="background-color: var(--success);">Set 2 · Q19</span>
+              <span class="badge badge-paid" style="font-size: 0.82rem;">Domain 5: Model Selection and Optimization (Select one)</span>
+              <span class="badge badge-free" style="font-size: 0.86rem; padding: 4px 12px;">✅ ข้อที่คุณตอบถูกแล้ว (Correct)</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Set 2 — Question 19 of 20</span>
+          </div>
+
+          <div style="background-color: var(--bg-primary); border: 1px solid var(--border); padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 14px;">
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options):</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1.65; margin-bottom: 10px;">A company has two Claude endpoints. One pulls five fields from invoices and must respond within one second. The other combines conflicting audit evidence into findings; a missed item there is costly, but speed matters less. How should the team choose models for them?</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--border-strong); margin-bottom: 14px;">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> Test candidate models on each workload and pick a model for each endpoint from the results.</div><div style="margin-bottom: 4px;"><strong>B)</strong> Use the most capable model for both endpoints so that neither workload loses any accuracy.</div><div style="margin-bottom: 4px;"><strong>C)</strong> Use the fastest model for both endpoints and add a second review pass for the audit findings.</div><div style="margin-bottom: 4px;"><strong>D)</strong> Pick one model for both endpoints based on its score on a widely used public benchmark.</div>
+            </div>
+
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; border-top: 1px dashed var(--border-strong); padding-top: 10px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทย:</div>
+            <div style="font-size: 0.96rem; line-height: 1.7; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">บริษัทแห่งหนึ่งมี Endpoint ที่เรียกใช้ Claude อยู่สองจุด จุดแรกทำหน้าที่ดึงข้อมูล 5 ฟิลด์จากใบแจ้งหนี้และต้องตอบกลับภายใน 1 วินาที ส่วนจุดที่สองทำหน้าที่รวบรวมหลักฐานการตรวจสอบบัญชีที่ขัดแย้งกันเพื่อสรุปเป็นข้อตรวจพบ ซึ่งหากตกหล่นจะมีมูลค่าความเสียหายสูงมากแต่เรื่องความเร็วไม่ใช่เรื่องเร่งด่วน ทีมควรเลือกโมเดลสำหรับทั้งสองจุดนี้อย่างไร?</div>
+            <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--accent);">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> ทดสอบโมเดลที่เข้าข่ายกับงานแต่ละชิ้นแยกกัน แล้วเลือกโมเดลให้แต่ละ Endpoint ตามผลการวัดจริง</div><div style="margin-bottom: 4px;"><strong>B)</strong> ใช้โมเดลที่ฉลาดที่สุดสำหรับทั้งสอง Endpoint เพื่อไม่ให้งานใดเสียความแม่นยำเลย</div><div style="margin-bottom: 4px;"><strong>C)</strong> ใช้โมเดลที่เร็วที่สุดสำหรับทั้งสอง Endpoint แล้วเพิ่มรอบการตรวจทานครั้งที่สองสำหรับงานตรวจสอบบัญชี</div><div style="margin-bottom: 4px;"><strong>D)</strong> เลือกโมเดลตัวเดียวสำหรับทั้งสอง Endpoint โดยดูจากคะแนนบน Public benchmark ยอดนิยม</div>
+            </div>
+          </div>
+          
+          <div class="q-answer-box" style="margin-top: 0; margin-bottom: 14px;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ เฉลยที่ถูกต้อง (Correct Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;"><strong>EN:</strong><br>A) Test candidate models on each workload and pick a model for each endpoint from the results.</div>
+            <div style="font-size: 0.95rem; border-top: 1px dashed rgba(43, 122, 75, 0.3); padding-top: 6px;"><strong>TH:</strong><br>A) ทดสอบโมเดลกับภาระงาน (Workload) ของแต่ละ Endpoint แยกกันด้วยชุดทดสอบจริง แล้วเลือกโมเดลที่เหมาะกับความต้องการของแต่ละจุด</div>
+          </div>
+
+          <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึกครบทุกตัวเลือก (Deep-Dive Explanation):</div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>การเลือกโมเดลแยกตามภาระงานจริง (Workload-Specific Empirical Model Selection):</strong>
+<ul style="margin-top: 6px; margin-bottom: 6px;">
+  <li>ห้ามยึดติดกับโมเดลตัวเดียวสำหรับทั้งระบบ และห้ามดูแค่คะแนน Public benchmark ทั่วไป (D) แต่ต้องวัดผลด้วย Evals ของงานจริงในแต่ละ Endpoint (เช่น จุดดึงใบแจ้งหนี้ภายใน 1 วินาทีอาจเหมาะกับ Haiku/Sonnet ส่วนจุดวิเคราะห์หลักฐานบัญชีที่ซับซ้อนเหมาะกับ Opus)</li>
+</ul></div>
+          </div>
+        </div>
+        <div class="question-card mock2-q-item mock-correct" data-status="correct" style="border-left: 5px solid var(--success);" id="mock2-q-20">
+          <div class="question-header" style="justify-content: space-between; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span class="q-number" style="background-color: var(--success);">Set 2 · Q20</span>
+              <span class="badge badge-paid" style="font-size: 0.82rem;">Domain 7: Security and Safety (Select one)</span>
+              <span class="badge badge-free" style="font-size: 0.86rem; padding: 4px 12px;">✅ ข้อที่คุณตอบถูกแล้ว (Correct)</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Set 2 — Question 20 of 20</span>
+          </div>
+
+          <div style="background-color: var(--bg-primary); border: 1px solid var(--border); padding: 16px 18px; border-radius: var(--radius-sm); margin-bottom: 14px;">
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">🇬🇧 โจทย์และตัวเลือกภาษาอังกฤษ (Original Question &amp; Options):</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; line-height: 1.65; margin-bottom: 10px;">An agent reads project issues through an MCP resource. One issue description contains instructions telling the agent to export all customer records. The agent is allowed to read issues, but exporting customer data requires separate authorization. How should the application handle this?</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--border-strong); margin-bottom: 14px;">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> Treat the text as a valid request, because it came from the company's own MCP server.</div><div style="margin-bottom: 4px;"><strong>B)</strong> Let Claude judge whether the author of the issue has the authority to request an export.</div><div style="margin-bottom: 4px;"><strong>C)</strong> Treat the issue text as untrusted data and enforce export authorization in the backend.</div><div style="margin-bottom: 4px;"><strong>D)</strong> Give the issue tool its own database credential so that it can check the author's role.</div>
+            </div>
+
+            <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; border-top: 1px dashed var(--border-strong); padding-top: 10px;">🇹🇭 คำแปลโจทย์และตัวเลือกภาษาไทย:</div>
+            <div style="font-size: 0.96rem; line-height: 1.7; color: var(--text-primary); font-weight: 600; margin-bottom: 8px;">เอเจนต์ตัวหนึ่งอ่านรายการปัญหาของโปรเจกต์ (Project issues) ผ่าน MCP resource โดยมีคำอธิบายของ Issue รายการหนึ่งแอบเขียนคำสั่งบอกให้เอเจนต์ส่งออกข้อมูลระเบียนลูกค้าทั้งหมด (Export all customer records) ทั้งนี้เอเจนต์ได้รับอนุญาตให้อ่าน Issues ได้ แต่การส่งออกข้อมูลลูกค้าจำเป็นต้องได้รับการอนุมัติสิทธิ์แยกต่างหาก แอปพลิเคชันควรจัดการกรณีอย่างไร?</div>
+            <div style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); padding-left: 10px; border-left: 3px solid var(--accent);">
+              <div style="margin-bottom: 4px;"><strong>A)</strong> ถือว่าข้อความนั้นเป็นคำสั่งที่ถูกต้อง เพราะถูกดึงมาจาก MCP server ของบริษัทเอง</div><div style="margin-bottom: 4px;"><strong>B)</strong> ให้ Claude เป็นผู้ตัดสินเองว่าผู้เขียน Issue นั้นมีอำนาจในการขอส่งออกข้อมูลหรือไม่</div><div style="margin-bottom: 4px;"><strong>C)</strong> ปฏิบัติต่อข้อความใน Issue ในฐานะข้อมูลที่ไม่น่าเชื่อถือ (Untrusted data) และบังคับตรวจสอบสิทธิ์การส่งออกข้อมูลที่ระบบ Backend</div><div style="margin-bottom: 4px;"><strong>D)</strong> มอบ Credential ฐานข้อมูลให้แก่ Issue tool เพื่อให้มันเช็กบทบาทของผู้เขียนเอง</div>
+            </div>
+          </div>
+          
+          <div class="q-answer-box" style="margin-top: 0; margin-bottom: 14px;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ เฉลยที่ถูกต้อง (Correct Answer):</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;"><strong>EN:</strong><br>C) Treat the issue text as untrusted data and enforce export authorization in the backend.</div>
+            <div style="font-size: 0.95rem; border-top: 1px dashed rgba(43, 122, 75, 0.3); padding-top: 6px;"><strong>TH:</strong><br>C) ปฏิบัติต่อข้อความใน Issue ในฐานะข้อมูลที่ไม่น่าเชื่อถือ (Untrusted data) และบังคับใช้การตรวจสอบสิทธิ์การส่งออกข้อมูลที่ฝั่ง Backend</div>
+          </div>
+
+          <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึกครบทุกตัวเลือก (Deep-Dive Explanation):</div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>การป้องกัน Indirect Prompt Injection ที่แฝงมากับข้อมูลในระบบภายใน (เช่น Issue Tracker / MCP Resource):</strong>
+<ul style="margin-top: 6px; margin-bottom: 6px;">
+  <li>แม้ข้อมูลจะถูกดึงมาจาก MCP Server ของบริษัทเอง แต่เนื้อหาข้างใน Issue เป็นสิ่งที่ใครๆ ก็พิมพ์ส่งเข้ามาได้ จึงต้องถือเป็น <strong>Untrusted data เสมอ (ตัดข้อ A ทิ้ง)</strong></li>
+  <li>ห้ามให้โมเดล LLM เป็นคนตัดสินใจเรื่องสิทธิ์ความมั่นคงเอง (ตัดข้อ B ทิ้ง) แต่ต้องใช้ <strong>การบังคับสิทธิ์แบบ Deterministic ที่ฝั่ง Backend / Execution Gate (ตัวเลือก C ✅)</strong></li>
+</ul></div>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <script>
+        function filterMock2Questions(mode) {
+          const items = document.querySelectorAll('.mock2-q-item');
+          items.forEach(el => {
+            const st = el.getAttribute('data-status');
+            if (mode === 'all') {
+              el.style.display = 'block';
+            } else if (mode === 'missed') {
+              el.style.display = (st === 'missed') ? 'block' : 'none';
+            } else if (mode === 'correct') {
+              el.style.display = (st === 'correct') ? 'block' : 'none';
+            }
+          });
+        }
+      </script>
+
 
 
       <!-- Footer -->
