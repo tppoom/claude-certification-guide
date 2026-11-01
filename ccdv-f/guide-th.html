@@ -4869,11 +4869,17 @@ ightarrow$ Default ของบัญชี) เพื่อให้ผู้�
 
           <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
             <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึก &amp; จุดที่ต้องระวังในห้องสอบ (Deep-Dive Explanation):</div>
-            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>ความต่างระหว่าง <code>availableModels</code> กับ <code>enforceAvailableModels</code> ใน Managed Settings:</strong><br>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>เข้าใจภาพเมนู <code>/model</code> ใน Claude Code จะหายงงทันที!</strong><br>
+เวลาคุณพิมพ์ <code>/model</code> ใน Claude Code เมนูจะมีตัวเลือกแยกเป็น 2 ส่วนคือ:<br>
+<ul style="margin-top: 6px; margin-bottom: 8px;">
+  <li><strong>ตัวเลือกบรรทัดที่ 1: <code>1. Default (recommended)</code></strong> &rarr; แปลว่า <em>"ให้ใช้โมเดลค่าเริ่มต้นตามประเภทบัญชีของผู้ใช้ (Account-type default model)"</em> โดยคนที่ไม่เคยกดเปลี่ยน <code>/model</code> เลย ระบบจะเลือกข้อ 1 (<code>Default</code>) นี้ไว้ให้ตั้งแต่แรก!</li>
+  <li><strong>ตัวเลือกบรรทัดที่ 2, 3, 4... (Explicit model choices):</strong> รายชื่อโมเดลเฉพาะเจาะจงที่กดสลับไปใช้เอง เช่น <code>Sonnet</code>, <code>Opus</code>, <code>Haiku</code></li>
+</ul>
+<strong>ทีนี้เกิดอะไรขึ้นเมื่อแอดมินตั้งค่าแค่ <code>availableModels</code> อย่างเดียว?</strong>
 <ul style="margin-top: 6px; margin-bottom: 6px;">
-  <li>ถ้าแอดมินตั้งค่าแค่ <strong><code>availableModels: ["sonnet", "claude-opus-4-6"]</code></strong> เพียงตัวเดียว (โดย<strong>ไม่ได้</strong>ตั้ง <code>enforceAvailableModels: true</code>): มันจะจำกัดเฉพาะรายการโมเดลที่นักพัฒนาสามารถกดเลือกเองได้ในตัวเลือกเมนู <code>/model</code> หรือผ่าน CLI flag เท่านั้น แต่<strong>ไม่ได้ไปบังคับเปลี่ยนตัวเลือก <code>Default</code> (ค่าเริ่มต้นตามประเภทบัญชีของผู้ใช้)</strong>!</li>
-  <li>ดังนั้นเมื่อนักพัฒนาเปิดเซสชันใหม่โดยไม่เคยเปลี่ยนค่า <code>/model</code> และไม่ได้ส่ง <code>--model</code> ระบบจึงยังคงเริ่มทำงานด้วย <strong>โมเดล Default ตามประเภทบัญชีของนักพัฒนาคนนั้น (Account-type default model — ตัวเลือก C)</strong></li>
-  <li>หากแอดมินต้องการบังคับให้แม้แต่ตัวเลือก Default ก็ต้องถูกจำกัดอยู่ภายใต้รายการ <code>availableModels</code> ด้วย จะต้องตั้งค่า <strong><code>enforceAvailableModels: true</code></strong> ควบคู่กันเสมอ!</li>
+  <li>การตั้งค่า <strong><code>availableModels: ["sonnet", "claude-opus-4-6"]</code></strong> เพียงตัวเดียว จะไปกรอง<strong>เฉพาะตัวเลือกบรรทัดที่ 2 ลงไป</strong> (คือถ้าผู้ใช้กดเลือกเอง จะเลือกได้แค่ <code>sonnet</code> หรือ <code>claude-opus-4-6</code> เท่านั้น กดเลือก <code>haiku</code> เองไม่ได้)</li>
+  <li><strong>แต่มันไม่ได้ไปแตะต้องตัวเลือกบรรทัดที่ 1 (<code>Default</code>) เลย!</strong> ดังนั้นเมื่อนักพัฒนาคนใหม่เปิดโปรแกรมขึ้นมา (ซึ่งอยู่บนตัวเลือกที่ 1 <code>Default</code> ตั้งแต่วันแรก) โปรแกรมจึงยังคงรันด้วย <strong>โมเดลค่าเริ่มต้นตามประเภทบัญชีของเขา (Account-type default model — ตัวเลือก A)</strong> ตามปกติ!</li>
+  <li>หากแอดมินต้องการบังคับให้แม้แต่ตัวเลือกที่ 1 (<code>Default</code>) ก็ต้องถูกจำกัดอยู่ภายใต้รายการ <code>availableModels</code> เท่านั้น จะต้องตั้งค่า <strong><code>enforceAvailableModels: true</code></strong> ควบคู่กันด้วย!</li>
 </ul></div>
           </div>
         </div>
