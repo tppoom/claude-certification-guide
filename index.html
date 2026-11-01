@@ -4104,12 +4104,37 @@ def call_with_backoff(make_request, max_attempts=5):
           </table>
         </div>
 
-        <h3>4.2 ฟีเจอร์ขั้นสูงของระบบ Tool Use ใน Anthropic API</h3>
+        <h3>4.2 ฟีเจอร์ขั้นสูงของระบบ Tool Use ใน Anthropic API (เจาะลึกขั้นตอนการทำงานจริง)</h3>
         <ul>
-          <li><strong>1. Deferred Tool Loading &amp; Tool Search (<code>defer_loading: true</code>):</strong>
-            เมื่อระบบมี Tools จำนวนมาก (เช่น 50–500 tools จากหลาย MCP servers) หากส่ง JSON Schema เต็มของทุก Tool เข้าไปในทุก Request จะเปลือง Context มหาศาลและทำให้โมเดลสับสน วิธีแก้คือตั้งค่า <strong><code>defer_loading: true</code></strong> บน Tools ที่ไม่ได้ใช้บ่อย ควบคู่กับเปิดใช้งาน <strong>Tool Search tool</strong> เพื่อให้โมเดลค้นหาและโหลดเฉพาะ Schema ของ Tool ที่ต้องการใช้ในเทิร์นนั้นขึ้นมาแบบ On-demand (และช่วยป้องกันไม่ให้แคชพังเมื่อมีการเพิ่ม Tool ใหม่!)</li>
-          <li><strong>2. Programmatic Tool Calling (PTC):</strong>
-            แทนที่โมเดลจะต้องเรียก Tool ทีละตัวแล้วรอผลลัพธ์กลับเข้า Context หลักถึง 20 รอบ (เช่น ดึงรายชื่อลูกค้า 20 คนทีละคน) ฟีเจอร์ PTC ช่วยให้ Claude <strong>เขียนสคริปต์โค้ดสั้นๆ เพื่อวนลูปเรียก Tools หลายๆ ครั้งติดต่อกันภายในสภาพแวดล้อมการรัน</strong> แล้วส่งเฉพาะผลลัพธ์สรุปสุดท้ายกลับเข้าสู่ Context ของโมเดลเพียงรอบเดียว ช่วยลดทั้ง Latency และจำนวน Token อย่างมหาศาล!</li>
+          <li><strong>1. Deferred Tool Loading &amp; Tool Search Tool (<code>defer_loading: true</code>) — ทำงานอย่างไรทีละขั้น?</strong>
+            <p style="margin-top: 6px; margin-bottom: 6px;">
+              <strong>ปัญหาเดิม:</strong> หากคุณมี Tools 200 ตัวแล้วส่ง JSON Schema ทั้งหมดเข้า Context ตั้งแต่แรก จะกินพื้นที่ถึง 30,000–50,000 tokens ทันที และทำให้โมเดลสับสนเลือก Tool ผิด<br>
+              <strong>ขั้นตอนการทำงานเมื่อเปิดใช้ Tool Search:</strong>
+            </p>
+            <ol style="margin-bottom: 10px;">
+              <li><strong>ตอนส่ง Request:</strong> ในอาร์เรย์ <code>tools</code> คุณใส่ <strong>Tool Search Tool</strong> เข้าไป 1 ตัว (เลือกได้ 2 โหมดคือ <code>tool_search_tool_regex_20251119</code> หรือ <code>tool_search_tool_bm25_20251119</code>) ส่วน Tool อีก 200 ตัวให้แปะแฟล็ก <strong><code>"defer_loading": true</code></strong> กำกับไว้</li>
+              <li><strong>ฝั่งเซิร์ฟเวอร์ Anthropic ซ่อน Schema ไว้ก่อน:</strong> ตอนเริ่มคุย โมเดล Claude จะ<strong>ยังไม่เห็น Schema ของ Tool ทั้ง 200 ตัวที่ติด <code>defer_loading: true</code> เลย</strong> (เห็นแค่ Tool Search ตัวเดียว จึงประหยัด Token ได้กว่า 85%+)</li>
+              <li><strong>เมื่อผู้ใช้ถามคำถามที่ต้องใช้ Tool (เช่น "ช่วยจองตั๋วเครื่องบินไปโตเกียว"):</strong>
+                <br>&bull; <strong>ขั้นที่ 1:</strong> Claude เรียกใช้ <code>tool_search_tool(query="flight booking")</code>
+                <br>&bull; <strong>ขั้นที่ 2:</strong> เซิร์ฟเวอร์ของ Anthropic ค้นหาในคลัง 200 tools ที่ซ่อนไว้ แล้วดึงบล็อก <code>tool_reference</code> ของ Tool ที่ตรงกับคำค้น (เช่น <code>search_flights</code>, <code>book_flight</code>) <strong>ขยายออกเป็น JSON Schema เต็มฉีดเข้าสู่ Context ของ Claude ให้โดยอัตโนมัติในเทิร์นนั้นทันที!</strong>
+                <br>&bull; <strong>ขั้นที่ 3:</strong> เมื่อ Claude มองเห็น Schema ของ <code>search_flights</code> แล้ว ก็จะสั่งเรียกใช้ <code>search_flights(destination="TYO")</code> ต่อได้ทันที!
+              </li>
+            </ol>
+          </li>
+          <li><strong>2. Programmatic Tool Calling (PTC — <code>allowed_callers: ["code_execution_20250825"]</code>) — ทำงานอย่างไรทีละขั้น?</strong>
+            <p style="margin-top: 6px; margin-bottom: 6px;">
+              <strong>ปัญหาเดิม:</strong> สมมติต้องดึงรายชื่อพนักงาน 50 คน แล้ววนเช็กรายการเบิกจ่ายของแต่ละคนเพื่อหาคนที่เบิกเกิน $2,000 หากทำแบบปกติ Claude ต้องส่ง <code>tool_use</code> กลับมา 50 รอบ และข้อมูลใบเสร็จดิบของทั้ง 50 คนจะถูกเทเข้าสมอง (Context Window) ของ Claude ทั้งหมดจนล้นและช้ามาก!<br>
+              <strong>ขั้นตอนการทำงานเมื่อเปิดใช้ PTC:</strong>
+            </p>
+            <ol style="margin-bottom: 10px;">
+              <li><strong>การตั้งค่าใน Request:</strong> เปิดใช้งาน <strong>Code Execution Tool</strong> (<code>{"type": "code_execution_20250825", "name": "code_execution"}</code>) ในรายการ <code>tools</code> และที่คำนิยามของ Tool ของเรา (เช่น <code>get_employees</code>, <code>get_expenses</code>) ให้ใส่ฟิลด์ <strong><code>"allowed_callers": ["code_execution_20250825"]</code></strong></li>
+              <li><strong>Claude เขียนโค้ด Python สั่งวนลูปเรียก Tool แทนการเรียกทีละรอบ:</strong> แทนที่ Claude จะเรียก <code>get_expenses</code> ผ่านแชททีละคน โมเดลจะเขียนสคริปต์ Python รันใน Sandbox ของ Code Execution เช่น:
+                <br><code>for emp in await get_employees(): expenses = await get_expenses(emp["id"]) ... print(over_budget_list)</code>
+              </li>
+              <li><strong>ผลลัพธ์ดิบวิ่งเข้าตัวแปรในโค้ด Python โดยตรง (ไม่รกสมอง Claude!):</strong> ทุกครั้งที่สคริปต์ Python รันถึงคำสั่ง <code>await get_expenses(...)</code> ระบบจะส่ง <code>tool_use</code> มาให้แอปของคุณรันตามปกติ แต่เมื่อแอปของคุณส่ง <code>tool_result</code> (ใบเสร็จดิบ 100 บรรทัด) กลับไป <strong>ข้อมูลดิบนั้นจะถูกส่งเข้าตัวแปร <code>expenses</code> ในโค้ด Python ทันที โดย<u>ไม่ถูกยัดเข้าไปใน Context Window ของโมเดล Claude เลย!</u></strong></li>
+              <li><strong>ส่งเฉพาะคำตอบที่กรองแล้วเข้า Context หลัก:</strong> เมื่อโค้ด Python วนลูปบวกเลขและคัดกรองครบ 50 คนแล้วสั่ง <code>print(over_budget_list)</code> <strong>จะมีเพียงข้อความจาก <code>stdout</code> บรรทัดสุดท้าย (รายชื่อ 2 คนที่เกินงบ) เท่านั้นที่ถูกส่งกลับเข้าสู่ Context ของ Claude!</strong> ช่วยลดทั้งจำนวนรอบ (Latency) และประหยัด Token ได้มหาศาล</li>
+            </ol>
+          </li>
           <li><strong>3. Strict Tool Use (<code>strict: true</code>):</strong>
             การใส่ <code>strict: true</code> ในคำนิยามของ Tool จะเปิดใช้ <strong>Constrained Decoding</strong> บังคับให้พารามิเตอร์ <code>input</code> ที่โมเดลสร้างขึ้นตรงตามประเภทข้อมูลและฟิลด์บังคับใน <code>input_schema</code> แบบ 100% (โดยใน Schema ต้องกำหนด <code>additionalProperties: false</code> สำหรับทุก Object)</li>
           <li><strong>4. การตั้งค่า <code>tool_choice</code> และข้อจำกัดเมื่อเปิด Extended Thinking:</strong>
