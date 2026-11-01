@@ -4907,18 +4907,20 @@ ightarrow$ Default ของบัญชี) เพื่อให้ผู้�
 
           <div style="background-color: var(--bg-tertiary); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: var(--radius-sm);">
             <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึก &amp; จุดที่ต้องระวังในห้องสอบ (Deep-Dive Explanation):</div>
-            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>เข้าใจภาพเมนู <code>/model</code> ใน Claude Code จะหายงงทันที!</strong><br>
-เวลาคุณพิมพ์ <code>/model</code> ใน Claude Code เมนูจะมีตัวเลือกแยกเป็น 2 ส่วนคือ:<br>
-<ul style="margin-top: 6px; margin-bottom: 8px;">
-  <li><strong>ตัวเลือกบรรทัดที่ 1: <code>1. Default (recommended)</code></strong> &rarr; แปลว่า <em>"ให้ใช้โมเดลค่าเริ่มต้นตามประเภทบัญชีของผู้ใช้ (Account-type default model)"</em> โดยคนที่ไม่เคยกดเปลี่ยน <code>/model</code> เลย ระบบจะเลือกข้อ 1 (<code>Default</code>) นี้ไว้ให้ตั้งแต่แรก!</li>
-  <li><strong>ตัวเลือกบรรทัดที่ 2, 3, 4... (Explicit model choices):</strong> รายชื่อโมเดลเฉพาะเจาะจงที่กดสลับไปใช้เอง เช่น <code>Sonnet</code>, <code>Opus</code>, <code>Haiku</code></li>
-</ul>
-<strong>ทีนี้เกิดอะไรขึ้นเมื่อแอดมินตั้งค่าแค่ <code>availableModels</code> อย่างเดียว?</strong>
-<ul style="margin-top: 6px; margin-bottom: 6px;">
-  <li>การตั้งค่า <strong><code>availableModels: ["sonnet", "claude-opus-4-6"]</code></strong> เพียงตัวเดียว จะไปกรอง<strong>เฉพาะตัวเลือกบรรทัดที่ 2 ลงไป</strong> (คือถ้าผู้ใช้กดเลือกเอง จะเลือกได้แค่ <code>sonnet</code> หรือ <code>claude-opus-4-6</code> เท่านั้น กดเลือก <code>haiku</code> เองไม่ได้)</li>
-  <li><strong>แต่มันไม่ได้ไปแตะต้องตัวเลือกบรรทัดที่ 1 (<code>Default</code>) เลย!</strong> ดังนั้นเมื่อนักพัฒนาคนใหม่เปิดโปรแกรมขึ้นมา (ซึ่งอยู่บนตัวเลือกที่ 1 <code>Default</code> ตั้งแต่วันแรก) โปรแกรมจึงยังคงรันด้วย <strong>โมเดลค่าเริ่มต้นตามประเภทบัญชีของเขา (Account-type default model — ตัวเลือก A)</strong> ตามปกติ!</li>
-  <li>หากแอดมินต้องการบังคับให้แม้แต่ตัวเลือกที่ 1 (<code>Default</code>) ก็ต้องถูกจำกัดอยู่ภายใต้รายการ <code>availableModels</code> เท่านั้น จะต้องตั้งค่า <strong><code>enforceAvailableModels: true</code></strong> ควบคู่กันด้วย!</li>
-</ul></div>
+            <div style="font-size: 0.95rem; line-height: 1.75;"><strong>อธิบายแบบยกตัวอย่างของจริง (รับรองหายงง 100%!):</strong><br>
+<ol style="margin-top: 6px; margin-bottom: 8px;">
+  <li><strong>คำว่า <code>Default</code> (Account-type default model) คืออะไร?</strong><br>
+    คือ <strong>"โมเดลเริ่มต้นจากโรงงานตามประเภทแพ็กเกจ/บัญชีของผู้ใช้คนนั้น"</strong> เช่น บัญชีประเภทหนึ่งอาจมีค่าเริ่มต้นจากโรงงานเป็น <code>Opus</code> ส่วนอีกประเภทเป็น <code>Sonnet</code> เวลาผู้ใช้เปิด Claude Code ครั้งแรกโดยไม่เคยกดเปลี่ยน <code>/model</code> เลย ระบบจะใช้ค่า <code>Default</code> จากโรงงานของบัญชีเขาทันที
+  </li>
+  <li><strong>แล้วถ้าแอดมินตั้งแค่ <code>availableModels</code> อย่างเดียว (ไม่ใส่ <code>enforceAvailableModels</code>) เกิดปัญหาอะไร?</strong><br>
+    สมมติแอดมินตั้ง <code>availableModels: ["haiku", "sonnet"]</code> เพราะไม่อยากให้ใครใช้ <code>Opus</code>:
+    <br>&bull; ลำพัง <code>availableModels</code> ตัวเดียว มีฤทธิ์แค่ <strong>"ตัดตัวเลือกออกจากเมนูตอนที่ผู้ใช้จะกดสลับโมเดลเอง"</strong> เท่านั้น
+    <br>&bull; <strong>แต่มันไม่ได้ไปบังคับเปลี่ยนค่า <code>Default</code> จากโรงงานของบัญชี!</strong> ดังนั้นถ้าพนักงานใช้บัญชีที่มีค่าเริ่มต้นจากโรงงานเป็นตัวอื่น แล้วเขาเปิดโปรแกรมมาเฉยๆ โดยไม่เคยกด <code>/model</code> เลย ระบบก็จะยังคงรันด้วย <strong>โมเดลค่าเริ่มต้นประจำบัญชีของเขา (Account-type default model — เฉลยข้อ A)</strong> ต่อไปหน้าตาเฉย!
+  </li>
+  <li><strong>แล้ว <code>enforceAvailableModels: true</code> คืออะไร?</strong><br>
+    คือสวิตช์ที่สั่งว่า <strong>"จงบังคับใช้กฎ <code>availableModels</code> กับตัวเลือก <code>Default</code> ตอนเปิดเครื่องด้วย!"</strong> (ถ้าระบบเห็นว่าค่าเริ่มต้นประจำบัญชีไม่อยู่ในรายการที่แอดมินอนุญาต ระบบจะบังคับดึงให้มาใช้เฉพาะโมเดลที่อยู่ใน <code>availableModels</code> ทันทีตั้งแต่เปิดเซสชันใหม่!)
+  </li>
+</ol></div>
           </div>
         </div>
     
