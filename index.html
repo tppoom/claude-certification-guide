@@ -5524,8 +5524,8 @@ ightarrow$ Default ของบัญชี) เพื่อให้ผู้�
             <div style="font-size: 0.95rem; line-height: 1.75;"><strong>วิเคราะห์ครบทุกตัวเลือกเรื่องความปลอดภัยของ Agent ที่ต่ออินเทอร์เน็ต:</strong><br>
 <ul style="margin-top: 6px; margin-bottom: 6px;">
   <li>✅ <strong>A (ถูกต้อง):</strong> ใช้โมเดลขนาดเล็กและเร็ว (เช่น Haiku) ทำการคัดกรองความปลอดภัยของ Input ขาเข้าจากผู้ใช้ (Pre-call harmlessness screen) ก่อนส่งเข้าบทสนทนาหลักเพื่อดักจับ Direct prompt injection ในราคาประหยัด</li>
-  <li>✅ <strong>C (ถูกต้อง):</strong> เขียนกำกับใน System prompt อย่างชัดเจนว่าข้อมูลที่ดึงกลับมาจาก Tool ภายนอกเป็น <strong>Untrusted data (ข้อมูลที่ไม่น่าเชื่อถือ)</strong> และห้ามนำคำสั่งที่แฝงอยู่ในนั้นมาทับคำสั่งใน System prompt หรือคำขอเดิมของผู้ใช้เด็ดขาด (ป้องกัน Indirect prompt injection)</li>
-  <li>✅ <strong>D (ถูกต้อง):</strong> จำกัดสิทธิ์ของ Tools ตามหลัก <strong>Least privilege</strong> (เปิดเฉพาะสิ่งที่จำเป็น) และกำหนดให้การกระทำที่มีความเสี่ยงสูงต้องผ่านการอนุมัติจากมนุษย์ (Human approval) เสมอ</li>
+  <li>✅ <strong>B (ถูกต้อง — ข้อที่คุณลืมเลือก):</strong> เขียนกำกับใน System prompt อย่างชัดเจนว่าข้อมูลที่ดึงกลับมาจาก Tool ภายนอกเป็น <strong>Untrusted data (ข้อมูลที่ไม่น่าเชื่อถือ)</strong> และห้ามนำคำสั่งที่แฝงอยู่ในนั้นมาทับคำสั่งใน System prompt หรือคำขอเดิมของผู้ใช้เด็ดขาด (ป้องกัน Indirect prompt injection)</li>
+  <li>✅ <strong>C (ถูกต้อง):</strong> จำกัดสิทธิ์ของ Tools ตามหลัก <strong>Least privilege</strong> (เปิดเฉพาะสิ่งที่จำเป็น) เพื่อลดความเสียหายหากเกิด Injection สำเร็จ</li>
   <li>❌ <strong>E (ผิด — กับดักที่คุณเผลอเลือก!):</strong> <em>"ปิดระบบตรวจสอบ Output (Continuous output monitoring) ทันทีหลังจากการรีวิวตอนเปิดตัวครั้งแรกผ่านแล้ว"</em> — ในทางความปลอดภัย <strong>ห้ามปิดระบบ Monitoring ต่อเนื่องเด็ดขาด</strong> เพราะข้อมูลจากเว็บภายนอกและพฤติกรรมผู้ใช้ใน Production เปลี่ยนแปลงตลอดเวลา!</li>
 </ul></div>
           </div>
@@ -5605,19 +5605,19 @@ ightarrow$ Default ของบัญชี) เพื่อให้ผู้�
     </thead>
     <tbody>
       <tr>
-        <td><strong>1. Files API &amp; Code Execution Tool (ตัวเลือก A และ B)</strong></td>
+        <td><strong>1. Files API &amp; Code Execution Tool (ตัวเลือก A ✅ และ B ✅)</strong></td>
         <td><span class="badge badge-heaviest">ไม่อยู่ภายใต้ ZDR! (Stateful features)</span></td>
-        <td>เนื่องจากฟีเจอร์เหล่านี้ต้องเก็บไฟล์และสถานะของ Container ข้ามคำขอเพื่อให้ทำงานได้ จึง<strong>ไม่เข้าข่ายความคุ้มครองแบบ Zero-retention</strong> (แต่ Anthropic รับประกันในตัวเลือก B ว่า<strong>จะไม่นำข้อมูลที่เก็บไว้นี้ไปใช้เทรนโมเดลโดยไม่ได้รับอนุญาตอย่างชัดแจ้งจากลูกค้า</strong>)</td>
+        <td>เนื่องจากฟีเจอร์เหล่านี้ต้องเก็บไฟล์ที่อัปโหลดและสถานะของ Container ข้ามคำขอเพื่อให้ทำงานได้ จึง<strong>ไม่เข้าข่ายความคุ้มครองแบบ Zero-retention (ตัวเลือก A ✅)</strong> แต่ Anthropic รับประกันชัดเจนว่า<strong>ข้อมูลที่เก็บไว้เพื่อให้ฟีเจอร์ทำงานได้นั้น จะไม่ถูกนำไปใช้เทรนโมเดลเด็ดขาดหากไม่ได้รับอนุญาตอย่างชัดแจ้งจากลูกค้า (ตัวเลือก B ✅)</strong></td>
       </tr>
       <tr>
-        <td><strong>2. ข้อยกเว้นทางกฎหมายและ Trust &amp; Safety (ตัวเลือก D)</strong></td>
+        <td><strong>2. ข้อยกเว้นทางกฎหมายและ Trust &amp; Safety (ตัวเลือก C ✅ ที่คุณลืมเลือก)</strong></td>
         <td><span class="badge badge-paid">เก็บได้ตามกฎหมาย / สูงสุด 2 ปี</span></td>
         <td>แม้จะมีข้อตกลง ZDR หรือ HIPAA ทาง Anthropic ก็ยังอาจต้องเก็บข้อมูลตามที่กฎหมายบังคับ และสามารถเก็บ Inputs/Outputs ที่ถูกระบบตรวจจับความปลอดภัย (Trust &amp; Safety classifiers) ปักธงว่าละเมิดนโยบายไว้ได้นานสูงสุด <strong>2 ปี</strong></td>
       </tr>
       <tr>
-        <td><strong>3. Web Search &amp; Manus (ตัวเลือก C ที่คุณเผลอเลือก)</strong></td>
-        <td><span class="badge badge-heaviest">ตัวเลือกหลอก!</span></td>
-        <td>คำขอที่ส่งไปยังฟีเจอร์ของบุคคลที่สามหรือบริการอย่าง Manus ไม่ได้รับความคุ้มครองแบบ Zero-retention เหมือน Messages API มาตรฐาน</td>
+        <td><strong>3. ตัวลวงเรื่อง Files API เก็บแค่ใน RAM (ตัวเลือก D ❌ ที่คุณเผลอเลือก)</strong></td>
+        <td><span class="badge badge-heaviest">❌ ผิด! (ตัวเลือกหลอก)</span></td>
+        <td>ตัวเลือก D หลอกว่า <em>"Files API เข้าข่าย ZDR เพราะเก็บไฟล์ไว้แค่ในหน่วยความจำ (RAM) ชั่วคราวไม่เคยเขียนลงดิสก์"</em> ซึ่ง<strong>ไม่จริง!</strong> เพราะ Files API มีไว้ให้อัปโหลดไฟล์ขึ้นไปเก็บไว้บน Storage ของ Anthropic เพื่อใช้อ้างอิงด้วย <code>file_id</code> ข้ามหลายๆ คำขอ จึงเป็น Stateful feature และไม่อยู่ภายใต้ ZDR (ตรงข้ามกับข้อ A)</td>
       </tr>
     </tbody>
   </table>
@@ -5719,8 +5719,8 @@ ightarrow$ Default ของบัญชี) เพื่อให้ผู้�
             <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px;">💡 คำอธิบายเจาะลึก &amp; จุดที่ต้องระวังในห้องสอบ (Deep-Dive Explanation):</div>
             <div style="font-size: 0.95rem; line-height: 1.75;"><strong>ความเข้าใจผิดยอดฮิตเรื่อง Structured Outputs (<code>output_config.format</code>) กับ ZDR:</strong><br>
 <ul style="margin-top: 6px; margin-bottom: 6px;">
-  <li><strong>ทำไมตัวเลือก C ที่คุณเลือกถึงผิด:</strong> คุณคิดว่าการแคชไวยากรณ์ JSON Schema ไว้ 24 ชั่วโมงทำให้องค์กรที่มีข้อตกลง ZDR ห้ามใช้ Structured Outputs ไปเลย ซึ่ง<strong>ไม่เป็นความจริง!</strong></li>
-  <li><strong>ความจริงที่ถูกต้อง (ตัวเลือก A):</strong> ฟีเจอร์ Structured Outputs <strong>สามารถใช้งานร่วมกับ ZDR ได้อย่างถูกต้อง (ZDR-eligible on a qualified basis)!</strong> โดยตัวข้อความ <strong>Prompts และ Outputs ของลูกค้าจะไม่ถูกบันทึกลงดิสก์เลยตามเกณฑ์ ZDR</strong> ส่วนสิ่งเดียวที่ระบบแคชไว้ในหน่วยความจำสูงสุดไม่เกิน <strong>24 ชั่วโมง</strong> คือ <strong>โครงสร้าง JSON Schema ที่คอมไพล์เป็นไวยากรณ์แล้ว (Compiled schema grammar)</strong> เพื่อให้คำขอถัดไปที่ใช้ Schema เดิมไม่ต้องเสียเวลาคอมไพล์ใหม่ (ดังนั้นจึงเพียงแค่หลีกเลี่ยงการตั้งชื่อฟิลด์ใน Schema เป็นข้อมูลความลับของลูกค้าก็ปลอดภัย 100%)</li>
+  <li><strong>ทำไมตัวเลือก B ที่คุณเลือกถึงผิด:</strong> ตัวเลือก B หลอกว่า <em>"ไม่สามารถใช้ Structured outputs ภายใต้ ZDR ได้เพราะการตรวจ Schema ต้องเก็บประวัติการสนทนาทั้งหมด"</em> ซึ่ง<strong>ไม่เป็นความจริง!</strong> การบังคับโครงสร้างด้วย Constrained Decoding ไม่จำเป็นต้องเก็บประวัติการสนทนาลงดิสก์เลย</li>
+  <li><strong>ความจริงที่ถูกต้อง (ตัวเลือก A ✅):</strong> ฟีเจอร์ Structured Outputs <strong>สามารถใช้งานร่วมกับ ZDR ได้อย่างถูกต้อง (ZDR-eligible on a qualified basis)!</strong> โดยตัวข้อความ <strong>Prompts และ Outputs ของลูกค้าจะไม่ถูกบันทึกลงดิสก์เลยตามเกณฑ์ ZDR</strong> ส่วนสิ่งเดียวที่ระบบแคชไว้สูงสุดไม่เกิน <strong>24 ชั่วโมง</strong> คือ <strong>โครงสร้าง JSON Schema ที่คอมไพล์เป็นไวยากรณ์แล้ว (Compiled schema grammar)</strong> เพื่อให้คำขอถัดไปที่ใช้ Schema เดิมไม่ต้องเสียเวลาคอมไพล์ใหม่</li>
 </ul></div>
           </div>
         </div>
