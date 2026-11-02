@@ -245,7 +245,7 @@
     .main-content {
       margin-left: var(--sidebar-width);
       flex: 1;
-      max-width: 980px;
+      max-width: none;
       padding: 40px 48px 80px;
     }
 
@@ -1201,7 +1201,7 @@
     .main-content {
       margin-left: var(--sidebar-width);
       width: calc(100% - var(--sidebar-width));
-      max-width: 1020px;
+      max-width: none;
       min-width: 0;
       padding: 32px 36px 80px;
     }
@@ -1284,6 +1284,46 @@
       flex: 1 1 240px;
       min-width: 0;
       word-break: break-word;
+    }
+
+    
+    /* === Wide Screen & No-Horizontal-Scroll Table Enhancements === */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      width: calc(100% - var(--sidebar-width));
+      max-width: none !important;
+      min-width: 0;
+      padding: 32px 44px 80px;
+    }
+
+    @media (min-width: 1600px) {
+      .main-content {
+        padding: 40px 64px 90px;
+      }
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      max-width: 100%;
+      border-collapse: collapse;
+      table-layout: auto;
+    }
+
+    th, td {
+      overflow-wrap: break-word;
+      word-break: break-word;
+      white-space: normal;
+    }
+
+    td code, th code {
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
     }
 
     /* Responsive Breakpoints */
