@@ -7765,13 +7765,13 @@ ightarrow$ Default ของบัญชี) เพื่อให้ผู้�
             <span class="badge badge-weight" id="vocabCountBadge" style="font-size: 0.9rem; padding: 6px 14px;">แสดงทั้งหมด 233 คำศัพท์</span>
           </div>
 
-          <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-            <button class="btn-toggle" onclick="setVocabCategory('all')" style="font-weight: 700;">📚 ทั้งหมด (233)</button>
-            <button class="btn-toggle" onclick="setVocabCategory('trap')" style="border-color: var(--danger); color: var(--danger); font-weight: 700;">🚨 1. ศัพท์จาก 22 ข้อที่เคยผิด (31)</button>
-            <button class="btn-toggle" onclick="setVocabCategory('general')" style="border-color: var(--accent); color: var(--accent); font-weight: 700;">📖 2. ศัพท์อังกฤษยากในโจทย์ &amp; ช้อยส์ (176)</button>
-            <button class="btn-toggle" onclick="setVocabCategory('arch')" style="font-weight: 600;">⚙️ 3. ศัพท์สถาปัตยกรรมนอกเหนือจาก Mock (10)</button>
-            <button class="btn-toggle" onclick="setVocabCategory('sec')" style="font-weight: 600;">🛡️ 4. ศัพท์ Security &amp; Governance (6)</button>
-            <button class="btn-toggle" onclick="setVocabCategory('claude')" style="font-weight: 600;">🤖 5. ศัพท์เฉพาะ Claude, MCP &amp; Evals (10)</button>
+          <div id="vocabCategoryButtons" style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <button class="vocab-cat-btn btn-primary-exam" data-cat="all" onclick="setVocabCategory('all', this)" style="font-weight: 700;">📚 ทั้งหมด (233)</button>
+            <button class="vocab-cat-btn btn-toggle" data-cat="trap" onclick="setVocabCategory('trap', this)" style="border-color: var(--danger); color: var(--danger); font-weight: 700;">🚨 1. ศัพท์จาก 22 ข้อที่เคยผิด (31)</button>
+            <button class="vocab-cat-btn btn-toggle" data-cat="general" onclick="setVocabCategory('general', this)" style="border-color: var(--accent); color: var(--accent); font-weight: 700;">📖 2. ศัพท์อังกฤษยากในโจทย์ &amp; ช้อยส์ (176)</button>
+            <button class="vocab-cat-btn btn-toggle" data-cat="arch" onclick="setVocabCategory('arch', this)" style="font-weight: 600;">⚙️ 3. ศัพท์สถาปัตยกรรมนอกเหนือจาก Mock (10)</button>
+            <button class="vocab-cat-btn btn-toggle" data-cat="sec" onclick="setVocabCategory('sec', this)" style="font-weight: 600;">🛡️ 4. ศัพท์ Security &amp; Governance (6)</button>
+            <button class="vocab-cat-btn btn-toggle" data-cat="claude" onclick="setVocabCategory('claude', this)" style="font-weight: 600;">🤖 5. ศัพท์เฉพาะ Claude, MCP &amp; Evals (10)</button>
           </div>
         </div>
 
@@ -11054,14 +11054,51 @@ ightarrow$ Default ของบัญชี) เพื่อให้ผู้�
 
       <script>
         let currentVocabCat = 'all';
-        function setVocabCategory(cat) {
+
+        function setVocabCategory(cat, btn) {
           currentVocabCat = cat;
+
+          const buttons = document.querySelectorAll('.vocab-cat-btn');
+          buttons.forEach(b => {
+            const bCat = b.getAttribute('data-cat');
+            if (bCat === cat) {
+              b.className = 'vocab-cat-btn btn-primary-exam';
+              if (cat === 'trap') {
+                b.style.backgroundColor = 'var(--danger)';
+                b.style.borderColor = 'var(--danger)';
+                b.style.color = '#ffffff';
+              } else if (cat === 'general') {
+                b.style.backgroundColor = 'var(--accent)';
+                b.style.borderColor = 'var(--accent)';
+                b.style.color = '#ffffff';
+              } else {
+                b.style.backgroundColor = '';
+                b.style.borderColor = '';
+                b.style.color = '#ffffff';
+              }
+            } else {
+              b.className = 'vocab-cat-btn btn-toggle';
+              b.style.backgroundColor = '';
+              if (bCat === 'trap') {
+                b.style.borderColor = 'var(--danger)';
+                b.style.color = 'var(--danger)';
+              } else if (bCat === 'general') {
+                b.style.borderColor = 'var(--accent)';
+                b.style.color = 'var(--accent)';
+              } else {
+                b.style.borderColor = '';
+                b.style.color = '';
+              }
+            }
+          });
+
           filterVocab();
         }
+
         function filterVocab() {
-          const input = document.getElementById('vocabSearchInput');
+          const input = document.getElementById('ccdv-f_vocabSearchInput') || document.getElementById('vocabSearchInput');
           const q = (input ? input.value : '').trim().toLowerCase();
-          const tbody = document.getElementById('vocabTableBody');
+          const tbody = document.getElementById('ccdv-f_vocabTableBody') || document.getElementById('vocabTableBody');
           if (!tbody) return;
           const rows = tbody.querySelectorAll('.vocab-row');
           let shown = 0;
@@ -11077,7 +11114,7 @@ ightarrow$ Default ของบัญชี) เพื่อให้ผู้�
               row.style.display = 'none';
             }
           });
-          const badge = document.getElementById('vocabCountBadge');
+          const badge = document.getElementById('ccdv-f_vocabCountBadge') || document.getElementById('vocabCountBadge');
           if (badge) {
             badge.innerText = 'แสดง ' + shown + ' / 233 คำศัพท์';
           }
